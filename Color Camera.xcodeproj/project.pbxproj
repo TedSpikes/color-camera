@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F20C18222A69ABA00CD8726 /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F20C18122A69AB900CD8726 /* CameraController.swift */; };
 		9F7F4FCA22367FB000294E0A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7F4FC922367FB000294E0A /* AppDelegate.swift */; };
 		9F7F4FCC22367FB000294E0A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7F4FCB22367FB000294E0A /* ViewController.swift */; };
 		9F7F4FCF22367FB000294E0A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F7F4FCD22367FB000294E0A /* Main.storyboard */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9F20C18122A69AB900CD8726 /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
 		9F7F4FC622367FB000294E0A /* Color Camera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Color Camera.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F7F4FC922367FB000294E0A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F7F4FCB22367FB000294E0A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 			children = (
 				9F7F4FC922367FB000294E0A /* AppDelegate.swift */,
 				9F7F4FCB22367FB000294E0A /* ViewController.swift */,
+				9F20C18122A69AB900CD8726 /* CameraController.swift */,
 				9F7F4FCD22367FB000294E0A /* Main.storyboard */,
 				9F7F4FD322367FB200294E0A /* Assets.xcassets */,
 				9F7F4FD522367FB200294E0A /* LaunchScreen.storyboard */,
@@ -99,6 +102,7 @@
 				TargetAttributes = {
 					9F7F4FC522367FB000294E0A = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -140,6 +144,7 @@
 			files = (
 				9F7F4FCC22367FB000294E0A /* ViewController.swift in Sources */,
 				9F7F4FCA22367FB000294E0A /* AppDelegate.swift in Sources */,
+				9F20C18222A69ABA00CD8726 /* CameraController.swift in Sources */,
 				9F7F4FD222367FB000294E0A /* Color_Camera.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -295,7 +300,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tedspikes.Color-Camera";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -313,7 +318,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tedspikes.Color-Camera";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
