@@ -19,13 +19,14 @@ class CameraController {
     var rearCameraInput: AVCaptureDeviceInput?
     var currentCameraPosition: CameraPosition?
     var photoOutput: AVCapturePhotoOutput?
+    var videoOutput: AVCaptureVideoDataOutput?
     
     var previewLayer: AVCaptureVideoPreviewLayer?
 }
 
 // MARK: Prepare
 extension CameraController {
-    func prepare(completionHandler: @escaping (Error?) -> Void) {
+    func prepare(captureVideoDelegate: AVCaptureVideoDataOutputSampleBufferDelegate, completionHandler: @escaping (Error?) -> Void) {
         func createCaptureSession() {
             self.captureSession = AVCaptureSession()
         }
@@ -79,12 +80,27 @@ extension CameraController {
             captureSession.startRunning()
         }
         
+        func configureVideoOutput(delegate: AVCaptureVideoDataOutputSampleBufferDelegate) throws {
+            guard let captureSession = self.captureSession else { throw CameraControllerError.captureSessionIsMissing }
+            
+            self.videoOutput = AVCaptureVideoDataOutput()
+            self.videoOutput!.setSampleBufferDelegate(delegate, queue: DispatchQueue(label: "Sample Buffer Queue"))
+            
+            if captureSession.canAddOutput(self.videoOutput!) { captureSession.addOutput(self.videoOutput!) }
+            for connection in self.videoOutput!.connections {
+                if connection.isVideoOrientationSupported {
+                    connection.videoOrientation = .portrait  // TODO: Awful hack?
+                }
+            }
+        }
+        
         DispatchQueue.init(label: "prepare").async {
             do {
                 createCaptureSession()
                 try configureCaptureDevices()
                 try configureDeviceInputs()
                 try configurePhotoOutput()
+                try configureVideoOutput(delegate: captureVideoDelegate)
             }
             
             catch {
@@ -102,6 +118,7 @@ extension CameraController {
     }
 }
 
+// MARK: Use the camera
 extension CameraController {
     func displayPreview(on view: UIView) throws {
         guard let captureSession = self.captureSession, captureSession.isRunning else { throw CameraControllerError.captureSessionIsMissing }
@@ -116,7 +133,6 @@ extension CameraController {
     
     func switchCamera() throws {
         guard let currentCameraPosition = currentCameraPosition, let captureSession = captureSession, captureSession.isRunning else { throw CameraControllerError.captureSessionIsMissing }
-        captureSession.beginConfiguration()
         
         func switchToFrontCamera() throws {
             guard let frontCamera = self.frontCamera else { throw CameraControllerError.invalidOperation}
@@ -143,13 +159,13 @@ extension CameraController {
             else { throw CameraControllerError.invalidOperation }
         }
         
+        captureSession.beginConfiguration()
         switch currentCameraPosition {
         case .front:
             try switchToRearCamera()
         case .rear:
             try switchToFrontCamera()
         }
-        
         captureSession.commitConfiguration()
     }
 }

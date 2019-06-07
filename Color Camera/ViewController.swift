@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
     let cameraController = CameraController()
     
+    @IBOutlet weak var filteredImageView: UIImageView!
     @IBOutlet weak var captureButton: UIButton!
-    @IBOutlet weak var capturePreviewView: UIView!
     @IBOutlet weak var toggleCameraButton: UIButton!
     @IBOutlet weak var toggleFlashButton: UIButton!
     
@@ -44,12 +45,10 @@ extension ViewController {
         super.viewDidLoad()
         
         func configureCameraController() {
-            cameraController.prepare { (error) in
+            cameraController.prepare(captureVideoDelegate: self) { (error) in
                 if let error = error {
                     print(error)
                 }
-                
-                try? self.cameraController.displayPreview(on: self.capturePreviewView)
             }
         }
         
@@ -65,3 +64,21 @@ extension ViewController {
     }
 }
 
+extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
+        let cameraImage = CIImage(cvPixelBuffer: pixelBuffer!)
+        
+        let invertColors = CIFilter(name: "CIColorInvert")
+        invertColors!.setValue(cameraImage, forKey: kCIInputImageKey)
+        let filteredImage = UIImage(ciImage: invertColors!.value(forKey: kCIOutputImageKey) as! CIImage)
+        
+        DispatchQueue.main.async {
+            self.filteredImageView.image = filteredImage
+        }
+    }
+    
+    func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        
+    }
+}
