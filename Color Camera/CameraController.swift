@@ -18,6 +18,7 @@ class CameraController {
     var frontCameraInput: AVCaptureDeviceInput?
     var rearCameraInput: AVCaptureDeviceInput?
     var currentCameraPosition: CameraPosition?
+    var flashStatus: Bool?
     var photoOutput: AVCapturePhotoOutput?
     var videoOutput: AVCaptureVideoDataOutput?
     
@@ -166,7 +167,33 @@ extension CameraController {
         case .rear:
             try switchToFrontCamera()
         }
+        for connection in self.videoOutput!.connections {
+            if connection.isVideoOrientationSupported {
+                connection.videoOrientation = .portrait  // TODO: Awful hack?
+            }
+        }
         captureSession.commitConfiguration()
+    }
+    
+    func toggleFlash() throws {
+        guard let device = AVCaptureDevice.default(for: .video) else { throw CameraControllerError.invalidOperation }
+        if device.hasTorch {
+            do {
+                try device.lockForConfiguration()
+                
+                if device.torchMode == .off {
+                    try device.setTorchModeOn(level: 1.0)
+                    self.flashStatus = true
+                } else {
+                    device.torchMode = .off
+                    self.flashStatus = false
+                }
+                device.unlockForConfiguration()
+            }
+            catch {
+                print(error)
+            }
+        }
     }
 }
 

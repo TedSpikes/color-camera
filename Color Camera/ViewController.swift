@@ -36,6 +36,17 @@ class ViewController: UIViewController {
             return
         }
     }
+    @IBAction func toggleFlash(_ sender: UIButton) {
+        do {
+            try cameraController.toggleFlash()
+        } catch { print(error) }
+        
+        if cameraController.flashStatus ?? true {
+            self.toggleFlashButton.setImage(UIImage(named: "flashOffIcon"), for: .normal)
+        } else {
+            self.toggleFlashButton.setImage(UIImage(named: "flashOnIcon"), for: .normal)
+        }
+    }
     
     override var prefersStatusBarHidden: Bool { return true }
 }
@@ -69,7 +80,7 @@ extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
         let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
         let cameraImage = CIImage(cvPixelBuffer: pixelBuffer!)
         
-        let invertColors = CIFilter(name: "CIColorInvert")
+        let invertColors = CIFilter(name: "CISepiaTone")
         invertColors!.setValue(cameraImage, forKey: kCIInputImageKey)
         let filteredImage = UIImage(ciImage: invertColors!.value(forKey: kCIOutputImageKey) as! CIImage)
         

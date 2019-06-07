@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3sb-D9-RO0">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="-1" y="19" width="377" height="649"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ndO-GP-upW">
                                 <rect key="frame" x="163.5" y="611" width="48" height="48"/>
@@ -31,7 +31,10 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Bl-QE-Fgn">
                                 <rect key="frame" x="317" y="610" width="50" height="50"/>
-                                <state key="normal" image="flashIcon"/>
+                                <state key="normal" image="flashOnIcon"/>
+                                <connections>
+                                    <action selector="toggleFlash:" destination="BYZ-38-t0r" eventType="touchUpInside" id="A9I-3u-WPA"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="83k-88-uzq">
                                 <rect key="frame" x="259" y="610" width="50" height="50"/>
@@ -43,14 +46,14 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="3sb-D9-RO0" secondAttribute="trailing" id="0Hq-Cv-B5X"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="3sb-D9-RO0" secondAttribute="bottom" id="6Xf-11-In3"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="3sb-D9-RO0" secondAttribute="trailing" constant="-1" id="0Hq-Cv-B5X"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="3sb-D9-RO0" secondAttribute="bottom" constant="-1" id="6Xf-11-In3"/>
                             <constraint firstItem="83k-88-uzq" firstAttribute="centerY" secondItem="ndO-GP-upW" secondAttribute="centerY" id="9Pt-NE-sXk"/>
                             <constraint firstItem="6Bl-QE-Fgn" firstAttribute="centerY" secondItem="ndO-GP-upW" secondAttribute="centerY" id="FUz-yE-V8u"/>
                             <constraint firstItem="6Bl-QE-Fgn" firstAttribute="leading" secondItem="83k-88-uzq" secondAttribute="trailing" constant="8" id="K7c-du-22l"/>
                             <constraint firstItem="ndO-GP-upW" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="VcB-1o-gXq"/>
-                            <constraint firstItem="3sb-D9-RO0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="j4f-po-u3n"/>
-                            <constraint firstItem="3sb-D9-RO0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="ktB-KJ-aYp"/>
+                            <constraint firstItem="3sb-D9-RO0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="-1" id="j4f-po-u3n"/>
+                            <constraint firstItem="3sb-D9-RO0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="-1" id="ktB-KJ-aYp"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ndO-GP-upW" secondAttribute="bottom" constant="8" id="oKv-Zh-EUa"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6Bl-QE-Fgn" secondAttribute="trailing" constant="8" id="raO-Ms-UxV"/>
                         </constraints>
@@ -68,7 +71,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="flashIcon" width="50" height="50"/>
+        <image name="flashOnIcon" width="50" height="50"/>
         <image name="frontCameraIcon" width="50" height="50"/>
     </resources>
 </document>
