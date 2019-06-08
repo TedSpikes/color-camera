@@ -14,6 +14,8 @@
 		9F7F4FD222367FB000294E0A /* Color_Camera.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9F7F4FD022367FB000294E0A /* Color_Camera.xcdatamodeld */; };
 		9F7F4FD422367FB200294E0A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F7F4FD322367FB200294E0A /* Assets.xcassets */; };
 		9F7F4FD722367FB200294E0A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F7F4FD522367FB200294E0A /* LaunchScreen.storyboard */; };
+		9F9234F222ABF36F00A0E51E /* FilterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9234F122ABF36F00A0E51E /* FilterController.swift */; };
+		9F9234F422ABF65300A0E51E /* CustomCIKernels.metal in Sources */ = {isa = PBXBuildFile; fileRef = 9F9234F322ABF65300A0E51E /* CustomCIKernels.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		9F7F4FD322367FB200294E0A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9F7F4FD622367FB200294E0A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9F7F4FD822367FB200294E0A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9F9234F122ABF36F00A0E51E /* FilterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterController.swift; sourceTree = "<group>"; };
+		9F9234F322ABF65300A0E51E /* CustomCIKernels.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = CustomCIKernels.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,14 +62,16 @@
 		9F7F4FC822367FB000294E0A /* Color Camera */ = {
 			isa = PBXGroup;
 			children = (
-				9F7F4FC922367FB000294E0A /* AppDelegate.swift */,
-				9F7F4FCB22367FB000294E0A /* ViewController.swift */,
-				9F20C18122A69AB900CD8726 /* CameraController.swift */,
-				9F7F4FCD22367FB000294E0A /* Main.storyboard */,
-				9F7F4FD322367FB200294E0A /* Assets.xcassets */,
-				9F7F4FD522367FB200294E0A /* LaunchScreen.storyboard */,
+				9F9234F322ABF65300A0E51E /* CustomCIKernels.metal */,
 				9F7F4FD822367FB200294E0A /* Info.plist */,
+				9F7F4FC922367FB000294E0A /* AppDelegate.swift */,
+				9F20C18122A69AB900CD8726 /* CameraController.swift */,
+				9F9234F122ABF36F00A0E51E /* FilterController.swift */,
+				9F7F4FCB22367FB000294E0A /* ViewController.swift */,
+				9F7F4FD322367FB200294E0A /* Assets.xcassets */,
 				9F7F4FD022367FB000294E0A /* Color_Camera.xcdatamodeld */,
+				9F7F4FD522367FB200294E0A /* LaunchScreen.storyboard */,
+				9F7F4FCD22367FB000294E0A /* Main.storyboard */,
 			);
 			path = "Color Camera";
 			sourceTree = "<group>";
@@ -142,7 +148,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F9234F222ABF36F00A0E51E /* FilterController.swift in Sources */,
 				9F7F4FCC22367FB000294E0A /* ViewController.swift in Sources */,
+				9F9234F422ABF65300A0E51E /* CustomCIKernels.metal in Sources */,
 				9F7F4FCA22367FB000294E0A /* AppDelegate.swift in Sources */,
 				9F20C18222A69ABA00CD8726 /* CameraController.swift in Sources */,
 				9F7F4FD222367FB000294E0A /* Color_Camera.xcdatamodeld in Sources */,
@@ -223,6 +231,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTLLINKER_FLAGS = "-cikernel";
+				MTL_COMPILER_FLAGS = "-fcikernel";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -278,6 +288,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTLLINKER_FLAGS = "-cikernel";
+				MTL_COMPILER_FLAGS = "-fcikernel";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -291,6 +303,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = G7SK84425W;
 				INFOPLIST_FILE = "Color Camera/Info.plist";
@@ -300,6 +313,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tedspikes.Color-Camera";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -309,6 +323,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = G7SK84425W;
 				INFOPLIST_FILE = "Color Camera/Info.plist";

@@ -11,6 +11,7 @@ import AVFoundation
 
 class ViewController: UIViewController {
     let cameraController = CameraController()
+    let filterController = FilterController()
     
     @IBOutlet weak var filteredImageView: UIImageView!
     @IBOutlet weak var captureButton: UIButton!
@@ -80,7 +81,7 @@ extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
         let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
         let cameraImage = CIImage(cvPixelBuffer: pixelBuffer!)
         
-        let invertColors = CIFilter(name: "CISepiaTone")
+        let invertColors = filterController.filter(withName: "Protanopia")
         invertColors!.setValue(cameraImage, forKey: kCIInputImageKey)
         let filteredImage = UIImage(ciImage: invertColors!.value(forKey: kCIOutputImageKey) as! CIImage)
         
