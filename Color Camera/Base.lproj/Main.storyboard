@@ -43,6 +43,16 @@
                                     <action selector="toggleCamera:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Zxm-Ko-Gsj"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lSw-oz-mwA">
+                                <rect key="frame" x="8" y="620" width="147.5" height="30"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="FilterPicker">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="pickFilter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XUb-ey-4DU"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -51,7 +61,10 @@
                             <constraint firstItem="83k-88-uzq" firstAttribute="centerY" secondItem="ndO-GP-upW" secondAttribute="centerY" id="9Pt-NE-sXk"/>
                             <constraint firstItem="6Bl-QE-Fgn" firstAttribute="centerY" secondItem="ndO-GP-upW" secondAttribute="centerY" id="FUz-yE-V8u"/>
                             <constraint firstItem="6Bl-QE-Fgn" firstAttribute="leading" secondItem="83k-88-uzq" secondAttribute="trailing" constant="8" id="K7c-du-22l"/>
+                            <constraint firstItem="lSw-oz-mwA" firstAttribute="centerY" secondItem="ndO-GP-upW" secondAttribute="centerY" id="MXF-K9-TvC"/>
                             <constraint firstItem="ndO-GP-upW" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="VcB-1o-gXq"/>
+                            <constraint firstItem="ndO-GP-upW" firstAttribute="leading" secondItem="lSw-oz-mwA" secondAttribute="trailing" constant="8" id="XpR-Oa-DX7"/>
+                            <constraint firstItem="lSw-oz-mwA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="fMO-20-gVl"/>
                             <constraint firstItem="3sb-D9-RO0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="-1" id="j4f-po-u3n"/>
                             <constraint firstItem="3sb-D9-RO0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="-1" id="ktB-KJ-aYp"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ndO-GP-upW" secondAttribute="bottom" constant="8" id="oKv-Zh-EUa"/>
@@ -61,6 +74,7 @@
                     </view>
                     <connections>
                         <outlet property="captureButton" destination="ndO-GP-upW" id="na2-qD-TWp"/>
+                        <outlet property="filterPickerButton" destination="lSw-oz-mwA" id="Z5C-Xz-QTZ"/>
                         <outlet property="filteredImageView" destination="3sb-D9-RO0" id="BpQ-Cg-knL"/>
                         <outlet property="toggleCameraButton" destination="83k-88-uzq" id="egS-cB-1dl"/>
                         <outlet property="toggleFlashButton" destination="6Bl-QE-Fgn" id="Rmb-Dn-8c2"/>

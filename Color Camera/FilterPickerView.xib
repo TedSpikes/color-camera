@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FilterPickerViewController" customModule="Color_Camera" customModuleProvider="target">
+            <connections>
+                <outlet property="tableView" destination="tlg-x0-CN0" id="zaK-8i-jcc"/>
+                <outlet property="view" destination="vjD-Q8-6xU" id="rMD-w5-din"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="vjD-Q8-6xU">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tlg-x0-CN0">
+                    <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </tableView>
+                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3vf-B2-8zC">
+                    <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="QqD-cZ-WcK"/>
+                    </constraints>
+                    <items>
+                        <navigationItem title="Pick a filter" id="2UE-gu-HRz">
+                            <barButtonItem key="rightBarButtonItem" title="Close" id="LDD-Rs-ivW">
+                                <connections>
+                                    <action selector="closeModal:" destination="-1" id="q5k-aW-TgW"/>
+                                </connections>
+                            </barButtonItem>
+                        </navigationItem>
+                    </items>
+                </navigationBar>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="3vf-B2-8zC" firstAttribute="trailing" secondItem="k9G-S1-T1x" secondAttribute="trailing" id="Jqn-xb-BiT"/>
+                <constraint firstItem="k9G-S1-T1x" firstAttribute="bottom" secondItem="tlg-x0-CN0" secondAttribute="bottom" id="KPi-AV-lPN"/>
+                <constraint firstItem="tlg-x0-CN0" firstAttribute="leading" secondItem="k9G-S1-T1x" secondAttribute="leading" id="Q4N-be-NH3"/>
+                <constraint firstItem="3vf-B2-8zC" firstAttribute="leading" secondItem="k9G-S1-T1x" secondAttribute="leading" id="YPG-L1-ycY"/>
+                <constraint firstItem="tlg-x0-CN0" firstAttribute="top" secondItem="3vf-B2-8zC" secondAttribute="bottom" id="g0r-zf-ZIx"/>
+                <constraint firstItem="3vf-B2-8zC" firstAttribute="top" secondItem="k9G-S1-T1x" secondAttribute="top" id="knu-Ck-xSd"/>
+                <constraint firstItem="k9G-S1-T1x" firstAttribute="trailing" secondItem="tlg-x0-CN0" secondAttribute="trailing" id="lAv-R6-pF4"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="k9G-S1-T1x"/>
+            <point key="canvasLocation" x="-52.173913043478265" y="75.669642857142847"/>
+        </view>
+    </objects>
+</document>

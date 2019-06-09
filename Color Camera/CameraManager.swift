@@ -11,7 +11,7 @@ import UIKit
 import AVFoundation
 
 // MARK: Properties
-class CameraController {
+class CameraManager {
     var captureSession: AVCaptureSession?
     var frontCamera: AVCaptureDevice?
     var rearCamera: AVCaptureDevice?
@@ -26,7 +26,7 @@ class CameraController {
 }
 
 // MARK: Prepare
-extension CameraController {
+extension CameraManager {
     func prepare(captureVideoDelegate: AVCaptureVideoDataOutputSampleBufferDelegate, completionHandler: @escaping (Error?) -> Void) {
         func createCaptureSession() {
             self.captureSession = AVCaptureSession()
@@ -35,7 +35,7 @@ extension CameraController {
         func configureCaptureDevices() throws {
             let session = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: AVMediaType.video, position: .unspecified)
             let cameras = (session.devices.compactMap{ $0 })
-            if cameras.isEmpty { throw CameraControllerError.noCamerasAvailable }
+            if cameras.isEmpty { throw CameraManagerError.noCamerasAvailable }
             
             for camera in cameras {
                 if camera.position == .front {
@@ -52,7 +52,7 @@ extension CameraController {
         }
         
         func configureDeviceInputs() throws {
-            guard let captureSession = self.captureSession else { throw CameraControllerError.captureSessionIsMissing }
+            guard let captureSession = self.captureSession else { throw CameraManagerError.captureSessionIsMissing }
             
             if let rearCamera = self.rearCamera {
                 self.rearCameraInput = try AVCaptureDeviceInput(device: rearCamera)
@@ -66,12 +66,12 @@ extension CameraController {
                 self.currentCameraPosition = .front
             }
             
-            else { throw CameraControllerError.noCamerasAvailable }
+            else { throw CameraManagerError.noCamerasAvailable }
             
         }
         
         func configurePhotoOutput() throws {
-            guard let captureSession = self.captureSession else { throw CameraControllerError.captureSessionIsMissing }
+            guard let captureSession = self.captureSession else { throw CameraManagerError.captureSessionIsMissing }
             
             self.photoOutput = AVCapturePhotoOutput()
             self.photoOutput!.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])], completionHandler: nil)
@@ -82,7 +82,7 @@ extension CameraController {
         }
         
         func configureVideoOutput(delegate: AVCaptureVideoDataOutputSampleBufferDelegate) throws {
-            guard let captureSession = self.captureSession else { throw CameraControllerError.captureSessionIsMissing }
+            guard let captureSession = self.captureSession else { throw CameraManagerError.captureSessionIsMissing }
             
             self.videoOutput = AVCaptureVideoDataOutput()
             self.videoOutput!.setSampleBufferDelegate(delegate, queue: DispatchQueue(label: "Sample Buffer Queue"))
@@ -120,9 +120,9 @@ extension CameraController {
 }
 
 // MARK: Use the camera
-extension CameraController {
+extension CameraManager {
     func displayPreview(on view: UIView) throws {
-        guard let captureSession = self.captureSession, captureSession.isRunning else { throw CameraControllerError.captureSessionIsMissing }
+        guard let captureSession = self.captureSession, captureSession.isRunning else { throw CameraManagerError.captureSessionIsMissing }
         
         self.previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         self.previewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
@@ -133,10 +133,10 @@ extension CameraController {
     }
     
     func switchCamera() throws {
-        guard let currentCameraPosition = currentCameraPosition, let captureSession = captureSession, captureSession.isRunning else { throw CameraControllerError.captureSessionIsMissing }
+        guard let currentCameraPosition = currentCameraPosition, let captureSession = captureSession, captureSession.isRunning else { throw CameraManagerError.captureSessionIsMissing }
         
         func switchToFrontCamera() throws {
-            guard let frontCamera = self.frontCamera else { throw CameraControllerError.invalidOperation}
+            guard let frontCamera = self.frontCamera else { throw CameraManagerError.invalidOperation}
             self.frontCameraInput = try AVCaptureDeviceInput(device: frontCamera)
             
             captureSession.removeInput(rearCameraInput!)
@@ -145,10 +145,10 @@ extension CameraController {
                 captureSession.addInput(self.frontCameraInput!)
                 self.currentCameraPosition = .front
             }
-            else { throw CameraControllerError.invalidOperation }
+            else { throw CameraManagerError.invalidOperation }
         }
         func switchToRearCamera() throws {
-            guard let rearCamera = self.rearCamera else { throw CameraControllerError.invalidOperation}
+            guard let rearCamera = self.rearCamera else { throw CameraManagerError.invalidOperation}
             self.rearCameraInput = try AVCaptureDeviceInput(device: rearCamera)
             
             captureSession.removeInput(frontCameraInput!)
@@ -157,7 +157,7 @@ extension CameraController {
                 captureSession.addInput(self.rearCameraInput!)
                 self.currentCameraPosition = .rear
             }
-            else { throw CameraControllerError.invalidOperation }
+            else { throw CameraManagerError.invalidOperation }
         }
         
         captureSession.beginConfiguration()
@@ -176,7 +176,7 @@ extension CameraController {
     }
     
     func toggleFlash() throws {
-        guard let device = AVCaptureDevice.default(for: .video) else { throw CameraControllerError.invalidOperation }
+        guard let device = AVCaptureDevice.default(for: .video) else { throw CameraManagerError.invalidOperation }
         if device.hasTorch {
             do {
                 try device.lockForConfiguration()
@@ -197,13 +197,13 @@ extension CameraController {
     }
 }
 
-extension CameraController {
+extension CameraManager {
     public enum CameraPosition {
         case front
         case rear
     }
     
-    enum CameraControllerError: Error {
+    enum CameraManagerError: Error {
         case captureSessionAlreadyRunning
         case captureSessionIsMissing
         case inputsAreInvalid

@@ -9,7 +9,7 @@
 import Foundation
 import CoreImage
 
-class FilterController: CIFilterConstructor {
+class FilterManager: CIFilterConstructor {
     var protanopia: CIFilter?
     
     var protanopiaKernel: CIColorKernel?
@@ -54,7 +54,7 @@ class FilterController: CIFilterConstructor {
         override class func registerName(_ name: String,
                                 constructor anObject: CIFilterConstructor,
                                 classAttributes attributes: [String : Any] = [:]) {
-            CIFilter.registerName("Protanopia", constructor: FilterController(), classAttributes: attributes)
+            CIFilter.registerName("Protanopia", constructor: FilterManager(), classAttributes: attributes)
         }
         
         // MARK: I/O

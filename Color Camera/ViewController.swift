@@ -10,23 +10,24 @@ import UIKit
 import AVFoundation
 
 class ViewController: UIViewController {
-    let cameraController = CameraController()
-    let filterController = FilterController()
+    let cameraManager = CameraManager()
+    let filterManager = FilterManager()
     
     @IBOutlet weak var filteredImageView: UIImageView!
     @IBOutlet weak var captureButton: UIButton!
     @IBOutlet weak var toggleCameraButton: UIButton!
     @IBOutlet weak var toggleFlashButton: UIButton!
+    @IBOutlet weak var filterPickerButton: UIButton!
     
     @IBAction func toggleCamera(_ sender: UIButton) {
         do {
-            try cameraController.switchCamera()
+            try cameraManager.switchCamera()
         }
         catch {
             print(error)
         }
 
-        switch cameraController.currentCameraPosition {
+        switch cameraManager.currentCameraPosition {
         case .some(.front):
             toggleCameraButton.setImage(UIImage(named: "rearCameraIcon"), for: .normal)
             
@@ -37,16 +38,22 @@ class ViewController: UIViewController {
             return
         }
     }
+    
     @IBAction func toggleFlash(_ sender: UIButton) {
         do {
-            try cameraController.toggleFlash()
+            try cameraManager.toggleFlash()
         } catch { print(error) }
         
-        if cameraController.flashStatus ?? true {
+        if cameraManager.flashStatus ?? true {
             self.toggleFlashButton.setImage(UIImage(named: "flashOffIcon"), for: .normal)
         } else {
             self.toggleFlashButton.setImage(UIImage(named: "flashOnIcon"), for: .normal)
         }
+    }
+    
+    @IBAction func pickFilter(_ sender: UIButton) {
+        let filterPicker = FilterPickerViewController(nibName: "FilterPickerView", bundle: nil)
+        self.present(filterPicker, animated: true, completion: nil)
     }
     
     override var prefersStatusBarHidden: Bool { return true }
@@ -57,7 +64,7 @@ extension ViewController {
         super.viewDidLoad()
         
         func configureCameraController() {
-            cameraController.prepare(captureVideoDelegate: self) { (error) in
+            cameraManager.prepare(captureVideoDelegate: self) { (error) in
                 if let error = error {
                     print(error)
                 }
@@ -71,8 +78,13 @@ extension ViewController {
             captureButton.layer.cornerRadius = min(captureButton.frame.width, captureButton.frame.height) / 2
         }
         
+        func styleFilterPickerButton() {
+            filterPickerButton.layer.cornerRadius = filterPickerButton.frame.height / 2
+        }
+        
         configureCameraController()
         styleCaptureButton()
+        styleFilterPickerButton()
     }
 }
 
@@ -81,7 +93,7 @@ extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
         let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
         let cameraImage = CIImage(cvPixelBuffer: pixelBuffer!)
         
-        let invertColors = filterController.filter(withName: "Protanopia")
+        let invertColors = filterManager.filter(withName: "Protanopia")
         invertColors!.setValue(cameraImage, forKey: kCIInputImageKey)
         let filteredImage = UIImage(ciImage: invertColors!.value(forKey: kCIOutputImageKey) as! CIImage)
         

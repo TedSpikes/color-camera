@@ -7,19 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9F20C18222A69ABA00CD8726 /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F20C18122A69AB900CD8726 /* CameraController.swift */; };
+		9F20C18222A69ABA00CD8726 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F20C18122A69AB900CD8726 /* CameraManager.swift */; };
 		9F7F4FCA22367FB000294E0A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7F4FC922367FB000294E0A /* AppDelegate.swift */; };
 		9F7F4FCC22367FB000294E0A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7F4FCB22367FB000294E0A /* ViewController.swift */; };
 		9F7F4FCF22367FB000294E0A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F7F4FCD22367FB000294E0A /* Main.storyboard */; };
 		9F7F4FD222367FB000294E0A /* Color_Camera.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9F7F4FD022367FB000294E0A /* Color_Camera.xcdatamodeld */; };
 		9F7F4FD422367FB200294E0A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F7F4FD322367FB200294E0A /* Assets.xcassets */; };
 		9F7F4FD722367FB200294E0A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F7F4FD522367FB200294E0A /* LaunchScreen.storyboard */; };
-		9F9234F222ABF36F00A0E51E /* FilterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9234F122ABF36F00A0E51E /* FilterController.swift */; };
+		9F9234F222ABF36F00A0E51E /* FilterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9234F122ABF36F00A0E51E /* FilterManager.swift */; };
 		9F9234F422ABF65300A0E51E /* CustomCIKernels.metal in Sources */ = {isa = PBXBuildFile; fileRef = 9F9234F322ABF65300A0E51E /* CustomCIKernels.metal */; };
+		9FECA45922AD257800B157D7 /* FilterPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FECA45822AD257800B157D7 /* FilterPickerView.xib */; };
+		9FECA45B22AD25AC00B157D7 /* FilterPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FECA45A22AD25AC00B157D7 /* FilterPickerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9F20C18122A69AB900CD8726 /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
+		9F20C18122A69AB900CD8726 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		9F7F4FC622367FB000294E0A /* Color Camera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Color Camera.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F7F4FC922367FB000294E0A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F7F4FCB22367FB000294E0A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -28,8 +30,10 @@
 		9F7F4FD322367FB200294E0A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9F7F4FD622367FB200294E0A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9F7F4FD822367FB200294E0A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9F9234F122ABF36F00A0E51E /* FilterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterController.swift; sourceTree = "<group>"; };
+		9F9234F122ABF36F00A0E51E /* FilterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterManager.swift; sourceTree = "<group>"; };
 		9F9234F322ABF65300A0E51E /* CustomCIKernels.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = CustomCIKernels.metal; sourceTree = "<group>"; };
+		9FECA45822AD257800B157D7 /* FilterPickerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterPickerView.xib; sourceTree = "<group>"; };
+		9FECA45A22AD25AC00B157D7 /* FilterPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPickerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,13 +69,15 @@
 				9F9234F322ABF65300A0E51E /* CustomCIKernels.metal */,
 				9F7F4FD822367FB200294E0A /* Info.plist */,
 				9F7F4FC922367FB000294E0A /* AppDelegate.swift */,
-				9F20C18122A69AB900CD8726 /* CameraController.swift */,
-				9F9234F122ABF36F00A0E51E /* FilterController.swift */,
+				9F20C18122A69AB900CD8726 /* CameraManager.swift */,
+				9F9234F122ABF36F00A0E51E /* FilterManager.swift */,
 				9F7F4FCB22367FB000294E0A /* ViewController.swift */,
 				9F7F4FD322367FB200294E0A /* Assets.xcassets */,
 				9F7F4FD022367FB000294E0A /* Color_Camera.xcdatamodeld */,
 				9F7F4FD522367FB200294E0A /* LaunchScreen.storyboard */,
 				9F7F4FCD22367FB000294E0A /* Main.storyboard */,
+				9FECA45822AD257800B157D7 /* FilterPickerView.xib */,
+				9FECA45A22AD25AC00B157D7 /* FilterPickerViewController.swift */,
 			);
 			path = "Color Camera";
 			sourceTree = "<group>";
@@ -135,6 +141,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FECA45922AD257800B157D7 /* FilterPickerView.xib in Resources */,
 				9F7F4FD722367FB200294E0A /* LaunchScreen.storyboard in Resources */,
 				9F7F4FD422367FB200294E0A /* Assets.xcassets in Resources */,
 				9F7F4FCF22367FB000294E0A /* Main.storyboard in Resources */,
@@ -148,12 +155,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F9234F222ABF36F00A0E51E /* FilterController.swift in Sources */,
+				9F9234F222ABF36F00A0E51E /* FilterManager.swift in Sources */,
 				9F7F4FCC22367FB000294E0A /* ViewController.swift in Sources */,
 				9F9234F422ABF65300A0E51E /* CustomCIKernels.metal in Sources */,
 				9F7F4FCA22367FB000294E0A /* AppDelegate.swift in Sources */,
-				9F20C18222A69ABA00CD8726 /* CameraController.swift in Sources */,
+				9F20C18222A69ABA00CD8726 /* CameraManager.swift in Sources */,
 				9F7F4FD222367FB000294E0A /* Color_Camera.xcdatamodeld in Sources */,
+				9FECA45B22AD25AC00B157D7 /* FilterPickerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
