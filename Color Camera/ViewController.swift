@@ -57,6 +57,8 @@ class ViewController: UIViewController {
     }
     
     override var prefersStatusBarHidden: Bool { return true }
+    
+    var activeFilter: CIFilter?
 }
 
 extension ViewController {
@@ -82,21 +84,38 @@ extension ViewController {
             filterPickerButton.layer.cornerRadius = filterPickerButton.frame.height / 2
         }
         
+        try! self.setActiveFilter(withName: "Protanopia")  // Guaranteed to have "Protanopia".
         configureCameraController()
         styleCaptureButton()
         styleFilterPickerButton()
     }
 }
 
-extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
+extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate, ViewportViewController {
+    func setActiveFilter(withName name: String) throws {
+        let filterManager = FilterManager()
+        if let filter = filterManager.filter(withName: name) {
+            self.activeFilter = filter
+            print("Switched filter to \(name).")
+        } else {
+            fatalError("Couldn't find filter with name \(name)!")
+        }
+    }
+    
+    func getFilteredImage(fromCIImage image: CIImage) -> UIImage? {
+        guard let filter = self.activeFilter else {
+            return nil
+        }
+        
+        filter.setValue(image, forKey: kCIInputImageKey)
+        return UIImage(ciImage: filter.value(forKey: kCIOutputImageKey) as! CIImage)
+    }
+    
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
         let cameraImage = CIImage(cvPixelBuffer: pixelBuffer!)
         
-        let invertColors = filterManager.filter(withName: "Protanopia")
-        invertColors!.setValue(cameraImage, forKey: kCIInputImageKey)
-        let filteredImage = UIImage(ciImage: invertColors!.value(forKey: kCIOutputImageKey) as! CIImage)
-        
+        let filteredImage = self.getFilteredImage(fromCIImage: cameraImage) ?? UIImage(ciImage: cameraImage)
         DispatchQueue.main.async {
             self.filteredImageView.image = filteredImage
         }
@@ -105,4 +124,8 @@ extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         
     }
+}
+
+protocol ViewportViewController {
+    func setActiveFilter(withName name: String) throws
 }

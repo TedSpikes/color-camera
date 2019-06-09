@@ -22,6 +22,8 @@ class FilterManager: CIFilterConstructor {
         switch name {
         case "Protanopia":
             return protanopiaFilter()
+        case "Deuteranopia":
+            return deuteranopiaFilter()
         default:
             return nil
         }
@@ -57,12 +59,52 @@ class FilterManager: CIFilterConstructor {
             CIFilter.registerName("Protanopia", constructor: FilterManager(), classAttributes: attributes)
         }
         
-        // MARK: I/O
         @objc dynamic var inputImage: CIImage?
         override var outputImage: CIImage? {
             if let input = inputImage {
                 let src = CISampler(image: input)
                 return self.protanopiaKernel?.apply(extent: input.extent, roiCallback: {return $1}, arguments: [src])
+            } else {
+                return nil
+            }
+        }
+    }
+    
+    class deuteranopiaFilter: CIFilter {
+        var deuteranopiaKernel: CIKernel?
+        
+        override var name: String {
+            get {
+                return "deuteranopia"
+            }
+            set {}
+        }
+        
+        override init() {
+            super.init()
+            guard let url = Bundle.main.url(forResource: "default", withExtension: "metallib"),
+                let data = try? Data(contentsOf: url)
+                else { fatalError("Unable to get metallib") }
+            
+            guard let deuteranopiaKernel: CIColorKernel = try? CIColorKernel(functionName: "deuteranopia", fromMetalLibraryData: data) else { fatalError("Couldn't create kernel \(self.name)") }
+            self.deuteranopiaKernel = deuteranopiaKernel
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            super.init(coder: aDecoder)
+        }
+        
+        override class func registerName(_ name: String,
+                                         constructor anObject: CIFilterConstructor,
+                                         classAttributes attributes: [String : Any] = [:]) {
+            CIFilter.registerName("Deuteranopia", constructor: FilterManager(), classAttributes: attributes)
+        }
+        
+        @objc dynamic var inputImage: CIImage?
+        override var outputImage: CIImage? {
+            if let input = inputImage {
+                let src = CISampler(image: input)
+                return self.deuteranopiaKernel?.apply(extent: input.extent, roiCallback: {return $1}, arguments: [src])
             } else {
                 return nil
             }

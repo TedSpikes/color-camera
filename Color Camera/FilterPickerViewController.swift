@@ -9,6 +9,8 @@
 import UIKit
 
 class FilterPickerViewController: UIViewController {
+    let filters:[String] = ["Protanopia", "Deuteranopia"]
+    
     @IBOutlet weak var tableView: UITableView!
     
     @IBAction func closeModal(_ sender: UIBarButtonItem) {
@@ -23,18 +25,29 @@ class FilterPickerViewController: UIViewController {
     }
 }
 
-extension FilterPickerViewController: UITableViewDelegate, UITableViewDataSource {
+extension FilterPickerViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let filterName = self.tableView.cellForRow(at: indexPath)?.textLabel?.text
+        let presenter = self.presentingViewController as! ViewportViewController
+        do {
+            try presenter.setActiveFilter(withName: filterName!)
+        } catch {
+            print(error)
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension FilterPickerViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 12
+        return self.filters.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .value1, reuseIdentifier: "FilterPickerCell")
-        cell.textLabel?.text = "Test"
+        cell.textLabel?.text = self.filters[indexPath.row]
         cell.detailTextLabel?.text = "Detail"
         
         return cell
     }
-    
-    
 }
