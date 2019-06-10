@@ -71,13 +71,13 @@
 				9F7F4FC922367FB000294E0A /* AppDelegate.swift */,
 				9F20C18122A69AB900CD8726 /* CameraManager.swift */,
 				9F9234F122ABF36F00A0E51E /* FilterManager.swift */,
+				9FECA45A22AD25AC00B157D7 /* FilterPickerViewController.swift */,
 				9F7F4FCB22367FB000294E0A /* ViewController.swift */,
 				9F7F4FD322367FB200294E0A /* Assets.xcassets */,
+				9FECA45822AD257800B157D7 /* FilterPickerView.xib */,
 				9F7F4FD022367FB000294E0A /* Color_Camera.xcdatamodeld */,
 				9F7F4FD522367FB200294E0A /* LaunchScreen.storyboard */,
 				9F7F4FCD22367FB000294E0A /* Main.storyboard */,
-				9FECA45822AD257800B157D7 /* FilterPickerView.xib */,
-				9FECA45A22AD25AC00B157D7 /* FilterPickerViewController.swift */,
 			);
 			path = "Color Camera";
 			sourceTree = "<group>";

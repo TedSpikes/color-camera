@@ -108,7 +108,8 @@ extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate, Viewport
         }
         
         filter.setValue(image, forKey: kCIInputImageKey)
-        return UIImage(ciImage: filter.value(forKey: kCIOutputImageKey) as! CIImage)
+        let result = UIImage(ciImage: filter.value(forKey: kCIOutputImageKey) as! CIImage)
+        return result
     }
     
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {

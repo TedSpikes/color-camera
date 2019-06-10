@@ -9,7 +9,17 @@
 import UIKit
 
 class FilterPickerViewController: UIViewController {
-    let filters:[String] = ["Protanopia", "Deuteranopia"]
+    let filters:[String] = [
+        "Normal",
+        "Protanopia",
+        "Protanomaly",
+        "Deuteranopia",
+        "Deuteranomaly",
+        "Tritanopia",
+        "Tritanomaly",
+        "Achromatopsia",
+        "Achromatomaly"
+    ]
     
     @IBOutlet weak var tableView: UITableView!
     
