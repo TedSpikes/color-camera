@@ -13,6 +13,9 @@ class ViewController: UIViewController {
     let cameraManager = CameraManager()
     let filterManager = FilterManager()
     
+    override var prefersStatusBarHidden: Bool { return true }
+    var activeFilter: FilterManager.VisionFilter?
+    
     @IBOutlet weak var filteredImageView: UIImageView!
     @IBOutlet weak var captureButton: UIButton!
     @IBOutlet weak var toggleCameraButton: UIButton!
@@ -55,12 +58,9 @@ class ViewController: UIViewController {
         let filterPicker = FilterPickerViewController(nibName: "FilterPickerView", bundle: nil)
         self.present(filterPicker, animated: true, completion: nil)
     }
-    
-    override var prefersStatusBarHidden: Bool { return true }
-    
-    var activeFilter: CIFilter?
 }
 
+// MARK: The setup.
 extension ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,23 +84,32 @@ extension ViewController {
             filterPickerButton.layer.cornerRadius = filterPickerButton.frame.height / 2
         }
         
-        try! self.setActiveFilter(withName: "Protanopia")  // Guaranteed to have "Protanopia".
+        self.setUpFilter(name: "Protanopia")  // TODO: Remember last used.
         configureCameraController()
         styleCaptureButton()
         styleFilterPickerButton()
     }
 }
 
-extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate, ViewportViewController {
-    func setActiveFilter(withName name: String) throws {
-        let filterManager = FilterManager()
-        if let filter = filterManager.filter(withName: name) {
-            self.activeFilter = filter
-            print("Switched filter to \(name).")
+// TODO: Create and switch filters extension.
+extension ViewController: ViewportViewController {
+    func setUpFilter(name: String) {
+        let filter = self.filterManager.filter(withName: name) as! FilterManager.VisionFilter
+        self.activeFilter = filter
+    }
+    
+    func changeFilterType(to name: String) throws {
+        if let filter = self.activeFilter, let colors = self.filterManager.colors(for: name) {
+            filter.colors = colors
+            print("Selected filter \(name).")
         } else {
             fatalError("Couldn't find filter with name \(name)!")
         }
     }
+}
+
+// MARK: Receive, process, and display the camera image.
+extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
     
     func getFilteredImage(fromCIImage image: CIImage) -> UIImage? {
         guard let filter = self.activeFilter else {
@@ -108,6 +117,8 @@ extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate, Viewport
         }
         
         filter.setValue(image, forKey: kCIInputImageKey)
+        let outputImage = filter.value(forKey: kCIOutputImageKey)
+        assert(type(of: outputImage) == type(of: CIImage(color: .blue))) // TODO: Remove when fixed Metal bug
         let result = UIImage(ciImage: filter.value(forKey: kCIOutputImageKey) as! CIImage)
         return result
     }
@@ -127,6 +138,8 @@ extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate, Viewport
     }
 }
 
+// TODO: Capture images to Camera Roll.
+
 protocol ViewportViewController {
-    func setActiveFilter(withName name: String) throws
+    func changeFilterType(to name: String) throws
 }

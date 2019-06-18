@@ -40,7 +40,7 @@ extension FilterPickerViewController: UITableViewDelegate {
         let filterName = self.tableView.cellForRow(at: indexPath)?.textLabel?.text
         let presenter = self.presentingViewController as! ViewportViewController
         do {
-            try presenter.setActiveFilter(withName: filterName!)
+            try presenter.changeFilterType(to: filterName!)
         } catch {
             print(error)
         }

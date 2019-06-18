@@ -12,10 +12,10 @@ using namespace metal;
 #include <CoreImage/CoreImage.h>
 
 extern "C" { namespace coreimage {
-    float4 vision(sample_t s, float3 r, float3 g, float3 b) {
-        float r_new = s.r * r.r + s.g * r.g + s.b * r.b;
-        float g_new = s.r * g.r + s.g * g.g + s.b * g.b;
-        float b_new = s.r * b.r + s.g * b.g + s.b * b.b;
+    float4 vision(sample_t s, float3 red, float3 green, float3 blue) {
+        float r_new = s.r * red.x + s.g * red.y + s.b * red.z;
+        float g_new = s.r * green.x + s.g * green.y + s.b * green.z;
+        float b_new = s.r * blue.x + s.g * blue.y + s.b * blue.z;
         
         return float4(r_new, g_new, b_new, s.a);
     }
