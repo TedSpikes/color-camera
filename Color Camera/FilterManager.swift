@@ -12,8 +12,8 @@ import CoreImage
 class FilterManager: CIFilterConstructor {
     init() {}
     
-    func colors(for filter: String) -> [[Double]]? {
-        let filter_library: [String: [[Double]]] = [
+    func colors(for filter: String) -> [[Float]]? {
+        let filter_library: [String: [[Float]]] = [
             "Normal": [[100.0, 0, 0], [0, 100.0, 0], [0, 100.0, 0]],
             "Protanopia": [[56.667, 43.333, 0], [55.833, 44.167, 0], [0, 24.167, 75.833]],
             "Protanomaly": [[81.667, 18.333, 0], [33.333, 66.667, 0], [0, 12.5, 87.5]],
@@ -40,7 +40,7 @@ class FilterManager: CIFilterConstructor {
     
     class VisionFilter: CIFilter {
         var kernel: CIKernel?
-        var colors: [[Double]]?
+        var colors: [[Float]]?
         
         override init() {
             super.init()
@@ -74,8 +74,11 @@ class FilterManager: CIFilterConstructor {
                 fatalError("Empty colors set!")
             }
             let src = CISampler(image: input)
-            return self.kernel?.apply(extent: input.extent, roiCallback: {return $1}, arguments: [src, colors[0],
-                                                                                                  colors[1], colors[2]])
+            return self.kernel?.apply(extent: input.extent, roiCallback: {return $1},
+                                      arguments: [src, colors[0][0], colors[0][1], colors[0][2],
+                                                       colors[1][0], colors[1][1], colors[1][2],
+                                                       colors[2][0], colors[2][1], colors[2][2]]
+            )
         }
     }
 }

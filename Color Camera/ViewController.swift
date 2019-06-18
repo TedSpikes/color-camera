@@ -117,8 +117,6 @@ extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
         }
         
         filter.setValue(image, forKey: kCIInputImageKey)
-        let outputImage = filter.value(forKey: kCIOutputImageKey)
-        assert(type(of: outputImage) == type(of: CIImage(color: .blue))) // TODO: Remove when fixed Metal bug
         let result = UIImage(ciImage: filter.value(forKey: kCIOutputImageKey) as! CIImage)
         return result
     }
