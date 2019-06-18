@@ -91,7 +91,7 @@ extension ViewController {
     }
 }
 
-// TODO: Create and switch filters extension.
+// MARK: Create the filter and switch its type.
 extension ViewController: ViewportViewController {
     func setUpFilter(name: String) {
         let filter = self.filterManager.filter(withName: name) as! FilterManager.VisionFilter
