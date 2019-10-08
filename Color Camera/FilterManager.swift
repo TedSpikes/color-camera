@@ -13,8 +13,8 @@ class FilterManager: CIFilterConstructor {
     init() {}
     
     func colors(for filter: String) -> [[Float]]? {
-        let filter_library: [String: [[Float]]] = [
-            "Normal": [[100.0, 0, 0], [0, 100.0, 0], [0, 100.0, 0]],
+        let filterLibrary: [String: [[Float]]] = [
+            "Normal": [[100.0, 0, 0], [0, 100.0, 0], [0, 0, 100.0]],
             "Protanopia": [[56.667, 43.333, 0], [55.833, 44.167, 0], [0, 24.167, 75.833]],
             "Protanomaly": [[81.667, 18.333, 0], [33.333, 66.667, 0], [0, 12.5, 87.5]],
             "Deuteranopia": [[62.5, 37.5, 0], [70, 30, 0], [0, 30, 70]],
@@ -24,61 +24,60 @@ class FilterManager: CIFilterConstructor {
             "Achromatopsia": [[29.9, 58.7, 11.4], [29.9, 58.7, 11.4], [29.9, 58.7, 11.4]],
             "Achromatomaly": [[61.8, 32, 6.2], [16.3, 77.5, 6.2], [16.3, 32.0, 51.6]]
         ]
-        
-        return filter_library[filter]
+        return filterLibrary[filter]
     }
     
     func filter(withName name: String) -> CIFilter? {
-        let filter = VisionFilter()
         if let colors = self.colors(for: name) {
-            filter.colors = colors
+            return VisionFilter(colors)
         } else {
             return nil
         }
-        return filter
+    }
+}
+
+
+class VisionFilter: CIFilter {
+    var kernel: CIKernel?
+    var colors: [[Float]]?
+    
+    init(_ colors: [[Float]]){
+        guard let url = Bundle.main.url(forResource: "default", withExtension: "metallib"),
+            let data = try? Data(contentsOf: url)
+            else { fatalError("Unable to get metallib") }
+        guard let kernel: CIColorKernel = try? CIColorKernel(functionName: "vision", fromMetalLibraryData: data)
+            else { fatalError("Couldn't create kernel") }
+        self.kernel = kernel
+        self.colors = colors
+        super.init()
     }
     
-    class VisionFilter: CIFilter {
-        var kernel: CIKernel?
-        var colors: [[Float]]?
-        
-        override init() {
-            super.init()
-            
-            guard let url = Bundle.main.url(forResource: "default", withExtension: "metallib"),
-                let data = try? Data(contentsOf: url)
-                else { fatalError("Unable to get metallib") }
-            
-            guard let kernel: CIColorKernel = try? CIColorKernel(functionName: "vision", fromMetalLibraryData: data)
-                else { fatalError("Couldn't create kernel") }
-            
-            self.kernel = kernel
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    override class func registerName(_ name: String,
+                                     constructor anObject: CIFilterConstructor,
+                                     classAttributes attributes: [String : Any] = [:]) {
+        CIFilter.registerName("Vision", constructor: FilterManager(), classAttributes: attributes)
+    }
+    
+    @objc dynamic var inputImage: CIImage?
+    override var outputImage: CIImage? {
+        guard let input = inputImage else {
+            fatalError("No input image!")
         }
-        
-        required init?(coder aDecoder: NSCoder) {
-            super.init(coder: aDecoder)
+        guard let kernel = self.kernel else {
+            fatalError("No kernel set!")
         }
-        
-        override class func registerName(_ name: String,
-                                         constructor anObject: CIFilterConstructor,
-                                         classAttributes attributes: [String : Any] = [:]) {
-            CIFilter.registerName("Vision", constructor: FilterManager(), classAttributes: attributes)
+        guard let colors = self.colors else {
+            fatalError("Empty colors set!")
         }
-        
-        @objc dynamic var inputImage: CIImage?
-        override var outputImage: CIImage? {
-            guard let input = inputImage else {
-                fatalError("No input image!")
-            }
-            guard let colors = self.colors else {
-                fatalError("Empty colors set!")
-            }
-            let src = CISampler(image: input)
-            return self.kernel?.apply(extent: input.extent, roiCallback: {return $1},
-                                      arguments: [src, colors[0][0], colors[0][1], colors[0][2],
-                                                       colors[1][0], colors[1][1], colors[1][2],
-                                                       colors[2][0], colors[2][1], colors[2][2]]
-            )
-        }
+        let src = CISampler(image: input)
+        return kernel.apply(extent: input.extent, roiCallback: {return $1},
+                                  arguments: [src, colors[0][0], colors[0][1], colors[0][2],
+                                                   colors[1][0], colors[1][1], colors[1][2],
+                                                   colors[2][0], colors[2][1], colors[2][2]]
+        )
     }
 }

@@ -22,9 +22,33 @@ class FilterPickerViewController: UIViewController {
     ]
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var transparentSwitch: UISwitch!
+    @IBOutlet weak var navBar: UINavigationBar!
     
     @IBAction func closeModal(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func toggleTransparent(_ sender: Any) {
+        if self.transparentSwitch.isOn {
+            self.view.backgroundColor = UIColor.clear
+            self.tableView.backgroundColor = UIColor.clear
+            self.navBar.backgroundColor = UIColor.clear
+            self.navBar.barTintColor = UIColor.clear
+            self.navBar.isTranslucent = true
+            for cell in self.tableView.visibleCells {
+                cell.backgroundColor = UIColor.clear
+            }
+        } else {
+            self.view.backgroundColor = UIColor.white
+            self.tableView.backgroundColor = UIColor.white
+            self.navBar.backgroundColor = UIColor.white
+            self.navBar.barTintColor = UIColor.white
+            self.navBar.isTranslucent = true
+            for cell in self.tableView.visibleCells {
+                cell.backgroundColor = UIColor.white
+            }
+        }
     }
     
     override func viewDidLoad() {
@@ -33,6 +57,7 @@ class FilterPickerViewController: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
     }
+    
 }
 
 extension FilterPickerViewController: UITableViewDelegate {

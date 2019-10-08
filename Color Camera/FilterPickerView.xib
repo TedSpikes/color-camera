@@ -12,7 +12,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FilterPickerViewController" customModule="Color_Camera" customModuleProvider="target">
             <connections>
+                <outlet property="navBar" destination="3vf-B2-8zC" id="n1a-7h-Kzd"/>
                 <outlet property="tableView" destination="tlg-x0-CN0" id="zaK-8i-jcc"/>
+                <outlet property="transparentSwitch" destination="QDg-Zr-4gj" id="Prc-pE-iTW"/>
                 <outlet property="view" destination="vjD-Q8-6xU" id="rMD-w5-din"/>
             </connections>
         </placeholder>
@@ -22,7 +24,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tlg-x0-CN0">
-                    <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                    <rect key="frame" x="0.0" y="88" width="414" height="727"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
                 <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3vf-B2-8zC">
@@ -40,14 +42,42 @@
                         </navigationItem>
                     </items>
                 </navigationBar>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LaB-Zv-lok">
+                    <rect key="frame" x="0.0" y="815" width="414" height="47"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transparent" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kaj-jN-Ax6">
+                            <rect key="frame" x="24" y="9" width="128" height="29"/>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="QDg-Zr-4gj">
+                            <rect key="frame" x="341" y="8" width="51" height="31"/>
+                            <connections>
+                                <action selector="toggleTransparent:" destination="-1" eventType="valueChanged" id="e9t-AP-9sX"/>
+                            </connections>
+                        </switch>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Kaj-jN-Ax6" firstAttribute="leading" secondItem="LaB-Zv-lok" secondAttribute="leading" constant="24" id="A4r-xK-eAJ"/>
+                        <constraint firstAttribute="bottom" secondItem="QDg-Zr-4gj" secondAttribute="bottom" constant="8" id="Ntr-YY-c92"/>
+                        <constraint firstItem="QDg-Zr-4gj" firstAttribute="top" secondItem="LaB-Zv-lok" secondAttribute="top" constant="8" id="rrg-sg-lSg"/>
+                        <constraint firstItem="Kaj-jN-Ax6" firstAttribute="centerY" secondItem="QDg-Zr-4gj" secondAttribute="centerY" id="vJn-hF-6it"/>
+                        <constraint firstAttribute="trailing" secondItem="QDg-Zr-4gj" secondAttribute="trailing" constant="24" id="vpu-Am-aJO"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="LaB-Zv-lok" firstAttribute="leading" secondItem="k9G-S1-T1x" secondAttribute="leading" id="4rH-C9-4NY"/>
                 <constraint firstItem="3vf-B2-8zC" firstAttribute="trailing" secondItem="k9G-S1-T1x" secondAttribute="trailing" id="Jqn-xb-BiT"/>
-                <constraint firstItem="k9G-S1-T1x" firstAttribute="bottom" secondItem="tlg-x0-CN0" secondAttribute="bottom" id="KPi-AV-lPN"/>
+                <constraint firstItem="LaB-Zv-lok" firstAttribute="top" secondItem="tlg-x0-CN0" secondAttribute="bottom" id="KPi-AV-lPN"/>
+                <constraint firstItem="k9G-S1-T1x" firstAttribute="trailing" secondItem="LaB-Zv-lok" secondAttribute="trailing" id="NmO-c2-QBw"/>
                 <constraint firstItem="tlg-x0-CN0" firstAttribute="leading" secondItem="k9G-S1-T1x" secondAttribute="leading" id="Q4N-be-NH3"/>
                 <constraint firstItem="3vf-B2-8zC" firstAttribute="leading" secondItem="k9G-S1-T1x" secondAttribute="leading" id="YPG-L1-ycY"/>
                 <constraint firstItem="tlg-x0-CN0" firstAttribute="top" secondItem="3vf-B2-8zC" secondAttribute="bottom" id="g0r-zf-ZIx"/>
+                <constraint firstItem="LaB-Zv-lok" firstAttribute="bottom" secondItem="k9G-S1-T1x" secondAttribute="bottom" id="hr8-g6-Uye"/>
                 <constraint firstItem="3vf-B2-8zC" firstAttribute="top" secondItem="k9G-S1-T1x" secondAttribute="top" id="knu-Ck-xSd"/>
                 <constraint firstItem="k9G-S1-T1x" firstAttribute="trailing" secondItem="tlg-x0-CN0" secondAttribute="trailing" id="lAv-R6-pF4"/>
             </constraints>

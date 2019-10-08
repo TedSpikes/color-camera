@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     let filterManager = FilterManager()
     
     override var prefersStatusBarHidden: Bool { return true }
-    var activeFilter: FilterManager.VisionFilter?
+    var activeFilter: VisionFilter?
     
     @IBOutlet weak var filteredImageView: UIImageView!
     @IBOutlet weak var captureButton: UIButton!
@@ -57,6 +57,11 @@ class ViewController: UIViewController {
     @IBAction func pickFilter(_ sender: UIButton) {
         let filterPicker = FilterPickerViewController(nibName: "FilterPickerView", bundle: nil)
         self.present(filterPicker, animated: true, completion: nil)
+        
+        
+//        let window = UIApplication.shared.keyWindow!
+//        filterPicker.view.frame = window.frame
+//        window.addSubview(filterPicker.view)
     }
 }
 
@@ -94,7 +99,7 @@ extension ViewController {
 // MARK: Create the filter and switch its type.
 extension ViewController: ViewportViewController {
     func setUpFilter(name: String) {
-        let filter = self.filterManager.filter(withName: name) as! FilterManager.VisionFilter
+        let filter = self.filterManager.filter(withName: name) as! VisionFilter
         self.activeFilter = filter
     }
     
