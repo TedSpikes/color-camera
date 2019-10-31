@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="filterPickerCell" id="pQd-n0-PfD" customClass="FilterPickerCell" customModule="Color_Camera" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="115"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pQd-n0-PfD" id="bNZ-Nz-exB">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="115"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Tx-uC-Pvq">
+                        <rect key="frame" x="12" y="12" width="48" height="21"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" text="Description" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ylQ-ng-iFo">
+                        <rect key="frame" x="12" y="41" width="88" height="20.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="ylQ-ng-iFo" firstAttribute="top" secondItem="4Tx-uC-Pvq" secondAttribute="bottom" constant="8" id="1N7-4F-4sZ"/>
+                    <constraint firstItem="4Tx-uC-Pvq" firstAttribute="top" secondItem="bNZ-Nz-exB" secondAttribute="top" constant="12" id="6eF-Bk-DbA"/>
+                    <constraint firstItem="ylQ-ng-iFo" firstAttribute="leading" secondItem="bNZ-Nz-exB" secondAttribute="leading" constant="12" id="YBp-Zl-o1T"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ylQ-ng-iFo" secondAttribute="trailing" constant="12" id="ibU-Yt-tUg"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ylQ-ng-iFo" secondAttribute="bottom" constant="12" id="nyn-yy-mL4"/>
+                    <constraint firstItem="4Tx-uC-Pvq" firstAttribute="leading" secondItem="bNZ-Nz-exB" secondAttribute="leading" constant="12" id="oHv-cT-LmW"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="descriptionLabel" destination="ylQ-ng-iFo" id="kFD-20-mHW"/>
+                <outlet property="nameLabel" destination="4Tx-uC-Pvq" id="RrL-HW-Mi4"/>
+            </connections>
+            <point key="canvasLocation" x="-55.072463768115945" y="94.754464285714278"/>
+        </tableViewCell>
+    </objects>
+</document>

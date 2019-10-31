@@ -16,6 +16,8 @@
 		9F7F4FD722367FB200294E0A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F7F4FD522367FB200294E0A /* LaunchScreen.storyboard */; };
 		9F9234F222ABF36F00A0E51E /* FilterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9234F122ABF36F00A0E51E /* FilterManager.swift */; };
 		9F9234F422ABF65300A0E51E /* CustomCIKernels.metal in Sources */ = {isa = PBXBuildFile; fileRef = 9F9234F322ABF65300A0E51E /* CustomCIKernels.metal */; };
+		9FC7E523236B090B00E97B39 /* FilterPickerCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FC7E522236B090B00E97B39 /* FilterPickerCellView.xib */; };
+		9FC7E525236B0A9100E97B39 /* FilterPickerCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC7E524236B0A9100E97B39 /* FilterPickerCellController.swift */; };
 		9FECA45922AD257800B157D7 /* FilterPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FECA45822AD257800B157D7 /* FilterPickerView.xib */; };
 		9FECA45B22AD25AC00B157D7 /* FilterPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FECA45A22AD25AC00B157D7 /* FilterPickerViewController.swift */; };
 /* End PBXBuildFile section */
@@ -32,6 +34,8 @@
 		9F7F4FD822367FB200294E0A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9F9234F122ABF36F00A0E51E /* FilterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterManager.swift; sourceTree = "<group>"; };
 		9F9234F322ABF65300A0E51E /* CustomCIKernels.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = CustomCIKernels.metal; sourceTree = "<group>"; };
+		9FC7E522236B090B00E97B39 /* FilterPickerCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterPickerCellView.xib; sourceTree = "<group>"; };
+		9FC7E524236B0A9100E97B39 /* FilterPickerCellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPickerCellController.swift; sourceTree = "<group>"; };
 		9FECA45822AD257800B157D7 /* FilterPickerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterPickerView.xib; sourceTree = "<group>"; };
 		9FECA45A22AD25AC00B157D7 /* FilterPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPickerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -78,6 +82,8 @@
 				9F7F4FD022367FB000294E0A /* Color_Camera.xcdatamodeld */,
 				9F7F4FD522367FB200294E0A /* LaunchScreen.storyboard */,
 				9F7F4FCD22367FB000294E0A /* Main.storyboard */,
+				9FC7E522236B090B00E97B39 /* FilterPickerCellView.xib */,
+				9FC7E524236B0A9100E97B39 /* FilterPickerCellController.swift */,
 			);
 			path = "Color Camera";
 			sourceTree = "<group>";
@@ -144,6 +150,7 @@
 				9FECA45922AD257800B157D7 /* FilterPickerView.xib in Resources */,
 				9F7F4FD722367FB200294E0A /* LaunchScreen.storyboard in Resources */,
 				9F7F4FD422367FB200294E0A /* Assets.xcassets in Resources */,
+				9FC7E523236B090B00E97B39 /* FilterPickerCellView.xib in Resources */,
 				9F7F4FCF22367FB000294E0A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -161,6 +168,7 @@
 				9F7F4FCA22367FB000294E0A /* AppDelegate.swift in Sources */,
 				9F20C18222A69ABA00CD8726 /* CameraManager.swift in Sources */,
 				9F7F4FD222367FB000294E0A /* Color_Camera.xcdatamodeld in Sources */,
+				9FC7E525236B0A9100E97B39 /* FilterPickerCellController.swift in Sources */,
 				9FECA45B22AD25AC00B157D7 /* FilterPickerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
