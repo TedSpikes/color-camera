@@ -2,8 +2,8 @@
 //  CustomCIKernels.metal
 //  Color Camera
 //
-//  Created by Fedor on 6/8/19.
-//  Copyright © 2019 Fedor Kostylev. All rights reserved.
+//  Created by Ted on 6/8/19.
+//  Copyright © 2019 Ted Kostylev. All rights reserved.
 //
 
 #include <metal_stdlib>

@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  Color Camera
 //
-//  Created by Fedor on 3/11/19.
-//  Copyright © 2019 Fedor Kostylev. All rights reserved.
+//  Created by Ted on 3/11/19.
+//  Copyright © 2019 Ted Kostylev. All rights reserved.
 //
 
 import UIKit

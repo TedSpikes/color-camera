@@ -2,14 +2,14 @@
 //  ViewController.swift
 //  Color Camera
 //
-//  Created by Fedor on 3/11/19.
-//  Copyright © 2019 Fedor Kostylev. All rights reserved.
+//  Created by Ted on 3/11/19.
+//  Copyright © 2019 Ted Kostylev. All rights reserved.
 //
 
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController {
+class ViewportViewController: UIViewController {
     let cameraManager = CameraManager()
     let filterManager = FilterManager()
     
@@ -66,7 +66,7 @@ class ViewController: UIViewController {
 }
 
 // MARK: The setup.
-extension ViewController {
+extension ViewportViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -89,33 +89,23 @@ extension ViewController {
             filterPickerButton.layer.cornerRadius = filterPickerButton.frame.height / 2
         }
         
-        self.setUpFilter(name: "Protanopia")  // TODO: Remember last used.
+        self.switchToFilter(name: "Protanopia")  // TODO: Remember last used.
         configureCameraController()
         styleCaptureButton()
         styleFilterPickerButton()
     }
 }
 
-// MARK: Create the filter and switch its type.
-extension ViewController: ViewportViewController {
-    func setUpFilter(name: String) {
+/// Create the filter and switch to it.
+extension ViewportViewController {
+    func switchToFilter(name: String) {
         let filter = self.filterManager.filter(withName: name) as! VisionFilter
         self.activeFilter = filter
     }
-    
-    func changeFilterType(to name: String) throws {
-        if let filter = self.activeFilter, let colors = self.filterManager.colors(for: name) {
-            filter.colors = colors
-            print("Selected filter \(name).")
-        } else {
-            fatalError("Couldn't find filter with name \(name)!")
-        }
-    }
 }
 
-// MARK: Receive, process, and display the camera image.
-extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
-    
+/// Receive, process, and display the camera image.
+extension ViewportViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
     func getFilteredImage(fromCIImage image: CIImage) -> UIImage? {
         guard let filter = self.activeFilter else {
             return nil
@@ -142,7 +132,3 @@ extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
 }
 
 // TODO: Capture images to Camera Roll.
-
-protocol ViewportViewController {
-    func changeFilterType(to name: String) throws
-}
