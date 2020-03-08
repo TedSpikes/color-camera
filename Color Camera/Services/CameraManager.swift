@@ -90,7 +90,7 @@ extension CameraManager {
             if captureSession.canAddOutput(self.videoOutput!) { captureSession.addOutput(self.videoOutput!) }
             for connection in self.videoOutput!.connections {
                 if connection.isVideoOrientationSupported {
-                    connection.videoOrientation = .portrait  // TODO: Awful hack?
+                    connection.videoOrientation = .portrait
                 }
             }
         }
@@ -169,7 +169,7 @@ extension CameraManager {
         }
         for connection in self.videoOutput!.connections {
             if connection.isVideoOrientationSupported {
-                connection.videoOrientation = .portrait  // TODO: Awful hack?
+                connection.videoOrientation = .portrait
             }
         }
         captureSession.commitConfiguration()

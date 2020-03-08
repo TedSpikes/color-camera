@@ -6,6 +6,8 @@
 //  Copyright © 2019 Ted Kostylev. All rights reserved.
 //
 
+import Foundation
+import os.log
 import UIKit
 import CoreData
 
@@ -13,10 +15,12 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var defaults: UserDefaults?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        self.defaults = UserDefaults()
         return true
     }
 
@@ -41,6 +45,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
+//        if let defaults: UserDefaults = self.defaults {
+//            defaults.set(ViewportViewController.activeFilter)
+//        }
+//        else {
+//            os_log("No user defaults storage found!", log: .default, type: .error)
+//        }
         self.saveContext()
     }
 

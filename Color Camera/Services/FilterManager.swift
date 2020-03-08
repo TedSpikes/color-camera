@@ -30,6 +30,18 @@ struct ColorMatrix {
 }
 
 class FilterManager {
+    private let filterNames: [String] = [  // An _ordered_ list of filters
+        "Normal",
+        "Protanopia",
+        "Protanomaly",
+        "Deuteranopia",
+        "Deuteranomaly",
+        "Tritanopia",
+        "Tritanomaly",
+        "Achromatopsia",
+        "Achromatomaly"
+    ]
+    
     private let colorMatrices: [String: ColorMatrix] = [
         "Normal":        ColorMatrix(name: "Normal",
                                      redVector: ColorVector(100.0, 0, 0),
@@ -81,7 +93,7 @@ class FilterManager {
     func getColorMatrix(name: String) -> ColorMatrix? {
         return self.colorMatrices[name]
     }
-    func getFilterNames() -> [String] {Array(self.colorMatrices.keys)}
+    func getFilterNames() -> [String] {self.filterNames}
 }
 
 extension FilterManager: CIFilterConstructor {
@@ -91,7 +103,7 @@ extension FilterManager: CIFilterConstructor {
     }
 }
 
-/// The filter to be applied on the live camera feed.
+
 class VisionFilter: CIFilter {
     var kernel: CIKernel
     var matrix: ColorMatrix
@@ -117,7 +129,8 @@ class VisionFilter: CIFilter {
         self.matrix = ColorMatrix(name: "",
                                   redVector: ColorVector(0, 0, 0),
                                   greenVector: ColorVector(0, 0, 0),
-                                  blueVector: ColorVector(0, 0, 0), description: "")
+                                  blueVector: ColorVector(0, 0, 0),
+                                  description: "")
         super.init(coder: aDecoder)
     }
     

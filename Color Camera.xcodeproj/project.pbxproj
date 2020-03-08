@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		9F20C18222A69ABA00CD8726 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F20C18122A69AB900CD8726 /* CameraManager.swift */; };
 		9F7F4FCA22367FB000294E0A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7F4FC922367FB000294E0A /* AppDelegate.swift */; };
-		9F7F4FCC22367FB000294E0A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7F4FCB22367FB000294E0A /* ViewController.swift */; };
+		9F7F4FCC22367FB000294E0A /* ViewportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7F4FCB22367FB000294E0A /* ViewportViewController.swift */; };
 		9F7F4FCF22367FB000294E0A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F7F4FCD22367FB000294E0A /* Main.storyboard */; };
 		9F7F4FD222367FB000294E0A /* Color_Camera.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9F7F4FD022367FB000294E0A /* Color_Camera.xcdatamodeld */; };
 		9F7F4FD422367FB200294E0A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F7F4FD322367FB200294E0A /* Assets.xcassets */; };
@@ -26,7 +26,7 @@
 		9F20C18122A69AB900CD8726 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		9F7F4FC622367FB000294E0A /* Color Camera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Color Camera.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F7F4FC922367FB000294E0A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9F7F4FCB22367FB000294E0A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		9F7F4FCB22367FB000294E0A /* ViewportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewportViewController.swift; sourceTree = "<group>"; };
 		9F7F4FCE22367FB000294E0A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9F7F4FD122367FB000294E0A /* Color_Camera.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Color_Camera.xcdatamodel; sourceTree = "<group>"; };
 		9F7F4FD322367FB200294E0A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -70,22 +70,62 @@
 		9F7F4FC822367FB000294E0A /* Color Camera */ = {
 			isa = PBXGroup;
 			children = (
-				9F9234F322ABF65300A0E51E /* CustomCIKernels.metal */,
+				9FFC86602415825B00F7E307 /* Core */,
+				9FFC865F241581BB00F7E307 /* Services */,
+				9FFC865E2415815F00F7E307 /* Screens */,
 				9F7F4FD822367FB200294E0A /* Info.plist */,
-				9F7F4FC922367FB000294E0A /* AppDelegate.swift */,
-				9F20C18122A69AB900CD8726 /* CameraManager.swift */,
-				9F9234F122ABF36F00A0E51E /* FilterManager.swift */,
-				9FECA45A22AD25AC00B157D7 /* FilterPickerViewController.swift */,
-				9F7F4FCB22367FB000294E0A /* ViewController.swift */,
 				9F7F4FD322367FB200294E0A /* Assets.xcassets */,
-				9FECA45822AD257800B157D7 /* FilterPickerView.xib */,
 				9F7F4FD022367FB000294E0A /* Color_Camera.xcdatamodeld */,
-				9F7F4FD522367FB200294E0A /* LaunchScreen.storyboard */,
-				9F7F4FCD22367FB000294E0A /* Main.storyboard */,
-				9FC7E522236B090B00E97B39 /* FilterPickerCellView.xib */,
-				9FC7E524236B0A9100E97B39 /* FilterPickerCellController.swift */,
 			);
 			path = "Color Camera";
+			sourceTree = "<group>";
+		};
+		9FFC865E2415815F00F7E307 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				9FFC86622415826E00F7E307 /* Filter Picker */,
+				9FFC86612415826700F7E307 /* Viewport */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		9FFC865F241581BB00F7E307 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				9F20C18122A69AB900CD8726 /* CameraManager.swift */,
+				9F9234F122ABF36F00A0E51E /* FilterManager.swift */,
+				9F9234F322ABF65300A0E51E /* CustomCIKernels.metal */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		9FFC86602415825B00F7E307 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				9F7F4FC922367FB000294E0A /* AppDelegate.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		9FFC86612415826700F7E307 /* Viewport */ = {
+			isa = PBXGroup;
+			children = (
+				9F7F4FCB22367FB000294E0A /* ViewportViewController.swift */,
+				9F7F4FD522367FB200294E0A /* LaunchScreen.storyboard */,
+				9F7F4FCD22367FB000294E0A /* Main.storyboard */,
+			);
+			path = Viewport;
+			sourceTree = "<group>";
+		};
+		9FFC86622415826E00F7E307 /* Filter Picker */ = {
+			isa = PBXGroup;
+			children = (
+				9FC7E524236B0A9100E97B39 /* FilterPickerCellController.swift */,
+				9FECA45A22AD25AC00B157D7 /* FilterPickerViewController.swift */,
+				9FC7E522236B090B00E97B39 /* FilterPickerCellView.xib */,
+				9FECA45822AD257800B157D7 /* FilterPickerView.xib */,
+			);
+			path = "Filter Picker";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,7 +203,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F9234F222ABF36F00A0E51E /* FilterManager.swift in Sources */,
-				9F7F4FCC22367FB000294E0A /* ViewController.swift in Sources */,
+				9F7F4FCC22367FB000294E0A /* ViewportViewController.swift in Sources */,
 				9F9234F422ABF65300A0E51E /* CustomCIKernels.metal in Sources */,
 				9F7F4FCA22367FB000294E0A /* AppDelegate.swift in Sources */,
 				9F20C18222A69ABA00CD8726 /* CameraManager.swift in Sources */,

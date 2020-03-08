@@ -57,11 +57,6 @@ class ViewportViewController: UIViewController {
     @IBAction func pickFilter(_ sender: UIButton) {
         let filterPicker = FilterPickerViewController(nibName: "FilterPickerView", bundle: nil)
         self.present(filterPicker, animated: true, completion: nil)
-        
-        
-//        let window = UIApplication.shared.keyWindow!
-//        filterPicker.view.frame = window.frame
-//        window.addSubview(filterPicker.view)
     }
 }
 
