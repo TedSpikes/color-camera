@@ -41,12 +41,15 @@ class FilterPickerViewController: UIViewController {
 // MARK: UITableViewDelegate
 extension FilterPickerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let activeCell = self.tableView.cellForRow(at: indexPath) as? FilterPickerCell else {
-            fatalError()
-        }
-        guard let filterName: String = activeCell.nameLabel?.text else { fatalError("Time to rewrite this properly") }
-        let presenter = self.presentingViewController as! ViewportViewController
+        guard let activeCell = self.tableView.cellForRow(at: indexPath) as? FilterPickerCell else { fatalError("Didn't select a FilterPickerCell") }
+        guard let filterName = activeCell.nameLabel?.text else { fatalError("Time to rewrite this properly") }
+        let presenter  = self.presentingViewController as! ViewportViewController
         presenter.switchToFilter(name: filterName)
+        do {
+            try setUserDefault(value: filterName, forKey: .activeFilter)
+        } catch {
+            print("Unexpected error when trying to save the active filter: \(error)")
+        }
         self.dismiss(animated: true, completion: nil)
     }
 }

@@ -29,14 +29,12 @@ class ViewportViewController: UIViewController {
         catch {
             print(error)
         }
-
         switch cameraManager.currentCameraPosition {
         case .some(.front):
             toggleCameraButton.setImage(UIImage(named: "rearCameraIcon"), for: .normal)
             
         case .some(.rear):
             toggleCameraButton.setImage(UIImage(named: "frontCameraIcon"), for: .normal)
-            
         case .none:
             return
         }
@@ -46,7 +44,6 @@ class ViewportViewController: UIViewController {
         do {
             try cameraManager.toggleFlash()
         } catch { print(error) }
-        
         if cameraManager.flashStatus ?? true {
             self.toggleFlashButton.setImage(UIImage(named: "flashOffIcon"), for: .normal)
         } else {
@@ -62,32 +59,35 @@ class ViewportViewController: UIViewController {
 
 // MARK: The setup.
 extension ViewportViewController {
+    func configureCameraController() {
+        cameraManager.prepare(captureVideoDelegate: self) { (error) in
+            if let error = error {
+                print(error)
+            }
+        }
+    }
+       
+    func styleButtons() {
+        let
+        self.captureButton.setImage(<#T##image: UIImage?##UIImage?#>, for: <#T##UIControl.State#>)
+    }
+    
+    func styleFilterPickerButton() {
+        self.filterPickerButton.layer.cornerRadius = self.filterPickerButton.frame.height / 2
+    }
+    
+    func loadFilterFromStorage(defaultFilter: String = "Normal") {
+        let storedFilter = getStoredFilter()
+        self.switchToFilter(name: storedFilter ?? defaultFilter)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        func configureCameraController() {
-            cameraManager.prepare(captureVideoDelegate: self) { (error) in
-                if let error = error {
-                    print(error)
-                }
-            }
-        }
-        
-        func styleCaptureButton() {
-            captureButton.layer.borderColor = UIColor.black.cgColor
-            captureButton.layer.borderWidth = 2
-            
-            captureButton.layer.cornerRadius = min(captureButton.frame.width, captureButton.frame.height) / 2
-        }
-        
-        func styleFilterPickerButton() {
-            filterPickerButton.layer.cornerRadius = filterPickerButton.frame.height / 2
-        }
-        
-        self.switchToFilter(name: "Protanopia")  // TODO: Remember last used.
-        configureCameraController()
-        styleCaptureButton()
-        styleFilterPickerButton()
+        self.loadFilterFromStorage()
+        self.configureCameraController()
+        self.styleButtons()
+        self.styleFilterPickerButton()
     }
 }
 

@@ -20,6 +20,7 @@
 		9FC7E525236B0A9100E97B39 /* FilterPickerCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC7E524236B0A9100E97B39 /* FilterPickerCellController.swift */; };
 		9FECA45922AD257800B157D7 /* FilterPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FECA45822AD257800B157D7 /* FilterPickerView.xib */; };
 		9FECA45B22AD25AC00B157D7 /* FilterPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FECA45A22AD25AC00B157D7 /* FilterPickerViewController.swift */; };
+		9FFC86642415864D00F7E307 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC86632415864D00F7E307 /* StorageManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		9FC7E524236B0A9100E97B39 /* FilterPickerCellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPickerCellController.swift; sourceTree = "<group>"; };
 		9FECA45822AD257800B157D7 /* FilterPickerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterPickerView.xib; sourceTree = "<group>"; };
 		9FECA45A22AD25AC00B157D7 /* FilterPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPickerViewController.swift; sourceTree = "<group>"; };
+		9FFC86632415864D00F7E307 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 				9F20C18122A69AB900CD8726 /* CameraManager.swift */,
 				9F9234F122ABF36F00A0E51E /* FilterManager.swift */,
 				9F9234F322ABF65300A0E51E /* CustomCIKernels.metal */,
+				9FFC86632415864D00F7E307 /* StorageManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -205,6 +208,7 @@
 				9F9234F222ABF36F00A0E51E /* FilterManager.swift in Sources */,
 				9F7F4FCC22367FB000294E0A /* ViewportViewController.swift in Sources */,
 				9F9234F422ABF65300A0E51E /* CustomCIKernels.metal in Sources */,
+				9FFC86642415864D00F7E307 /* StorageManager.swift in Sources */,
 				9F7F4FCA22367FB000294E0A /* AppDelegate.swift in Sources */,
 				9F20C18222A69ABA00CD8726 /* CameraManager.swift in Sources */,
 				9F7F4FD222367FB000294E0A /* Color_Camera.xcdatamodeld in Sources */,

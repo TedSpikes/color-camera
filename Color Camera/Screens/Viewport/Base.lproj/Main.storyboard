@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,39 +13,52 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewportViewController" customModule="Color_Camera" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3sb-D9-RO0">
-                                <rect key="frame" x="-1" y="-1" width="602" height="602"/>
+                                <rect key="frame" x="-1" y="43" width="416" height="755"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ndO-GP-upW">
-                                <rect key="frame" x="276" y="544" width="48" height="48"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ndO-GP-upW">
+                                <rect key="frame" x="183" y="806" width="48" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="48" id="8Da-52-l5s"/>
                                     <constraint firstAttribute="height" constant="48" id="8gh-XZ-3CA"/>
                                 </constraints>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="circle" catalog="system"/>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Bl-QE-Fgn">
-                                <rect key="frame" x="492" y="518" width="100" height="100"/>
-                                <state key="normal" image="flashOnIcon"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Bl-QE-Fgn">
+                                <rect key="frame" x="358" y="806" width="48" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="6Bl-QE-Fgn" secondAttribute="height" multiplier="1:1" id="NRz-K2-BDf"/>
+                                </constraints>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="bolt" catalog="system"/>
                                 <connections>
                                     <action selector="toggleFlash:" destination="BYZ-38-t0r" eventType="touchUpInside" id="A9I-3u-WPA"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="83k-88-uzq">
-                                <rect key="frame" x="384" y="518" width="100" height="100"/>
-                                <state key="normal" image="frontCameraIcon"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="83k-88-uzq">
+                                <rect key="frame" x="302" y="806" width="48" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="83k-88-uzq" secondAttribute="height" multiplier="1:1" id="Fnv-mf-9gV"/>
+                                </constraints>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="camera.rotate" catalog="system"/>
                                 <connections>
                                     <action selector="toggleCamera:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Zxm-Ko-Gsj"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lSw-oz-mwA">
-                                <rect key="frame" x="8" y="553" width="260" height="30"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="FilterPicker">
-                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lSw-oz-mwA">
+                                <rect key="frame" x="16" y="806" width="49" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="lSw-oz-mwA" secondAttribute="height" constant="1" id="82j-AS-nS1"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="list.dash" catalog="system">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
                                     <action selector="pickFilter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XUb-ey-4DU"/>
@@ -53,18 +68,23 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="3sb-D9-RO0" secondAttribute="trailing" constant="-1" id="0Hq-Cv-B5X"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="3sb-D9-RO0" secondAttribute="bottom" constant="-1" id="6Xf-11-In3"/>
+                            <constraint firstItem="lSw-oz-mwA" firstAttribute="bottom" secondItem="ndO-GP-upW" secondAttribute="bottom" id="2Jo-2n-2K6"/>
                             <constraint firstItem="83k-88-uzq" firstAttribute="centerY" secondItem="ndO-GP-upW" secondAttribute="centerY" id="9Pt-NE-sXk"/>
                             <constraint firstItem="6Bl-QE-Fgn" firstAttribute="centerY" secondItem="ndO-GP-upW" secondAttribute="centerY" id="FUz-yE-V8u"/>
+                            <constraint firstItem="ndO-GP-upW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="lSw-oz-mwA" secondAttribute="trailing" constant="8" symbolic="YES" id="Jpc-D2-pax"/>
                             <constraint firstItem="6Bl-QE-Fgn" firstAttribute="leading" secondItem="83k-88-uzq" secondAttribute="trailing" constant="8" id="K7c-du-22l"/>
-                            <constraint firstItem="lSw-oz-mwA" firstAttribute="centerY" secondItem="ndO-GP-upW" secondAttribute="centerY" id="MXF-K9-TvC"/>
+                            <constraint firstItem="83k-88-uzq" firstAttribute="bottom" secondItem="ndO-GP-upW" secondAttribute="bottom" id="Okq-WG-hB4"/>
                             <constraint firstItem="ndO-GP-upW" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="VcB-1o-gXq"/>
-                            <constraint firstItem="ndO-GP-upW" firstAttribute="leading" secondItem="lSw-oz-mwA" secondAttribute="trailing" constant="8" id="XpR-Oa-DX7"/>
-                            <constraint firstItem="lSw-oz-mwA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="fMO-20-gVl"/>
+                            <constraint firstItem="lSw-oz-mwA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Yri-sc-Q9y"/>
+                            <constraint firstItem="83k-88-uzq" firstAttribute="top" secondItem="ndO-GP-upW" secondAttribute="top" id="bvr-E0-hhM"/>
+                            <constraint firstItem="ndO-GP-upW" firstAttribute="top" secondItem="3sb-D9-RO0" secondAttribute="bottom" constant="8" id="di0-kJ-LhQ"/>
                             <constraint firstItem="3sb-D9-RO0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="-1" id="j4f-po-u3n"/>
                             <constraint firstItem="3sb-D9-RO0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="-1" id="ktB-KJ-aYp"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ndO-GP-upW" secondAttribute="bottom" constant="8" id="oKv-Zh-EUa"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6Bl-QE-Fgn" secondAttribute="trailing" constant="8" id="raO-Ms-UxV"/>
+                            <constraint firstItem="6Bl-QE-Fgn" firstAttribute="top" secondItem="ndO-GP-upW" secondAttribute="top" id="rf1-3G-tSK"/>
+                            <constraint firstItem="lSw-oz-mwA" firstAttribute="top" secondItem="ndO-GP-upW" secondAttribute="top" id="sdg-Fm-rdd"/>
+                            <constraint firstItem="6Bl-QE-Fgn" firstAttribute="bottom" secondItem="ndO-GP-upW" secondAttribute="bottom" id="vgy-BP-2pE"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -78,10 +98,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-263.768115942029" y="129.24107142857142"/>
         </scene>
     </scenes>
     <resources>
-        <image name="flashOnIcon" width="50" height="50"/>
-        <image name="frontCameraIcon" width="50" height="50"/>
+        <image name="bolt" catalog="system" width="50" height="64"/>
+        <image name="camera.rotate" catalog="system" width="64" height="48"/>
+        <image name="circle" catalog="system" width="64" height="60"/>
+        <image name="list.dash" catalog="system" width="64" height="42"/>
     </resources>
 </document>
