@@ -17,48 +17,42 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3sb-D9-RO0">
-                                <rect key="frame" x="-1" y="43" width="416" height="755"/>
+                                <rect key="frame" x="-1" y="43" width="416" height="741.5"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ndO-GP-upW">
-                                <rect key="frame" x="183" y="806" width="48" height="48"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="48" id="8Da-52-l5s"/>
-                                    <constraint firstAttribute="height" constant="48" id="8gh-XZ-3CA"/>
-                                </constraints>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ndO-GP-upW">
+                                <rect key="frame" x="179" y="792.5" width="56" height="61.5"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="circle" catalog="system"/>
+                                <state key="normal" image="circle" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="48"/>
+                                </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Bl-QE-Fgn">
-                                <rect key="frame" x="358" y="806" width="48" height="48"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="6Bl-QE-Fgn" secondAttribute="height" multiplier="1:1" id="NRz-K2-BDf"/>
-                                </constraints>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Bl-QE-Fgn">
+                                <rect key="frame" x="351.5" y="792.5" width="46.5" height="61.5"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="bolt" catalog="system"/>
+                                <state key="normal" image="bolt" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="48"/>
+                                </state>
                                 <connections>
                                     <action selector="toggleFlash:" destination="BYZ-38-t0r" eventType="touchUpInside" id="A9I-3u-WPA"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="83k-88-uzq">
-                                <rect key="frame" x="302" y="806" width="48" height="48"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="83k-88-uzq" secondAttribute="height" multiplier="1:1" id="Fnv-mf-9gV"/>
-                                </constraints>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="83k-88-uzq">
+                                <rect key="frame" x="276" y="792.5" width="67.5" height="61.5"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="camera.rotate" catalog="system"/>
+                                <state key="normal" image="camera.rotate" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="48"/>
+                                </state>
                                 <connections>
                                     <action selector="toggleCamera:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Zxm-Ko-Gsj"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lSw-oz-mwA">
-                                <rect key="frame" x="16" y="806" width="49" height="48"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="lSw-oz-mwA" secondAttribute="height" constant="1" id="82j-AS-nS1"/>
-                                </constraints>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lSw-oz-mwA">
+                                <rect key="frame" x="16" y="792.5" width="59.5" height="61.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="list.dash" catalog="system">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="48"/>
                                 </state>
                                 <connections>
                                     <action selector="pickFilter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XUb-ey-4DU"/>
@@ -72,16 +66,17 @@
                             <constraint firstItem="83k-88-uzq" firstAttribute="centerY" secondItem="ndO-GP-upW" secondAttribute="centerY" id="9Pt-NE-sXk"/>
                             <constraint firstItem="6Bl-QE-Fgn" firstAttribute="centerY" secondItem="ndO-GP-upW" secondAttribute="centerY" id="FUz-yE-V8u"/>
                             <constraint firstItem="ndO-GP-upW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="lSw-oz-mwA" secondAttribute="trailing" constant="8" symbolic="YES" id="Jpc-D2-pax"/>
-                            <constraint firstItem="6Bl-QE-Fgn" firstAttribute="leading" secondItem="83k-88-uzq" secondAttribute="trailing" constant="8" id="K7c-du-22l"/>
+                            <constraint firstItem="6Bl-QE-Fgn" firstAttribute="leading" secondItem="83k-88-uzq" secondAttribute="trailing" constant="8" symbolic="YES" id="K7c-du-22l"/>
                             <constraint firstItem="83k-88-uzq" firstAttribute="bottom" secondItem="ndO-GP-upW" secondAttribute="bottom" id="Okq-WG-hB4"/>
                             <constraint firstItem="ndO-GP-upW" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="VcB-1o-gXq"/>
                             <constraint firstItem="lSw-oz-mwA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Yri-sc-Q9y"/>
                             <constraint firstItem="83k-88-uzq" firstAttribute="top" secondItem="ndO-GP-upW" secondAttribute="top" id="bvr-E0-hhM"/>
-                            <constraint firstItem="ndO-GP-upW" firstAttribute="top" secondItem="3sb-D9-RO0" secondAttribute="bottom" constant="8" id="di0-kJ-LhQ"/>
+                            <constraint firstItem="83k-88-uzq" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ndO-GP-upW" secondAttribute="trailing" constant="8" symbolic="YES" id="ccd-PV-KFo"/>
+                            <constraint firstItem="ndO-GP-upW" firstAttribute="top" secondItem="3sb-D9-RO0" secondAttribute="bottom" constant="8" symbolic="YES" id="di0-kJ-LhQ"/>
                             <constraint firstItem="3sb-D9-RO0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="-1" id="j4f-po-u3n"/>
                             <constraint firstItem="3sb-D9-RO0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="-1" id="ktB-KJ-aYp"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ndO-GP-upW" secondAttribute="bottom" constant="8" id="oKv-Zh-EUa"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6Bl-QE-Fgn" secondAttribute="trailing" constant="8" id="raO-Ms-UxV"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6Bl-QE-Fgn" secondAttribute="trailing" constant="16" id="raO-Ms-UxV"/>
                             <constraint firstItem="6Bl-QE-Fgn" firstAttribute="top" secondItem="ndO-GP-upW" secondAttribute="top" id="rf1-3G-tSK"/>
                             <constraint firstItem="lSw-oz-mwA" firstAttribute="top" secondItem="ndO-GP-upW" secondAttribute="top" id="sdg-Fm-rdd"/>
                             <constraint firstItem="6Bl-QE-Fgn" firstAttribute="bottom" secondItem="ndO-GP-upW" secondAttribute="bottom" id="vgy-BP-2pE"/>

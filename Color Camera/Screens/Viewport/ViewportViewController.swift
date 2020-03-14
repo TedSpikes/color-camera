@@ -29,26 +29,12 @@ class ViewportViewController: UIViewController {
         catch {
             print(error)
         }
-        switch cameraManager.currentCameraPosition {
-        case .some(.front):
-            toggleCameraButton.setImage(UIImage(named: "rearCameraIcon"), for: .normal)
-            
-        case .some(.rear):
-            toggleCameraButton.setImage(UIImage(named: "frontCameraIcon"), for: .normal)
-        case .none:
-            return
-        }
     }
     
     @IBAction func toggleFlash(_ sender: UIButton) {
         do {
             try cameraManager.toggleFlash()
         } catch { print(error) }
-        if cameraManager.flashStatus ?? true {
-            self.toggleFlashButton.setImage(UIImage(named: "flashOffIcon"), for: .normal)
-        } else {
-            self.toggleFlashButton.setImage(UIImage(named: "flashOnIcon"), for: .normal)
-        }
     }
     
     @IBAction func pickFilter(_ sender: UIButton) {
@@ -68,12 +54,19 @@ extension ViewportViewController {
     }
        
     func styleButtons() {
-        let
-        self.captureButton.setImage(<#T##image: UIImage?##UIImage?#>, for: <#T##UIControl.State#>)
-    }
-    
-    func styleFilterPickerButton() {
-        self.filterPickerButton.layer.cornerRadius = self.filterPickerButton.frame.height / 2
+        let pointSize    = CGFloat(floatLiteral: 36.0)
+        
+        let normalConfig = UIImage.SymbolConfiguration(pointSize: pointSize)
+        let lightConfig  = UIImage.SymbolConfiguration(pointSize: pointSize, weight: .ultraLight)
+        
+        self.filterPickerButton.setImage(UIImage(systemName: "list.dash", withConfiguration: normalConfig), for: .normal)
+        self.filterPickerButton.setImage(UIImage(systemName: "list.dash", withConfiguration: lightConfig), for: .highlighted)
+        self.captureButton.setImage(UIImage(systemName: "circle", withConfiguration: normalConfig), for: .normal)
+        self.captureButton.setImage(UIImage(systemName: "circle", withConfiguration: lightConfig), for: .highlighted)
+        self.toggleFlashButton.setImage(UIImage(systemName: "bolt", withConfiguration: normalConfig), for: .normal)
+        self.toggleFlashButton.setImage(UIImage(systemName: "bolt", withConfiguration: lightConfig), for: .highlighted)
+        self.toggleCameraButton.setImage(UIImage(systemName: "camera.rotate", withConfiguration: normalConfig), for: .normal)
+        self.toggleCameraButton.setImage(UIImage(systemName: "camera.rotate", withConfiguration: lightConfig), for: .selected)
     }
     
     func loadFilterFromStorage(defaultFilter: String = "Normal") {
@@ -87,7 +80,6 @@ extension ViewportViewController {
         self.loadFilterFromStorage()
         self.configureCameraController()
         self.styleButtons()
-        self.styleFilterPickerButton()
     }
 }
 
