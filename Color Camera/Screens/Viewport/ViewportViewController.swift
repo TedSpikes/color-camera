@@ -55,19 +55,14 @@ extension ViewportViewController {
     }
        
     func styleButtons() {
-        let pointSize    = CGFloat(floatLiteral: 42.0)
-        
-        let normalConfig = UIImage.SymbolConfiguration(pointSize: pointSize)
-        let lightConfig  = UIImage.SymbolConfiguration(pointSize: pointSize, weight: .ultraLight)
+        let normalConfig = UIImage.SymbolConfiguration(pointSize: CGFloat(floatLiteral: 48.0), weight: .regular)
+        let upperRightConfig  = UIImage.SymbolConfiguration(pointSize: CGFloat(floatLiteral: 32.0), weight: .regular)
         
         self.filterPickerButton.setImage(UIImage(systemName: "list.dash", withConfiguration: normalConfig), for: .normal)
-        self.filterPickerButton.setImage(UIImage(systemName: "list.dash", withConfiguration: lightConfig), for: .highlighted)  // TODO: Doesn't actually seem to work
         self.captureButton.setImage(UIImage(systemName: "circle", withConfiguration: normalConfig), for: .normal)
-        self.captureButton.setImage(UIImage(systemName: "circle", withConfiguration: lightConfig), for: .highlighted)
-        self.toggleFlashButton.setImage(UIImage(systemName: "bolt", withConfiguration: normalConfig), for: .normal)
-        self.toggleFlashButton.setImage(UIImage(systemName: "bolt", withConfiguration: lightConfig), for: .highlighted)
-        self.toggleCameraButton.setImage(UIImage(systemName: "camera.rotate", withConfiguration: normalConfig), for: .normal)
-        self.toggleCameraButton.setImage(UIImage(systemName: "camera.rotate", withConfiguration: lightConfig), for: .selected)
+        
+        self.toggleFlashButton.setImage(UIImage(systemName: "bolt", withConfiguration: upperRightConfig), for: .normal)
+        self.toggleCameraButton.setImage(UIImage(systemName: "camera.rotate", withConfiguration: upperRightConfig), for: .normal)
     }
     
     func loadFilterFromStorage(defaultFilter: String = "Normal") {

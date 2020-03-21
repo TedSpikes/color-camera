@@ -48,13 +48,17 @@ extension CameraManager {
     func configureDeviceInputs(for session: AVCaptureSession) throws {
         if let rearCamera = self.rearCamera {
             self.rearCameraInput = try AVCaptureDeviceInput(device: rearCamera)
-            if session.canAddInput(self.rearCameraInput!) { session.addInput(self.rearCameraInput!) }
-            self.cameraPosition = .rear
+            if session.canAddInput(self.rearCameraInput!) {
+                session.addInput(self.rearCameraInput!)
+                self.cameraPosition = .rear
+            }
         }
         if let frontCamera = self.frontCamera {
             self.frontCameraInput = try AVCaptureDeviceInput(device: frontCamera)
-            if session.canAddInput(self.frontCameraInput!) { session.addInput(self.frontCameraInput!) }
-            self.cameraPosition = .front
+            if session.canAddInput(self.frontCameraInput!) {
+                session.addInput(self.frontCameraInput!)
+                self.cameraPosition = .front
+            }
         }
     }
     
@@ -112,31 +116,35 @@ extension CameraManager {
         if (self.cameraPosition == .front) && (self.rearCamera != nil) {
             // Switch to rear
             let input = try AVCaptureDeviceInput(device: self.rearCamera!)
-            if let otherInput = self.frontCameraInput {
+            if let otherInput = self.captureSession.inputs.first {
                 self.captureSession.removeInput(otherInput)
             }
             if self.captureSession.canAddInput(input) {
                 self.captureSession.addInput(input)
                 self.cameraPosition = .rear
+            } else {
+                print("Can't add input, session already has \(self.captureSession.inputs)")
             }
         } else if (self.cameraPosition == .rear) && (self.frontCamera != nil) {
             // Switch to front
             let input = try AVCaptureDeviceInput(device: self.frontCamera!)
-            if let otherInput = self.rearCameraInput {
+            if let otherInput = self.captureSession.inputs.first {
                 self.captureSession.removeInput(otherInput)
             }
             if self.captureSession.canAddInput(input) {
                 self.captureSession.addInput(input)
                 self.cameraPosition = .front
+            } else {
+                print("Can't add input, session already has \(self.captureSession.inputs)")
             }
         } else {
             print("No other cameras available to switch away from \(self.cameraPosition)")
         }
-//        for connection in self.videoOutput.connections {
-//            if connection.isVideoOrientationSupported {
-//                connection.videoOrientation = .portrait
-//            }
-//        }
+        for connection in self.videoOutput.connections {
+            if connection.isVideoOrientationSupported {
+                connection.videoOrientation = .portrait
+            }
+        }
         captureSession.commitConfiguration()
     }
     
