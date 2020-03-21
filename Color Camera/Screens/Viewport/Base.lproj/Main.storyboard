@@ -16,76 +16,100 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3sb-D9-RO0">
-                                <rect key="frame" x="-1" y="43" width="416" height="748"/>
+                                <rect key="frame" x="-1" y="43" width="416" height="820"/>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="1fv-47-deH">
-                                <rect key="frame" x="361" y="52" width="45" height="86.5"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PbW-KL-CZ0">
+                                <rect key="frame" x="353" y="52" width="53" height="94.5"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Bl-QE-Fgn">
-                                        <rect key="frame" x="0.0" y="0.0" width="45" height="40.5"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="1fv-47-deH">
+                                        <rect key="frame" x="4" y="4" width="45" height="86.5"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Bl-QE-Fgn">
+                                                <rect key="frame" x="0.0" y="0.0" width="45" height="40.5"/>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" image="bolt" catalog="system">
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="32"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="toggleFlash:" destination="BYZ-38-t0r" eventType="touchUpInside" id="A9I-3u-WPA"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="83k-88-uzq">
+                                                <rect key="frame" x="0.0" y="52.5" width="45" height="34"/>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" image="camera.rotate" catalog="system">
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="32"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="toggleCamera:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Zxm-Ko-Gsj"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="1fv-47-deH" secondAttribute="trailing" constant="4" id="FdP-Gk-Smd"/>
+                                    <constraint firstItem="1fv-47-deH" firstAttribute="leading" secondItem="PbW-KL-CZ0" secondAttribute="leading" constant="4" id="GHx-ca-4gf"/>
+                                    <constraint firstItem="1fv-47-deH" firstAttribute="top" secondItem="PbW-KL-CZ0" secondAttribute="top" constant="4" id="mi5-tX-7om"/>
+                                    <constraint firstAttribute="bottom" secondItem="1fv-47-deH" secondAttribute="bottom" constant="4" id="oQb-LO-zmD"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ogM-NH-1XV">
+                                <rect key="frame" x="8" y="783" width="398" height="71"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ndO-GP-upW">
+                                        <rect key="frame" x="171" y="8" width="56" height="55"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" image="bolt" catalog="system">
-                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="32"/>
+                                        <state key="normal" image="circle" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="48"/>
                                         </state>
-                                        <connections>
-                                            <action selector="toggleFlash:" destination="BYZ-38-t0r" eventType="touchUpInside" id="A9I-3u-WPA"/>
-                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="83k-88-uzq">
-                                        <rect key="frame" x="0.0" y="52.5" width="45" height="34"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lSw-oz-mwA">
+                                        <rect key="frame" x="20" y="14.5" width="59.5" height="42"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" image="camera.rotate" catalog="system">
-                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="32"/>
+                                        <state key="normal" image="list.dash" catalog="system">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="48"/>
                                         </state>
                                         <connections>
-                                            <action selector="toggleCamera:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Zxm-Ko-Gsj"/>
+                                            <action selector="pickFilter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XUb-ey-4DU"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                            </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ndO-GP-upW">
-                                <rect key="frame" x="179" y="799" width="56" height="55"/>
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="circle" catalog="system">
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="48"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lSw-oz-mwA">
-                                <rect key="frame" x="16" y="799" width="59.5" height="55"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="list.dash" catalog="system">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="48"/>
-                                </state>
-                                <connections>
-                                    <action selector="pickFilter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XUb-ey-4DU"/>
-                                </connections>
-                            </button>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="lSw-oz-mwA" firstAttribute="centerY" secondItem="ndO-GP-upW" secondAttribute="centerY" id="4MI-BL-HXm"/>
+                                    <constraint firstItem="ndO-GP-upW" firstAttribute="centerX" secondItem="ogM-NH-1XV" secondAttribute="centerX" id="TOf-vM-vxj"/>
+                                    <constraint firstItem="lSw-oz-mwA" firstAttribute="leading" secondItem="ogM-NH-1XV" secondAttribute="leading" constant="20" symbolic="YES" id="aTx-N5-w5V"/>
+                                    <constraint firstItem="ndO-GP-upW" firstAttribute="top" secondItem="ogM-NH-1XV" secondAttribute="top" constant="8" id="mFS-MS-Fvs"/>
+                                    <constraint firstAttribute="bottom" secondItem="ndO-GP-upW" secondAttribute="bottom" constant="8" id="qPk-gw-ZN1"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="3sb-D9-RO0" secondAttribute="trailing" constant="-1" id="0Hq-Cv-B5X"/>
-                            <constraint firstItem="lSw-oz-mwA" firstAttribute="bottom" secondItem="ndO-GP-upW" secondAttribute="bottom" id="2Jo-2n-2K6"/>
-                            <constraint firstItem="1fv-47-deH" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="Cud-RD-xHP"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1fv-47-deH" secondAttribute="trailing" constant="8" id="IKG-ic-Boz"/>
-                            <constraint firstItem="ndO-GP-upW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="lSw-oz-mwA" secondAttribute="trailing" constant="8" symbolic="YES" id="Jpc-D2-pax"/>
-                            <constraint firstItem="ndO-GP-upW" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="VcB-1o-gXq"/>
-                            <constraint firstItem="lSw-oz-mwA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Yri-sc-Q9y"/>
-                            <constraint firstItem="ndO-GP-upW" firstAttribute="top" secondItem="3sb-D9-RO0" secondAttribute="bottom" constant="8" symbolic="YES" id="di0-kJ-LhQ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="PbW-KL-CZ0" secondAttribute="trailing" constant="8" id="6Zi-AW-rHO"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ogM-NH-1XV" secondAttribute="bottom" constant="8" id="DGa-qB-mvE"/>
+                            <constraint firstItem="PbW-KL-CZ0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="Eh2-8W-2PC"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ogM-NH-1XV" secondAttribute="trailing" constant="8" id="P36-91-vtj"/>
+                            <constraint firstItem="ogM-NH-1XV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="exz-HM-qLk"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="3sb-D9-RO0" secondAttribute="bottom" constant="-1" id="f2q-Hh-fJ4"/>
                             <constraint firstItem="3sb-D9-RO0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="-1" id="j4f-po-u3n"/>
                             <constraint firstItem="3sb-D9-RO0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="-1" id="ktB-KJ-aYp"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ndO-GP-upW" secondAttribute="bottom" constant="8" id="oKv-Zh-EUa"/>
-                            <constraint firstItem="lSw-oz-mwA" firstAttribute="top" secondItem="ndO-GP-upW" secondAttribute="top" id="sdg-Fm-rdd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="bottomButtonsView" destination="ogM-NH-1XV" id="qCX-zX-DOP"/>
                         <outlet property="captureButton" destination="ndO-GP-upW" id="na2-qD-TWp"/>
                         <outlet property="filterPickerButton" destination="lSw-oz-mwA" id="Z5C-Xz-QTZ"/>
                         <outlet property="filteredImageView" destination="3sb-D9-RO0" id="BpQ-Cg-knL"/>
                         <outlet property="toggleCameraButton" destination="83k-88-uzq" id="egS-cB-1dl"/>
                         <outlet property="toggleFlashButton" destination="6Bl-QE-Fgn" id="Rmb-Dn-8c2"/>
+                        <outlet property="upperRightButtonsView" destination="PbW-KL-CZ0" id="jXK-d4-r8f"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

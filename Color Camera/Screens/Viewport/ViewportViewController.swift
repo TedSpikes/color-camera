@@ -22,6 +22,8 @@ class ViewportViewController: UIViewController {
     @IBOutlet weak var toggleCameraButton: UIButton!
     @IBOutlet weak var toggleFlashButton: UIButton!
     @IBOutlet weak var filterPickerButton: UIButton!
+    @IBOutlet weak var bottomButtonsView: UIView!
+    @IBOutlet weak var upperRightButtonsView: UIView!
     
     @IBAction func toggleCamera(_ sender: UIButton) {
         do {
@@ -54,15 +56,28 @@ extension ViewportViewController {
         }
     }
        
-    func styleButtons() {
+    func styleElements() {
+        // Views
+        self.view.backgroundColor = .black
+        self.bottomButtonsView.layer.cornerRadius = 8
+        self.bottomButtonsView.backgroundColor = UIColor(white: 0.1, alpha: 0.75)
+        self.upperRightButtonsView.layer.cornerRadius = 4
+        self.upperRightButtonsView.backgroundColor = UIColor(white: 0.1, alpha:  0.75)
+        self.filteredImageView.contentMode = .scaleAspectFill
+        
+        // Buttons
         let normalConfig = UIImage.SymbolConfiguration(pointSize: CGFloat(floatLiteral: 48.0), weight: .regular)
         let upperRightConfig  = UIImage.SymbolConfiguration(pointSize: CGFloat(floatLiteral: 32.0), weight: .regular)
         
         self.filterPickerButton.setImage(UIImage(systemName: "list.dash", withConfiguration: normalConfig), for: .normal)
         self.captureButton.setImage(UIImage(systemName: "circle", withConfiguration: normalConfig), for: .normal)
+        self.filterPickerButton.tintColor = .white
+        self.captureButton.tintColor = .white
         
-        self.toggleFlashButton.setImage(UIImage(systemName: "bolt", withConfiguration: upperRightConfig), for: .normal)
-        self.toggleCameraButton.setImage(UIImage(systemName: "camera.rotate", withConfiguration: upperRightConfig), for: .normal)
+        self.toggleFlashButton.setImage(UIImage(systemName: "bolt", withConfiguration: upperRightConfig)?.withTintColor(.white), for: .normal)
+        self.toggleCameraButton.setImage(UIImage(systemName: "camera.rotate", withConfiguration: upperRightConfig)?.withTintColor(.white), for: .normal)
+        self.toggleFlashButton.tintColor = .white
+        self.toggleCameraButton.tintColor = .white
     }
     
     func loadFilterFromStorage(defaultFilter: String = "Normal") {
@@ -75,7 +90,7 @@ extension ViewportViewController {
         
         self.loadFilterFromStorage()
         self.configureCameraController()
-        self.styleButtons()
+        self.styleElements()
     }
 }
 
