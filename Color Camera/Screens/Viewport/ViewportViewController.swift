@@ -16,6 +16,7 @@ class ViewportViewController: UIViewController {
     override var prefersStatusBarHidden: Bool { return true }
     var activeFilter: VisionFilter?
     
+    // MARK: Interface hooks
     @IBOutlet weak var filteredImageView: UIImageView!
     @IBOutlet weak var captureButton: UIButton!
     @IBOutlet weak var toggleCameraButton: UIButton!
@@ -24,7 +25,7 @@ class ViewportViewController: UIViewController {
     
     @IBAction func toggleCamera(_ sender: UIButton) {
         do {
-            try cameraManager.switchCamera()
+            try cameraManager.switchCameras()
         }
         catch {
             print(error)
@@ -54,13 +55,13 @@ extension ViewportViewController {
     }
        
     func styleButtons() {
-        let pointSize    = CGFloat(floatLiteral: 36.0)
+        let pointSize    = CGFloat(floatLiteral: 42.0)
         
         let normalConfig = UIImage.SymbolConfiguration(pointSize: pointSize)
         let lightConfig  = UIImage.SymbolConfiguration(pointSize: pointSize, weight: .ultraLight)
         
         self.filterPickerButton.setImage(UIImage(systemName: "list.dash", withConfiguration: normalConfig), for: .normal)
-        self.filterPickerButton.setImage(UIImage(systemName: "list.dash", withConfiguration: lightConfig), for: .highlighted)
+        self.filterPickerButton.setImage(UIImage(systemName: "list.dash", withConfiguration: lightConfig), for: .highlighted)  // TODO: Doesn't actually seem to work
         self.captureButton.setImage(UIImage(systemName: "circle", withConfiguration: normalConfig), for: .normal)
         self.captureButton.setImage(UIImage(systemName: "circle", withConfiguration: lightConfig), for: .highlighted)
         self.toggleFlashButton.setImage(UIImage(systemName: "bolt", withConfiguration: normalConfig), for: .normal)
@@ -83,7 +84,7 @@ extension ViewportViewController {
     }
 }
 
-/// Create the filter and switch to it.
+// MARK: Filter switching logic
 extension ViewportViewController {
     func switchToFilter(name: String) {
         let filter = self.filterManager.filter(withName: name) as! VisionFilter
@@ -91,7 +92,7 @@ extension ViewportViewController {
     }
 }
 
-/// Receive, process, and display the camera image.
+// MARK: Work with camera output
 extension ViewportViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
     func getFilteredImage(fromCIImage image: CIImage) -> UIImage? {
         guard let filter = self.activeFilter else {

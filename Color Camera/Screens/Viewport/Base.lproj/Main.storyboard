@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -17,37 +16,42 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3sb-D9-RO0">
-                                <rect key="frame" x="-1" y="43" width="416" height="741.5"/>
+                                <rect key="frame" x="-1" y="43" width="416" height="748"/>
                             </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="1fv-47-deH">
+                                <rect key="frame" x="361" y="52" width="45" height="86.5"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Bl-QE-Fgn">
+                                        <rect key="frame" x="0.0" y="0.0" width="45" height="40.5"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" image="bolt" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="32"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="toggleFlash:" destination="BYZ-38-t0r" eventType="touchUpInside" id="A9I-3u-WPA"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="83k-88-uzq">
+                                        <rect key="frame" x="0.0" y="52.5" width="45" height="34"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" image="camera.rotate" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="32"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="toggleCamera:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Zxm-Ko-Gsj"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ndO-GP-upW">
-                                <rect key="frame" x="179" y="792.5" width="56" height="61.5"/>
+                                <rect key="frame" x="179" y="799" width="56" height="55"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="circle" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="48"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Bl-QE-Fgn">
-                                <rect key="frame" x="351.5" y="792.5" width="46.5" height="61.5"/>
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="bolt" catalog="system">
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="48"/>
-                                </state>
-                                <connections>
-                                    <action selector="toggleFlash:" destination="BYZ-38-t0r" eventType="touchUpInside" id="A9I-3u-WPA"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="83k-88-uzq">
-                                <rect key="frame" x="276" y="792.5" width="67.5" height="61.5"/>
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="camera.rotate" catalog="system">
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="48"/>
-                                </state>
-                                <connections>
-                                    <action selector="toggleCamera:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Zxm-Ko-Gsj"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lSw-oz-mwA">
-                                <rect key="frame" x="16" y="792.5" width="59.5" height="61.5"/>
+                                <rect key="frame" x="16" y="799" width="59.5" height="55"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="list.dash" catalog="system">
@@ -63,23 +67,16 @@
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="3sb-D9-RO0" secondAttribute="trailing" constant="-1" id="0Hq-Cv-B5X"/>
                             <constraint firstItem="lSw-oz-mwA" firstAttribute="bottom" secondItem="ndO-GP-upW" secondAttribute="bottom" id="2Jo-2n-2K6"/>
-                            <constraint firstItem="83k-88-uzq" firstAttribute="centerY" secondItem="ndO-GP-upW" secondAttribute="centerY" id="9Pt-NE-sXk"/>
-                            <constraint firstItem="6Bl-QE-Fgn" firstAttribute="centerY" secondItem="ndO-GP-upW" secondAttribute="centerY" id="FUz-yE-V8u"/>
+                            <constraint firstItem="1fv-47-deH" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="Cud-RD-xHP"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1fv-47-deH" secondAttribute="trailing" constant="8" id="IKG-ic-Boz"/>
                             <constraint firstItem="ndO-GP-upW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="lSw-oz-mwA" secondAttribute="trailing" constant="8" symbolic="YES" id="Jpc-D2-pax"/>
-                            <constraint firstItem="6Bl-QE-Fgn" firstAttribute="leading" secondItem="83k-88-uzq" secondAttribute="trailing" constant="8" symbolic="YES" id="K7c-du-22l"/>
-                            <constraint firstItem="83k-88-uzq" firstAttribute="bottom" secondItem="ndO-GP-upW" secondAttribute="bottom" id="Okq-WG-hB4"/>
                             <constraint firstItem="ndO-GP-upW" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="VcB-1o-gXq"/>
                             <constraint firstItem="lSw-oz-mwA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Yri-sc-Q9y"/>
-                            <constraint firstItem="83k-88-uzq" firstAttribute="top" secondItem="ndO-GP-upW" secondAttribute="top" id="bvr-E0-hhM"/>
-                            <constraint firstItem="83k-88-uzq" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ndO-GP-upW" secondAttribute="trailing" constant="8" symbolic="YES" id="ccd-PV-KFo"/>
                             <constraint firstItem="ndO-GP-upW" firstAttribute="top" secondItem="3sb-D9-RO0" secondAttribute="bottom" constant="8" symbolic="YES" id="di0-kJ-LhQ"/>
                             <constraint firstItem="3sb-D9-RO0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="-1" id="j4f-po-u3n"/>
                             <constraint firstItem="3sb-D9-RO0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="-1" id="ktB-KJ-aYp"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ndO-GP-upW" secondAttribute="bottom" constant="8" id="oKv-Zh-EUa"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6Bl-QE-Fgn" secondAttribute="trailing" constant="16" id="raO-Ms-UxV"/>
-                            <constraint firstItem="6Bl-QE-Fgn" firstAttribute="top" secondItem="ndO-GP-upW" secondAttribute="top" id="rf1-3G-tSK"/>
                             <constraint firstItem="lSw-oz-mwA" firstAttribute="top" secondItem="ndO-GP-upW" secondAttribute="top" id="sdg-Fm-rdd"/>
-                            <constraint firstItem="6Bl-QE-Fgn" firstAttribute="bottom" secondItem="ndO-GP-upW" secondAttribute="bottom" id="vgy-BP-2pE"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
