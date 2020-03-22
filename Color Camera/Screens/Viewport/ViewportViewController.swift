@@ -12,6 +12,8 @@ import AVFoundation
 class ViewportViewController: UIViewController {
     let cameraManager = CameraManager()
     let filterManager = FilterManager()
+    let bottomButtonConfig = UIImage.SymbolConfiguration(pointSize: CGFloat(floatLiteral: 48.0), weight: .regular)
+    let upperRightButtonConfig  = UIImage.SymbolConfiguration(pointSize: CGFloat(floatLiteral: 32.0), weight: .regular)
     
     override var prefersStatusBarHidden: Bool { return true }
     var activeFilter: VisionFilter?
@@ -27,7 +29,7 @@ class ViewportViewController: UIViewController {
     
     @IBAction func toggleCamera(_ sender: UIButton) {
         do {
-            try cameraManager.switchCameras()
+            try self.cameraManager.switchCameras()
         }
         catch {
             print(error)
@@ -36,7 +38,8 @@ class ViewportViewController: UIViewController {
     
     @IBAction func toggleFlash(_ sender: UIButton) {
         do {
-            try cameraManager.toggleFlash()
+            try self.cameraManager.toggleFlash()
+            self.styleFlashButton(isOn: self.cameraManager.isFlashOn)
         } catch { print(error) }
     }
     
@@ -49,10 +52,20 @@ class ViewportViewController: UIViewController {
 // MARK: The setup.
 extension ViewportViewController {
     func configureCameraController() {
-        cameraManager.prepare(captureVideoDelegate: self) { (error) in
+        self.cameraManager.prepare(captureVideoDelegate: self) { (error) in
             if let error = error {
                 print(error)
             }
+        }
+    }
+    
+    func styleFlashButton(isOn: Bool) {
+        if isOn {
+            self.toggleFlashButton.setImage(UIImage(systemName: "bolt.fill", withConfiguration: self.upperRightButtonConfig)?.withTintColor(.white), for: .normal)
+            self.toggleFlashButton.tintColor = .white
+        } else {
+            self.toggleFlashButton.setImage(UIImage(systemName: "bolt", withConfiguration: self.upperRightButtonConfig)?.withTintColor(.white), for: .normal)
+            self.toggleFlashButton.tintColor = .white
         }
     }
        
@@ -66,17 +79,14 @@ extension ViewportViewController {
         self.filteredImageView.contentMode = .scaleAspectFill
         
         // Buttons
-        let normalConfig = UIImage.SymbolConfiguration(pointSize: CGFloat(floatLiteral: 48.0), weight: .regular)
-        let upperRightConfig  = UIImage.SymbolConfiguration(pointSize: CGFloat(floatLiteral: 32.0), weight: .regular)
         
-        self.filterPickerButton.setImage(UIImage(systemName: "list.dash", withConfiguration: normalConfig), for: .normal)
-        self.captureButton.setImage(UIImage(systemName: "circle", withConfiguration: normalConfig), for: .normal)
+        self.filterPickerButton.setImage(UIImage(systemName: "list.dash", withConfiguration: self.bottomButtonConfig), for: .normal)
+        self.captureButton.setImage(UIImage(systemName: "circle", withConfiguration: self.bottomButtonConfig), for: .normal)
         self.filterPickerButton.tintColor = .white
         self.captureButton.tintColor = .white
         
-        self.toggleFlashButton.setImage(UIImage(systemName: "bolt", withConfiguration: upperRightConfig)?.withTintColor(.white), for: .normal)
-        self.toggleCameraButton.setImage(UIImage(systemName: "camera.rotate", withConfiguration: upperRightConfig)?.withTintColor(.white), for: .normal)
-        self.toggleFlashButton.tintColor = .white
+        self.styleFlashButton(isOn: false)
+        self.toggleCameraButton.setImage(UIImage(systemName: "camera.rotate", withConfiguration: self.upperRightButtonConfig)?.withTintColor(.white), for: .normal)
         self.toggleCameraButton.tintColor = .white
     }
     
