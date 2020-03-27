@@ -118,7 +118,6 @@ extension ViewportViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
         guard let filter = self.activeFilter else {
             return nil
         }
-        
         filter.setValue(image, forKey: kCIInputImageKey)
         let result = UIImage(ciImage: filter.value(forKey: kCIOutputImageKey) as! CIImage)
         return result
@@ -127,10 +126,15 @@ extension ViewportViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
         let cameraImage = CIImage(cvPixelBuffer: pixelBuffer!)
-        
         let filteredImage = self.getFilteredImage(fromCIImage: cameraImage) ?? UIImage(ciImage: cameraImage)
         DispatchQueue.main.async {
             self.filteredImageView.image = filteredImage
+            if self.cameraManager.cameraPosition == .front {
+                // Mirror the image view for front camera
+                self.filteredImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            } else {
+                self.filteredImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
         }
     }
     
