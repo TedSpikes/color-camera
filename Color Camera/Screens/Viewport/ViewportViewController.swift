@@ -12,6 +12,7 @@ import AVFoundation
 class ViewportViewController: UIViewController {
     let cameraManager = CameraManager()
     let filterManager = FilterManager()
+    
     let bottomButtonConfig = UIImage.SymbolConfiguration(pointSize: CGFloat(floatLiteral: 48.0), weight: .regular)
     let upperRightButtonConfig  = UIImage.SymbolConfiguration(pointSize: CGFloat(floatLiteral: 32.0), weight: .regular)
     
@@ -26,6 +27,10 @@ class ViewportViewController: UIViewController {
     @IBOutlet weak var filterPickerButton: UIButton!
     @IBOutlet weak var bottomButtonsView: UIView!
     @IBOutlet weak var upperRightButtonsView: UIView!
+    
+    @IBAction func beginPhotoCapture(_ sender: UIButton) {
+        self.capturePhoto()
+    }
     
     @IBAction func toggleCamera(_ sender: UIButton) {
         do {
@@ -47,10 +52,8 @@ class ViewportViewController: UIViewController {
         let filterPicker = FilterPickerViewController(nibName: "FilterPickerView", bundle: nil)
         self.present(filterPicker, animated: true, completion: nil)
     }
-}
 
-// MARK: The setup.
-extension ViewportViewController {
+    // MARK: The setup
     func configureCameraController() {
         self.cameraManager.prepare(captureVideoDelegate: self) { (error) in
             if let error = error {
@@ -79,13 +82,12 @@ extension ViewportViewController {
         self.filteredImageView.contentMode = .scaleAspectFill
         
         // Buttons
-        
         self.filterPickerButton.setImage(UIImage(systemName: "list.dash", withConfiguration: self.bottomButtonConfig), for: .normal)
         self.captureButton.setImage(UIImage(systemName: "circle", withConfiguration: self.bottomButtonConfig), for: .normal)
         self.filterPickerButton.tintColor = .white
         self.captureButton.tintColor = .white
         
-        self.styleFlashButton(isOn: false)
+        self.styleFlashButton(isOn: self.cameraManager.isFlashOn)
         self.toggleCameraButton.setImage(UIImage(systemName: "camera.rotate", withConfiguration: self.upperRightButtonConfig)?.withTintColor(.white), for: .normal)
         self.toggleCameraButton.tintColor = .white
     }
@@ -102,18 +104,14 @@ extension ViewportViewController {
         self.configureCameraController()
         self.styleElements()
     }
-}
-
-// MARK: Filter switching logic
-extension ViewportViewController {
+    
+    // MARK: Filter switching logic
     func switchToFilter(name: String) {
         let filter = self.filterManager.filter(withName: name) as! VisionFilter
         self.activeFilter = filter
     }
-}
 
-// MARK: Work with camera output
-extension ViewportViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
+    // MARK: Work with the camera output
     func getFilteredImage(fromCIImage image: CIImage) -> UIImage? {
         guard let filter = self.activeFilter else {
             return nil
@@ -141,6 +139,40 @@ extension ViewportViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         
     }
+    
+    // MARK: Capture photos
+    let captureManager = CaptureManager(willBeginCapture: {
+        // TODO: Replaces the shutter button with a spinner
+    }, willCapture: {
+        // TODO: Flashes the screen
+    }, didCapture: {
+        
+    }, didFinishCapture: {
+        
+    }, didFinishProcessing: {
+        // TODO: Removes the spinner, brings back the shutter button
+    })
+    
+    func capturePhoto() {
+        let activityView = UIActivityIndicatorView(style: .large)
+        activityView.color = UIColor(white: 1.0, alpha: 1.0)
+        activityView.hidesWhenStopped = true
+        activityView.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.captureButton.addSubview(activityView)
+        
+        let alignLeading = NSLayoutConstraint(item: self.captureButton!, attribute: .leading, relatedBy: .equal, toItem: activityView, attribute: .leading, multiplier: 1, constant: 0)
+        let alignTop = NSLayoutConstraint(item: self.captureButton!, attribute: .top, relatedBy: .equal, toItem: activityView, attribute: .top, multiplier: 1, constant: 0)
+        let equalHeight = NSLayoutConstraint(item: self.captureButton!, attribute: .height, relatedBy: .equal, toItem: activityView, attribute: .height, multiplier: 1, constant: 0)
+        let equalWidth = NSLayoutConstraint(item: self.captureButton!, attribute: .width, relatedBy: .equal, toItem: activityView, attribute: .width, multiplier: 1, constant: 0)
+        self.captureButton.addConstraint(alignLeading)
+        self.captureButton.addConstraint(alignTop)
+        self.captureButton.addConstraint(equalHeight)
+        self.captureButton.addConstraint(equalWidth)
+        
+        self.captureButton.tintColor = UIColor(white: 1.0, alpha: 0.0)
+        activityView.startAnimating()
+    }
 }
 
-// TODO: Capture images to Camera Roll.
+extension ViewportViewController: AVCaptureVideoDataOutputSampleBufferDelegate {}
