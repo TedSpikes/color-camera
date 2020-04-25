@@ -17,16 +17,16 @@ class CameraManager {
         case rear
     }
     
-    lazy var captureSession: AVCaptureSession = AVCaptureSession()
+    var captureSession: AVCaptureSession = AVCaptureSession()
     var frontCamera: AVCaptureDevice?
     var rearCamera: AVCaptureDevice?
     var frontCameraInput: AVCaptureDeviceInput?
     var rearCameraInput: AVCaptureDeviceInput?
-    lazy var cameraPosition: CameraPosition = .rear
-    lazy var isFlashOn: Bool = false
-    lazy var photoOutput: AVCapturePhotoOutput = AVCapturePhotoOutput()
-    lazy var videoOutput: AVCaptureVideoDataOutput = AVCaptureVideoDataOutput()
-    lazy var previewLayer: AVCaptureVideoPreviewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
+    var cameraPosition: CameraPosition = .rear
+    var isFlashOn: Bool = false
+    var photoOutput: AVCapturePhotoOutput = AVCapturePhotoOutput()
+    var videoOutput: AVCaptureVideoDataOutput = AVCaptureVideoDataOutput()
+    var previewLayer: AVCaptureVideoPreviewLayer = AVCaptureVideoPreviewLayer(session: AVCaptureSession())
 }
 
 // MARK: Prepare
@@ -92,6 +92,7 @@ extension CameraManager {
                 return
             }
             DispatchQueue.main.async {
+                print("Finished preparing Camera Manager")
                 completionHandler(nil)
             }
         }

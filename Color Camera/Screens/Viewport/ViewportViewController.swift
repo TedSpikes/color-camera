@@ -141,24 +141,11 @@ class ViewportViewController: UIViewController {
     }
     
     // MARK: Capture photos
-    let captureManager = CaptureManager(willBeginCapture: {
-        // TODO: Replaces the shutter button with a spinner
-    }, willCapture: {
-        // TODO: Flashes the screen
-    }, didCapture: {
-        
-    }, didFinishCapture: {
-        
-    }, didFinishProcessing: {
-        // TODO: Removes the spinner, brings back the shutter button
-    })
-    
-    func capturePhoto() {
-        let activityView = UIActivityIndicatorView(style: .large)
-        activityView.color = UIColor(white: 1.0, alpha: 1.0)
+    private func activateSpinner() {
+        let activityView: UIActivityIndicatorView = UIActivityIndicatorView(style: .large)
+        activityView.color = .white
         activityView.hidesWhenStopped = true
         activityView.translatesAutoresizingMaskIntoConstraints = false
-        
         self.captureButton.addSubview(activityView)
         
         let alignLeading = NSLayoutConstraint(item: self.captureButton!, attribute: .leading, relatedBy: .equal, toItem: activityView, attribute: .leading, multiplier: 1, constant: 0)
@@ -172,6 +159,53 @@ class ViewportViewController: UIViewController {
         
         self.captureButton.tintColor = UIColor(white: 1.0, alpha: 0.0)
         activityView.startAnimating()
+    }
+    
+    private func flashViewPort() {
+        self.filteredImageView.layer.opacity = 0
+        UIView.animate(withDuration: 0.25) {
+            self.filteredImageView.layer.opacity = 1
+        }
+    }
+    
+    private func deactivateSpinner() {
+        for subView in self.captureButton.subviews {
+            if type(of: subView) == UIActivityIndicatorView.self {
+                subView.removeFromSuperview()
+            }
+        }
+        self.captureButton.tintColor = .white
+    }
+    
+    private func buildCaptureSettings() -> AVCapturePhotoSettings {
+        /// Simplified magic from https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture/avcam_building_a_camera_app
+        var photoSettings = AVCapturePhotoSettings()
+        if  self.cameraManager.photoOutput.availablePhotoCodecTypes.contains(.hevc) {
+            photoSettings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.hevc])
+        }
+        switch self.cameraManager.cameraPosition {
+        case .front:
+            if self.cameraManager.frontCameraInput?.device.isFlashAvailable ?? false {
+                photoSettings.flashMode = .auto
+            }
+        case .rear:
+            if self.cameraManager.rearCameraInput?.device.isFlashAvailable ?? false {
+                photoSettings.flashMode = .auto
+            }
+        }
+        photoSettings.photoQualityPrioritization = .balanced
+        return photoSettings
+    }
+    
+    func capturePhoto() {
+        let captureManager = CaptureManager(willBeginCapture: activateSpinner,
+                                            willCapture: flashViewPort,
+                                            didCapture: {},
+                                            didFinishCapture: {},
+                                            didFinishProcessing: deactivateSpinner)
+        let captureSettings = buildCaptureSettings()
+        
+        self.cameraManager.photoOutput.capturePhoto(with: captureSettings, delegate: captureManager)
     }
 }
 
