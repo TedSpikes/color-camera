@@ -141,42 +141,6 @@ class ViewportViewController: UIViewController {
     }
     
     // MARK: Capture photos
-    private func activateSpinner() {
-        let activityView: UIActivityIndicatorView = UIActivityIndicatorView(style: .large)
-        activityView.color = .white
-        activityView.hidesWhenStopped = true
-        activityView.translatesAutoresizingMaskIntoConstraints = false
-        self.captureButton.addSubview(activityView)
-        
-        let alignLeading = NSLayoutConstraint(item: self.captureButton!, attribute: .leading, relatedBy: .equal, toItem: activityView, attribute: .leading, multiplier: 1, constant: 0)
-        let alignTop = NSLayoutConstraint(item: self.captureButton!, attribute: .top, relatedBy: .equal, toItem: activityView, attribute: .top, multiplier: 1, constant: 0)
-        let equalHeight = NSLayoutConstraint(item: self.captureButton!, attribute: .height, relatedBy: .equal, toItem: activityView, attribute: .height, multiplier: 1, constant: 0)
-        let equalWidth = NSLayoutConstraint(item: self.captureButton!, attribute: .width, relatedBy: .equal, toItem: activityView, attribute: .width, multiplier: 1, constant: 0)
-        self.captureButton.addConstraint(alignLeading)
-        self.captureButton.addConstraint(alignTop)
-        self.captureButton.addConstraint(equalHeight)
-        self.captureButton.addConstraint(equalWidth)
-        
-        self.captureButton.tintColor = UIColor(white: 1.0, alpha: 0.0)
-        activityView.startAnimating()
-    }
-    
-    private func flashViewPort() {
-        self.filteredImageView.layer.opacity = 0
-        UIView.animate(withDuration: 0.25) {
-            self.filteredImageView.layer.opacity = 1
-        }
-    }
-    
-    private func deactivateSpinner() {
-        for subView in self.captureButton.subviews {
-            if type(of: subView) == UIActivityIndicatorView.self {
-                subView.removeFromSuperview()
-            }
-        }
-        self.captureButton.tintColor = .white
-    }
-    
     private func buildCaptureSettings() -> AVCapturePhotoSettings {
         /// Simplified magic from https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture/avcam_building_a_camera_app
         var photoSettings = AVCapturePhotoSettings()
@@ -204,19 +168,7 @@ class ViewportViewController: UIViewController {
     }
     
     func capturePhoto() {
-//        let captureManager = CaptureManager(willBeginCapture: activateSpinner,
-//                                            willCapture: flashViewPort,
-//                                            didCapture: {
-//                                                print("didCapture")
-//        },
-//                                            didFinishCapture: {
-//                                                print("didFinishCapture")
-//        },
-//                                            didFinishProcessing: deactivateSpinner)
         let captureSettings = buildCaptureSettings()
-        
-        
-        print(self.cameraManager.captureSession.outputs)
         self.cameraManager.cameraPhotoOutput!.capturePhoto(with: captureSettings, delegate: self)
     }
 }
@@ -224,27 +176,31 @@ class ViewportViewController: UIViewController {
 extension ViewportViewController: AVCaptureVideoDataOutputSampleBufferDelegate {}
 
 extension ViewportViewController: AVCapturePhotoCaptureDelegate {
+    private func flashViewPort() {
+        self.filteredImageView.layer.opacity = 0
+        UIView.animate(withDuration: 0.25) {
+            self.filteredImageView.layer.opacity = 1
+        }
+    }
+    
+    // MARK: Capture delegate methods
     func photoOutput(_ output: AVCapturePhotoOutput, willBeginCaptureFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
-        print("willBeginCaptureFor")
     }
     
     func photoOutput(_ output: AVCapturePhotoOutput, willCapturePhotoFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
-        print("willCapturePhotoFor")
     }
     
     func photoOutput(_ output: AVCapturePhotoOutput, didCapturePhotoFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
-        print("didCapturePhotoFor")
+        self.flashViewPort()
     }
     
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishCaptureFor resolvedSettings: AVCaptureResolvedPhotoSettings, error: Error?) {
         if error == nil {
-            print("didFinishCapture")
         } else {
             print("Failed to capture photo: \(error!)")
         }
     }
     
-    // MARK: Receiving results
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         if error == nil {
             print("\(photo.description)")
