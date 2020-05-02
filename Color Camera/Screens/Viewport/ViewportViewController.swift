@@ -180,7 +180,13 @@ class ViewportViewController: UIViewController {
     private func buildCaptureSettings() -> AVCapturePhotoSettings {
         /// Simplified magic from https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture/avcam_building_a_camera_app
         var photoSettings = AVCapturePhotoSettings()
-        if  self.cameraManager.photoOutput.availablePhotoCodecTypes.contains(.hevc) {
+        let previewPixelType = photoSettings.availablePreviewPhotoPixelFormatTypes.first!
+        let previewFormat = [kCVPixelBufferPixelFormatTypeKey as String: previewPixelType,
+                                     kCVPixelBufferWidthKey as String: 160,
+                                     kCVPixelBufferHeightKey as String: 160,
+                                     ]
+        photoSettings.previewPhotoFormat = previewFormat
+        if  self.cameraManager.cameraPhotoOutput.availablePhotoCodecTypes.contains(.hevc) {
             photoSettings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.hevc])
         }
         switch self.cameraManager.cameraPosition {
@@ -198,15 +204,52 @@ class ViewportViewController: UIViewController {
     }
     
     func capturePhoto() {
-        let captureManager = CaptureManager(willBeginCapture: activateSpinner,
-                                            willCapture: flashViewPort,
-                                            didCapture: {},
-                                            didFinishCapture: {},
-                                            didFinishProcessing: deactivateSpinner)
+//        let captureManager = CaptureManager(willBeginCapture: activateSpinner,
+//                                            willCapture: flashViewPort,
+//                                            didCapture: {
+//                                                print("didCapture")
+//        },
+//                                            didFinishCapture: {
+//                                                print("didFinishCapture")
+//        },
+//                                            didFinishProcessing: deactivateSpinner)
         let captureSettings = buildCaptureSettings()
         
-        self.cameraManager.photoOutput.capturePhoto(with: captureSettings, delegate: captureManager)
+        
+        print(self.cameraManager.captureSession.outputs)
+        self.cameraManager.cameraPhotoOutput!.capturePhoto(with: captureSettings, delegate: self)
     }
 }
 
 extension ViewportViewController: AVCaptureVideoDataOutputSampleBufferDelegate {}
+
+extension ViewportViewController: AVCapturePhotoCaptureDelegate {
+    func photoOutput(_ output: AVCapturePhotoOutput, willBeginCaptureFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
+        print("willBeginCaptureFor")
+    }
+    
+    func photoOutput(_ output: AVCapturePhotoOutput, willCapturePhotoFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
+        print("willCapturePhotoFor")
+    }
+    
+    func photoOutput(_ output: AVCapturePhotoOutput, didCapturePhotoFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
+        print("didCapturePhotoFor")
+    }
+    
+    func photoOutput(_ output: AVCapturePhotoOutput, didFinishCaptureFor resolvedSettings: AVCaptureResolvedPhotoSettings, error: Error?) {
+        if error == nil {
+            print("didFinishCapture")
+        } else {
+            print("Failed to capture photo: \(error!)")
+        }
+    }
+    
+    // MARK: Receiving results
+    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+        if error == nil {
+            print("\(photo.description)")
+        } else {
+            print("Failed to process photo: \(error!)")
+        }
+    }
+}

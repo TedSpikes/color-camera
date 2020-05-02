@@ -17,20 +17,18 @@ class CameraManager {
         case rear
     }
     
-    var captureSession: AVCaptureSession = AVCaptureSession()
+    let captureSession: AVCaptureSession = AVCaptureSession()
     var frontCamera: AVCaptureDevice?
     var rearCamera: AVCaptureDevice?
     var frontCameraInput: AVCaptureDeviceInput?
     var rearCameraInput: AVCaptureDeviceInput?
     var cameraPosition: CameraPosition = .rear
     var isFlashOn: Bool = false
-    var photoOutput: AVCapturePhotoOutput = AVCapturePhotoOutput()
+    var cameraPhotoOutput: AVCapturePhotoOutput!
     var videoOutput: AVCaptureVideoDataOutput = AVCaptureVideoDataOutput()
     var previewLayer: AVCaptureVideoPreviewLayer = AVCaptureVideoPreviewLayer(session: AVCaptureSession())
-}
 
 // MARK: Prepare
-extension CameraManager {
     func getCaptureDevices() throws {
         let session = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: .video, position: .unspecified)
         guard !session.devices.isEmpty else { fatalError("No cameras available on device") }
@@ -63,9 +61,20 @@ extension CameraManager {
     }
     
     func configurePhotoOutput(for session: AVCaptureSession) {
-        self.photoOutput.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])], completionHandler: nil)
-        if captureSession.canAddOutput(self.photoOutput) { captureSession.addOutput(self.photoOutput) }
-        captureSession.startRunning()
+        self.cameraPhotoOutput = AVCapturePhotoOutput()
+        self.cameraPhotoOutput.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])], completionHandler: nil)
+        if captureSession.canAddOutput(self.cameraPhotoOutput) {
+            captureSession.addOutput(self.cameraPhotoOutput)
+            
+            cameraPhotoOutput.isHighResolutionCaptureEnabled = true
+            cameraPhotoOutput.isLivePhotoCaptureEnabled = cameraPhotoOutput.isLivePhotoCaptureSupported
+            cameraPhotoOutput.isDepthDataDeliveryEnabled = cameraPhotoOutput.isDepthDataDeliverySupported
+            cameraPhotoOutput.isPortraitEffectsMatteDeliveryEnabled = cameraPhotoOutput.isPortraitEffectsMatteDeliverySupported
+            cameraPhotoOutput.enabledSemanticSegmentationMatteTypes = cameraPhotoOutput.availableSemanticSegmentationMatteTypes
+            cameraPhotoOutput.maxPhotoQualityPrioritization = .quality
+        } else {
+            print("Failed to add photo output!")
+        }
     }
     
     func configureVideoOutput(for session: AVCaptureSession, delegate: AVCaptureVideoDataOutputSampleBufferDelegate) {
@@ -80,27 +89,24 @@ extension CameraManager {
     }
     
     func prepare(captureVideoDelegate: AVCaptureVideoDataOutputSampleBufferDelegate, completionHandler: @escaping (Error?) -> Void) {
-        DispatchQueue(label: "Prepare Camera Manager").async {
-            do {
-                try self.getCaptureDevices()
-                try self.configureDeviceInputs(for: self.captureSession)
-                self.configurePhotoOutput(for: self.captureSession)
-                self.configureVideoOutput(for: self.captureSession, delegate: captureVideoDelegate)
-            }
-            catch {
-                DispatchQueue.main.async { completionHandler(error) }
-                return
-            }
-            DispatchQueue.main.async {
-                print("Finished preparing Camera Manager")
-                completionHandler(nil)
-            }
+        do {
+            self.captureSession.beginConfiguration()
+            self.captureSession.sessionPreset = .photo
+            try self.getCaptureDevices()
+            try self.configureDeviceInputs(for: self.captureSession)
+            self.configurePhotoOutput(for: self.captureSession)
+            self.configureVideoOutput(for: self.captureSession, delegate: captureVideoDelegate)
+            self.captureSession.commitConfiguration()
+            self.captureSession.startRunning()
         }
+        catch {
+            completionHandler(error)
+            return
+        }
+        completionHandler(nil)
     }
-}
 
 // MARK: Use the camera
-extension CameraManager {
     func displayPreview(on view: UIView, aspectRatio: AVLayerVideoGravity) {
         guard self.captureSession.isRunning else { fatalError("Capture session not running") }
         self.previewLayer.videoGravity = aspectRatio

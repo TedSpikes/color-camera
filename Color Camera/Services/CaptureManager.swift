@@ -54,6 +54,7 @@ class CaptureManager: NSObject, AVCapturePhotoCaptureDelegate {
     // MARK: Receiving results
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         if error == nil {
+            print("\(photo.description)")
             self.didFinishProcessing()
         } else {
             print("Failed to process photo: \(error!)")
