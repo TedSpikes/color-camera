@@ -196,11 +196,12 @@ extension ViewportViewController: AVCapturePhotoCaptureDelegate {
     
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         if error == nil {
-            print("\(photo.description)")
             if let imageData = photo.fileDataRepresentation() {
-                if let image = UIImage(data: imageData) {
-                    let previewPopup = PhotoPreviewViewController(withPreview: image)
-                    self.present(previewPopup, animated: true, completion: nil)
+                if let ciImage = CIImage(data: imageData) {
+                    if let filteredImage = self.getFilteredImage(fromCIImage: ciImage) {
+                        let previewPopup = PhotoPreviewViewController(withPreview: filteredImage)
+                        self.present(previewPopup, animated: true, completion: nil)
+                    }
                 }
             }
         } else {
