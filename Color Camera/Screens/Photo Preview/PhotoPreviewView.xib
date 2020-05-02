@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PhotoPreviewViewController" customModule="Color_Camera" customModuleProvider="target">
+            <connections>
+                <outlet property="imageView" destination="JY7-vY-hVp" id="2xN-76-va3"/>
+                <outlet property="view" destination="N1f-tt-naF" id="qC8-1N-Pb3"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="N1f-tt-naF">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="JY7-vY-hVp">
+                    <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                </imageView>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sp6-fE-0e5">
+                    <rect key="frame" x="0.0" y="813" width="414" height="49"/>
+                    <items>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="s7e-Mj-1eq"/>
+                        <barButtonItem title="Save to Photos" id="YFU-x2-aLg">
+                            <connections>
+                                <action selector="savePhoto:" destination="-1" id="GJA-Mm-6lX"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="ISS-up-Gy3"/>
+                    </items>
+                </toolbar>
+                <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gmf-4u-0R4">
+                    <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <items>
+                        <navigationItem title="Preview" id="baI-It-r7z">
+                            <barButtonItem key="rightBarButtonItem" title="Discard" id="1sN-Wr-aPy">
+                                <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="discard:" destination="-1" id="KSx-Po-vu1"/>
+                                </connections>
+                            </barButtonItem>
+                        </navigationItem>
+                    </items>
+                </navigationBar>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="JY7-vY-hVp" firstAttribute="top" secondItem="gmf-4u-0R4" secondAttribute="bottom" id="4Yw-WI-d6S"/>
+                <constraint firstItem="qJs-xF-8hY" firstAttribute="trailing" secondItem="JY7-vY-hVp" secondAttribute="trailing" id="NO4-IY-MLC"/>
+                <constraint firstItem="qJs-xF-8hY" firstAttribute="leading" secondItem="Sp6-fE-0e5" secondAttribute="leading" id="Ort-o2-vrK"/>
+                <constraint firstItem="qJs-xF-8hY" firstAttribute="trailing" secondItem="gmf-4u-0R4" secondAttribute="trailing" id="Rn6-RY-LUg"/>
+                <constraint firstItem="qJs-xF-8hY" firstAttribute="trailing" secondItem="Sp6-fE-0e5" secondAttribute="trailing" id="YNb-bz-MjB"/>
+                <constraint firstItem="qJs-xF-8hY" firstAttribute="bottom" secondItem="Sp6-fE-0e5" secondAttribute="bottom" id="aci-zN-SzE"/>
+                <constraint firstItem="Sp6-fE-0e5" firstAttribute="top" secondItem="JY7-vY-hVp" secondAttribute="bottom" id="fGy-yM-Ytk"/>
+                <constraint firstItem="gmf-4u-0R4" firstAttribute="top" secondItem="qJs-xF-8hY" secondAttribute="top" id="iJs-mW-bbZ"/>
+                <constraint firstItem="gmf-4u-0R4" firstAttribute="leading" secondItem="qJs-xF-8hY" secondAttribute="leading" id="jef-T0-DmB"/>
+                <constraint firstItem="JY7-vY-hVp" firstAttribute="leading" secondItem="qJs-xF-8hY" secondAttribute="leading" id="ztb-DP-6Kg"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="qJs-xF-8hY"/>
+            <point key="canvasLocation" x="8.6956521739130448" y="123.88392857142857"/>
+        </view>
+    </objects>
+</document>

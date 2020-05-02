@@ -18,6 +18,8 @@
 		9F9234F422ABF65300A0E51E /* CustomCIKernels.metal in Sources */ = {isa = PBXBuildFile; fileRef = 9F9234F322ABF65300A0E51E /* CustomCIKernels.metal */; };
 		9FC7E523236B090B00E97B39 /* FilterPickerCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FC7E522236B090B00E97B39 /* FilterPickerCellView.xib */; };
 		9FC7E525236B0A9100E97B39 /* FilterPickerCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC7E524236B0A9100E97B39 /* FilterPickerCellController.swift */; };
+		9FCB8AF0245DB648008716C2 /* PhotoPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCB8AEF245DB648008716C2 /* PhotoPreviewViewController.swift */; };
+		9FCB8AF2245DB66C008716C2 /* PhotoPreviewView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FCB8AF1245DB66C008716C2 /* PhotoPreviewView.xib */; };
 		9FECA45922AD257800B157D7 /* FilterPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FECA45822AD257800B157D7 /* FilterPickerView.xib */; };
 		9FECA45B22AD25AC00B157D7 /* FilterPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FECA45A22AD25AC00B157D7 /* FilterPickerViewController.swift */; };
 		9FFC86642415864D00F7E307 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC86632415864D00F7E307 /* StorageManager.swift */; };
@@ -37,6 +39,8 @@
 		9F9234F322ABF65300A0E51E /* CustomCIKernels.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = CustomCIKernels.metal; sourceTree = "<group>"; };
 		9FC7E522236B090B00E97B39 /* FilterPickerCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterPickerCellView.xib; sourceTree = "<group>"; };
 		9FC7E524236B0A9100E97B39 /* FilterPickerCellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPickerCellController.swift; sourceTree = "<group>"; };
+		9FCB8AEF245DB648008716C2 /* PhotoPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPreviewViewController.swift; sourceTree = "<group>"; };
+		9FCB8AF1245DB66C008716C2 /* PhotoPreviewView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoPreviewView.xib; sourceTree = "<group>"; };
 		9FECA45822AD257800B157D7 /* FilterPickerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterPickerView.xib; sourceTree = "<group>"; };
 		9FECA45A22AD25AC00B157D7 /* FilterPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPickerViewController.swift; sourceTree = "<group>"; };
 		9FFC86632415864D00F7E307 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
@@ -82,10 +86,20 @@
 			path = "Color Camera";
 			sourceTree = "<group>";
 		};
+		9FCB8AEE245DB62C008716C2 /* Photo Preview */ = {
+			isa = PBXGroup;
+			children = (
+				9FCB8AEF245DB648008716C2 /* PhotoPreviewViewController.swift */,
+				9FCB8AF1245DB66C008716C2 /* PhotoPreviewView.xib */,
+			);
+			path = "Photo Preview";
+			sourceTree = "<group>";
+		};
 		9FFC865E2415815F00F7E307 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
 				9FFC86622415826E00F7E307 /* Filter Picker */,
+				9FCB8AEE245DB62C008716C2 /* Photo Preview */,
 				9FFC86612415826700F7E307 /* Viewport */,
 			);
 			path = Screens;
@@ -194,6 +208,7 @@
 				9F7F4FD722367FB200294E0A /* LaunchScreen.storyboard in Resources */,
 				9F7F4FD422367FB200294E0A /* Assets.xcassets in Resources */,
 				9FC7E523236B090B00E97B39 /* FilterPickerCellView.xib in Resources */,
+				9FCB8AF2245DB66C008716C2 /* PhotoPreviewView.xib in Resources */,
 				9F7F4FCF22367FB000294E0A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -211,6 +226,7 @@
 				9FFC86642415864D00F7E307 /* StorageManager.swift in Sources */,
 				9F7F4FCA22367FB000294E0A /* AppDelegate.swift in Sources */,
 				9F20C18222A69ABA00CD8726 /* CameraManager.swift in Sources */,
+				9FCB8AF0245DB648008716C2 /* PhotoPreviewViewController.swift in Sources */,
 				9F7F4FD222367FB000294E0A /* Color_Camera.xcdatamodeld in Sources */,
 				9FC7E525236B0A9100E97B39 /* FilterPickerCellController.swift in Sources */,
 				9FECA45B22AD25AC00B157D7 /* FilterPickerViewController.swift in Sources */,

@@ -153,15 +153,8 @@ class ViewportViewController: UIViewController {
         if  self.cameraManager.cameraPhotoOutput.availablePhotoCodecTypes.contains(.hevc) {
             photoSettings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.hevc])
         }
-        switch self.cameraManager.cameraPosition {
-        case .front:
-            if self.cameraManager.frontCameraInput?.device.isFlashAvailable ?? false {
-                photoSettings.flashMode = .auto
-            }
-        case .rear:
-            if self.cameraManager.rearCameraInput?.device.isFlashAvailable ?? false {
-                photoSettings.flashMode = .auto
-            }
+        if (self.cameraManager.frontCameraInput?.device.isFlashAvailable ?? false) || (self.cameraManager.rearCameraInput?.device.isFlashAvailable ?? false) {
+            photoSettings.flashMode = .auto
         }
         photoSettings.photoQualityPrioritization = .balanced
         return photoSettings
@@ -204,6 +197,12 @@ extension ViewportViewController: AVCapturePhotoCaptureDelegate {
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         if error == nil {
             print("\(photo.description)")
+            if let imageData = photo.fileDataRepresentation() {
+                if let image = UIImage(data: imageData) {
+                    let previewPopup = PhotoPreviewViewController(withPreview: image)
+                    self.present(previewPopup, animated: true, completion: nil)
+                }
+            }
         } else {
             print("Failed to process photo: \(error!)")
         }
