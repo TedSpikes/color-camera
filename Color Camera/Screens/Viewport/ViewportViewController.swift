@@ -112,13 +112,14 @@ class ViewportViewController: UIViewController {
     }
 
     // MARK: Work with the camera output
-    func getFilteredImage(fromCIImage image: CIImage) -> UIImage? {
+    func getFilteredImage(fromCIImage image: CIImage, oriented orientation: CGImagePropertyOrientation = .up) -> UIImage? {
         guard let filter = self.activeFilter else {
             return nil
         }
         filter.setValue(image, forKey: kCIInputImageKey)
-        let result = UIImage(ciImage: filter.value(forKey: kCIOutputImageKey) as! CIImage)
-        return result
+        var result = filter.value(forKey: kCIOutputImageKey) as! CIImage
+        result = result.oriented(orientation)
+        return UIImage(ciImage: result)
     }
     
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
@@ -197,15 +198,23 @@ extension ViewportViewController: AVCapturePhotoCaptureDelegate {
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         if error == nil {
             if let imageData = photo.fileDataRepresentation() {
-                if let ciImage = CIImage(data: imageData) {
-                    if let filteredImage = self.getFilteredImage(fromCIImage: ciImage) {
-                        let previewPopup = PhotoPreviewViewController(withPreview: filteredImage)
-                        self.present(previewPopup, animated: true, completion: nil)
-                    }
+                let dataProvider = CGDataProvider(data: imageData as CFData)
+                let cgImageRef: CGImage! = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent)
+                if let filteredImage = self.getFilteredImage(fromCIImage: CIImage(cgImage: cgImageRef), oriented: .right) {
+                    let previewPopup = PhotoPreviewViewController(delegate: self, withPreview: filteredImage)
+                    self.present(previewPopup, animated: true, completion: nil)
                 }
             }
         } else {
             print("Failed to process photo: \(error!)")
+        }
+    }
+    
+    @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if error != nil {
+            print("Failed to save an image: \(String(describing: error))")
+        } else {
+            print("Successfully saved the image: \(image.debugDescription)")
         }
     }
 }

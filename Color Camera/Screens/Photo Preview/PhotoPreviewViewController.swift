@@ -15,12 +15,21 @@ class PhotoPreviewViewController: UIViewController {
     }
     
     @IBAction func savePhoto(_ sender: UIBarButtonItem) {
+        guard let ciImage = self.previewImage.ciImage else { return }
+        guard let cgImage = cgImage(from: ciImage) else { return }
+        // Good god
+        let newImage = UIImage(cgImage: cgImage)
+        UIImageWriteToSavedPhotosAlbum(newImage, self.delegate, #selector(ViewportViewController.image(_:didFinishSavingWithError:contextInfo:)), nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     var previewImage: UIImage!
+    weak private var delegate: ViewportViewController!
     
-    init(withPreview previewImage: UIImage) {
+    init(delegate: ViewportViewController, withPreview previewImage: UIImage) {
         self.previewImage = previewImage
+        self.delegate     = delegate
+        
         super.init(nibName: "PhotoPreviewView", bundle: nil)
     }
     
@@ -30,8 +39,13 @@ class PhotoPreviewViewController: UIViewController {
     
     override func viewDidLoad() {
         self.imageView.image = self.previewImage
-        self.imageView.contentMode = .scaleAspectFill
+        self.imageView.contentMode = .scaleAspectFit
         super.viewDidLoad()
+    }
+    
+    func cgImage(from ciImage: CIImage) -> CGImage? {
+        let context = CIContext(options: nil)
+        return context.createCGImage(ciImage, from: ciImage.extent)
     }
     
 }
