@@ -2,8 +2,8 @@
 //  PhotoPreviewViewController.swift
 //  Color Camera
 //
-//  Created by Fedor on 5/2/20.
-//  Copyright © 2020 Fedor Kostylev. All rights reserved.
+//  Created by Ted on 5/2/20.
+//  Copyright © 2020 Ted Kostylev. All rights reserved.
 //
 
 import UIKit
