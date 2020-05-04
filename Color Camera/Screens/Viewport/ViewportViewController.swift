@@ -64,10 +64,10 @@ class ViewportViewController: UIViewController {
     
     func styleFlashButton(isOn: Bool) {
         if isOn {
-            self.toggleFlashButton.setImage(UIImage(systemName: "bolt.fill", withConfiguration: self.upperRightButtonConfig)?.withTintColor(.white), for: .normal)
+            self.toggleFlashButton.setImage(UIImage(systemName: "flashlight.on.fill", withConfiguration: self.upperRightButtonConfig)?.withTintColor(.white), for: .normal)
             self.toggleFlashButton.tintColor = .white
         } else {
-            self.toggleFlashButton.setImage(UIImage(systemName: "bolt", withConfiguration: self.upperRightButtonConfig)?.withTintColor(.white), for: .normal)
+            self.toggleFlashButton.setImage(UIImage(systemName: "flashlight.off.fill", withConfiguration: self.upperRightButtonConfig)?.withTintColor(.white), for: .normal)
             self.toggleFlashButton.tintColor = .white
         }
     }
@@ -170,7 +170,7 @@ class ViewportViewController: UIViewController {
 extension ViewportViewController: AVCaptureVideoDataOutputSampleBufferDelegate {}
 
 extension ViewportViewController: AVCapturePhotoCaptureDelegate {
-    private func flashViewPort() {
+    private func flashViewport() {
         self.filteredImageView.layer.opacity = 0
         UIView.animate(withDuration: 0.25) {
             self.filteredImageView.layer.opacity = 1
@@ -185,7 +185,7 @@ extension ViewportViewController: AVCapturePhotoCaptureDelegate {
     }
     
     func photoOutput(_ output: AVCapturePhotoOutput, didCapturePhotoFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
-        self.flashViewPort()
+        self.flashViewport()
     }
     
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishCaptureFor resolvedSettings: AVCaptureResolvedPhotoSettings, error: Error?) {
