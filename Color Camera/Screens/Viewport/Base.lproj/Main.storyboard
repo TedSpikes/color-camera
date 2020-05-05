@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,15 +19,15 @@
                                 <rect key="frame" x="-1" y="43" width="416" height="820"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PbW-KL-CZ0">
-                                <rect key="frame" x="353" y="52" width="53" height="94.5"/>
+                                <rect key="frame" x="353" y="52" width="53" height="96.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="1fv-47-deH">
-                                        <rect key="frame" x="4" y="4" width="45" height="86.5"/>
+                                        <rect key="frame" x="4" y="4" width="45" height="88.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Bl-QE-Fgn">
-                                                <rect key="frame" x="0.0" y="0.0" width="45" height="40.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="45" height="42.5"/>
                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <state key="normal" image="bolt" catalog="system">
+                                                <state key="normal" image="flashlight.off.fill" catalog="system">
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="32"/>
                                                 </state>
                                                 <connections>
@@ -35,7 +35,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="83k-88-uzq">
-                                                <rect key="frame" x="0.0" y="52.5" width="45" height="34"/>
+                                                <rect key="frame" x="0.0" y="54.5" width="45" height="34"/>
                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" image="camera.rotate" catalog="system">
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="32"/>
@@ -80,11 +80,24 @@
                                             <action selector="pickFilter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XUb-ey-4DU"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7d2-qS-4zo">
+                                        <rect key="frame" x="304" y="7" width="74" height="57.5"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" image="photo.on.rectangle" catalog="system">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="48"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="chooseImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="X8h-1Y-rJf"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstItem="lSw-oz-mwA" firstAttribute="centerY" secondItem="ndO-GP-upW" secondAttribute="centerY" id="4MI-BL-HXm"/>
+                                    <constraint firstItem="7d2-qS-4zo" firstAttribute="centerY" secondItem="ndO-GP-upW" secondAttribute="centerY" id="Ne7-hU-64I"/>
                                     <constraint firstItem="ndO-GP-upW" firstAttribute="centerX" secondItem="ogM-NH-1XV" secondAttribute="centerX" id="TOf-vM-vxj"/>
+                                    <constraint firstAttribute="trailing" secondItem="7d2-qS-4zo" secondAttribute="trailing" constant="20" symbolic="YES" id="WrF-HX-yUo"/>
                                     <constraint firstItem="lSw-oz-mwA" firstAttribute="leading" secondItem="ogM-NH-1XV" secondAttribute="leading" constant="20" symbolic="YES" id="aTx-N5-w5V"/>
                                     <constraint firstItem="ndO-GP-upW" firstAttribute="top" secondItem="ogM-NH-1XV" secondAttribute="top" constant="8" id="mFS-MS-Fvs"/>
                                     <constraint firstAttribute="bottom" secondItem="ndO-GP-upW" secondAttribute="bottom" constant="8" id="qPk-gw-ZN1"/>
@@ -110,6 +123,7 @@
                         <outlet property="captureButton" destination="ndO-GP-upW" id="na2-qD-TWp"/>
                         <outlet property="filterPickerButton" destination="lSw-oz-mwA" id="Z5C-Xz-QTZ"/>
                         <outlet property="filteredImageView" destination="3sb-D9-RO0" id="BpQ-Cg-knL"/>
+                        <outlet property="galleryButton" destination="7d2-qS-4zo" id="GlJ-Ph-bEa"/>
                         <outlet property="toggleCameraButton" destination="83k-88-uzq" id="egS-cB-1dl"/>
                         <outlet property="toggleFlashButton" destination="6Bl-QE-Fgn" id="Rmb-Dn-8c2"/>
                         <outlet property="upperRightButtonsView" destination="PbW-KL-CZ0" id="jXK-d4-r8f"/>
@@ -121,9 +135,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="bolt" catalog="system" width="101" height="128"/>
         <image name="camera.rotate" catalog="system" width="128" height="96"/>
         <image name="circle" catalog="system" width="128" height="121"/>
+        <image name="flashlight.off.fill" catalog="system" width="73" height="128"/>
         <image name="list.dash" catalog="system" width="128" height="85"/>
+        <image name="photo.on.rectangle" catalog="system" width="128" height="98"/>
     </resources>
 </document>

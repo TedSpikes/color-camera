@@ -18,12 +18,14 @@ class ViewportViewController: UIViewController {
     
     override var prefersStatusBarHidden: Bool { return true }
     var activeFilter: VisionFilter?
+    var cameraEnabled: Bool = true
     
     // MARK: Interface hooks
     @IBOutlet weak var filteredImageView: UIImageView!
     @IBOutlet weak var captureButton: UIButton!
     @IBOutlet weak var toggleCameraButton: UIButton!
     @IBOutlet weak var toggleFlashButton: UIButton!
+    @IBOutlet weak var galleryButton: UIButton!
     @IBOutlet weak var filterPickerButton: UIButton!
     @IBOutlet weak var bottomButtonsView: UIView!
     @IBOutlet weak var upperRightButtonsView: UIView!
@@ -52,7 +54,11 @@ class ViewportViewController: UIViewController {
         let filterPicker = FilterPickerViewController(nibName: "FilterPickerView", bundle: nil)
         self.present(filterPicker, animated: true, completion: nil)
     }
-
+    
+    @IBAction func chooseImage(_ sender: UIButton) {
+        self.pickPhoto()
+    }
+    
     // MARK: The setup
     func configureCameraController() {
         self.cameraManager.prepare(captureVideoDelegate: self) { (error) in
@@ -84,8 +90,10 @@ class ViewportViewController: UIViewController {
         // Buttons
         self.filterPickerButton.setImage(UIImage(systemName: "list.dash", withConfiguration: self.bottomButtonConfig), for: .normal)
         self.captureButton.setImage(UIImage(systemName: "circle", withConfiguration: self.bottomButtonConfig), for: .normal)
+        self.galleryButton.setImage(UIImage(systemName: "photo.on.rectangle", withConfiguration: self.bottomButtonConfig), for: .normal)
         self.filterPickerButton.tintColor = .white
         self.captureButton.tintColor = .white
+        self.galleryButton.tintColor = .white
         
         self.styleFlashButton(isOn: self.cameraManager.isFlashOn)
         self.toggleCameraButton.setImage(UIImage(systemName: "camera.rotate", withConfiguration: self.upperRightButtonConfig)?.withTintColor(.white), for: .normal)
@@ -126,6 +134,10 @@ class ViewportViewController: UIViewController {
         let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
         let cameraImage = CIImage(cvPixelBuffer: pixelBuffer!)
         let filteredImage = self.getFilteredImage(fromCIImage: cameraImage) ?? UIImage(ciImage: cameraImage)
+        
+        if !self.cameraEnabled {
+            return
+        }
         DispatchQueue.main.async {
             self.filteredImageView.image = filteredImage
             if self.cameraManager.cameraPosition == .front {
@@ -216,5 +228,36 @@ extension ViewportViewController: AVCapturePhotoCaptureDelegate {
         } else {
             print("Successfully saved the image: \(image.debugDescription)")
         }
+    }
+    
+    // MARK: Working with images from the gallery
+    func pickPhoto() {
+        if !UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            return
+        }
+        let pickerController = UIImagePickerController()
+        pickerController.sourceType = .photoLibrary
+        pickerController.delegate = self
+        self.present(pickerController, animated: true, completion: nil)
+    }
+}
+
+extension ViewportViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        defer {
+            picker.dismiss(animated: true, completion: nil)
+        }
+        
+        guard let image = info[.originalImage] as? UIImage else { return }
+        self.cameraEnabled = false
+        self.filteredImageView.image = image
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        defer {
+            picker.dismiss(animated: true, completion: nil)
+        }
+        print("picker did cancel")
     }
 }
