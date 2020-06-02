@@ -19,6 +19,8 @@ class ViewportViewController: UIViewController {
     override var prefersStatusBarHidden: Bool { return true }
     var activeFilter: VisionFilter?
     var cameraEnabled: Bool = true
+    private var inGalleryMode: Bool = false
+    private var originalGalleryImage: UIImage = UIImage()
     
     // MARK: Interface hooks
     @IBOutlet weak var filteredImageView: UIImageView!
@@ -56,7 +58,11 @@ class ViewportViewController: UIViewController {
     }
     
     @IBAction func chooseImage(_ sender: UIButton) {
-        self.pickPhoto()
+        if inGalleryMode {
+            toggleViewportGalleryMode(enabled: false)
+        } else {
+            self.pickPhoto()
+        }
     }
     
     // MARK: The setup
@@ -117,6 +123,9 @@ class ViewportViewController: UIViewController {
     func switchToFilter(name: String) {
         let filter = self.filterManager.filter(withName: name) as! VisionFilter
         self.activeFilter = filter
+        if inGalleryMode {
+            refreshGalleryImage()
+        }
     }
 
     // MARK: Work with the camera output
@@ -243,21 +252,53 @@ extension ViewportViewController: AVCapturePhotoCaptureDelegate {
 }
 
 extension ViewportViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        defer {
-            picker.dismiss(animated: true, completion: nil)
+    private func toggleViewportGalleryMode(enabled: Bool) {
+        self.inGalleryMode = enabled
+        // Restyle the button
+        if enabled {
+            self.galleryButton.setImage(UIImage(systemName: "camera", withConfiguration: self.bottomButtonConfig), for: .normal)
+            self.galleryButton.tintColor = .white
+        } else {
+            self.galleryButton.setImage(UIImage(systemName: "photo.on.rectangle", withConfiguration: self.bottomButtonConfig), for: .normal)
+            self.galleryButton.tintColor = .white
         }
         
-        guard let image = info[.originalImage] as? UIImage else { return }
+        self.cameraEnabled = !enabled // The world's worst line of code
+    }
+    
+    private func refreshGalleryImage() {
+        if let _image = originalGalleryImage.ciImage {
+            DispatchQueue.main.async {
+                self.filteredImageView.image = self.getFilteredImage(fromCIImage: _image)
+            }
+        } else if let _image = originalGalleryImage.cgImage {
+            DispatchQueue.main.async {
+                self.filteredImageView.image = self.getFilteredImage(fromCIImage: CIImage(cgImage: _image))
+            }
+        } else {
+            print("Unable to get a filtered image out of \(originalGalleryImage.description)")
+            return
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        defer { picker.dismiss(animated: true, completion: nil) }
+        
+        if let _uiImage = info[.originalImage] as? UIImage {
+            originalGalleryImage = _uiImage
+            refreshGalleryImage()
+        } else {
+            print("Unable to get the original image from \(info.description)")
+            return
+        }
+        
         self.cameraEnabled = false
-        self.filteredImageView.image = image
+        toggleViewportGalleryMode(enabled: true)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        defer {
-            picker.dismiss(animated: true, completion: nil)
-        }
+        defer { picker.dismiss(animated: true, completion: nil) }
         print("picker did cancel")
     }
 }
