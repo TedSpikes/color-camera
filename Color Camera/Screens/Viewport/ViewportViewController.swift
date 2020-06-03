@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class ViewportViewController: UIViewController {
+class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
     let cameraManager = CameraManager()
     let filterManager = FilterManager()
     
@@ -22,7 +22,7 @@ class ViewportViewController: UIViewController {
     private var inGalleryMode: Bool = false
     private var originalGalleryImage: UIImage = UIImage()
     
-    // MARK: Interface hooks
+    // MARK: UI hooks
     @IBOutlet weak var filteredImageView: UIImageView!
     @IBOutlet weak var captureButton: UIButton!
     @IBOutlet weak var toggleCameraButton: UIButton!
@@ -31,9 +31,14 @@ class ViewportViewController: UIViewController {
     @IBOutlet weak var filterPickerButton: UIButton!
     @IBOutlet weak var bottomButtonsView: UIView!
     @IBOutlet weak var upperRightButtonsView: UIView!
+    @IBOutlet weak var imageScrollView: UIScrollView!
     
     @IBAction func beginPhotoCapture(_ sender: UIButton) {
-        self.capturePhoto()
+        if inGalleryMode {
+            self.saveGalleryPreview()
+        } else {
+            self.capturePhoto()
+        }
     }
     
     @IBAction func toggleCamera(_ sender: UIButton) {
@@ -92,6 +97,13 @@ class ViewportViewController: UIViewController {
         self.upperRightButtonsView.layer.cornerRadius = 4
         self.upperRightButtonsView.backgroundColor = UIColor(white: 0.1, alpha:  0.75)
         self.filteredImageView.contentMode = .scaleAspectFill
+        self.imageScrollView.minimumZoomScale = 1.0
+        self.imageScrollView.maximumZoomScale = 1.0
+        
+        let doubleTapGr = UITapGestureRecognizer(target: self, action: #selector(ViewportViewController.doubleTapZoom(_:)))
+        doubleTapGr.delegate = self
+        doubleTapGr.numberOfTapsRequired = 2
+        self.imageScrollView.addGestureRecognizer(doubleTapGr)
         
         // Buttons
         self.filterPickerButton.setImage(UIImage(systemName: "list.dash", withConfiguration: self.bottomButtonConfig), for: .normal)
@@ -113,10 +125,21 @@ class ViewportViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.imageScrollView.delegate = self
         
         self.loadFilterFromStorage()
         self.configureCameraController()
         self.styleElements()
+    }
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? { return self.filteredImageView }
+    
+    @objc func doubleTapZoom(_ sender: UITapGestureRecognizer) {
+        if imageScrollView.zoomScale > imageScrollView.minimumZoomScale {
+            imageScrollView.setZoomScale(imageScrollView.minimumZoomScale, animated: true)
+        } else {
+            imageScrollView.setZoomScale(imageScrollView.maximumZoomScale, animated: true)
+        }
     }
     
     // MARK: Filter switching logic
@@ -238,8 +261,10 @@ extension ViewportViewController: AVCapturePhotoCaptureDelegate {
             print("Successfully saved the image: \(image.debugDescription)")
         }
     }
-    
-    // MARK: Working with images from the gallery
+}
+
+// MARK: Working with images from the gallery
+extension ViewportViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func pickPhoto() {
         if !UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             return
@@ -249,18 +274,38 @@ extension ViewportViewController: AVCapturePhotoCaptureDelegate {
         pickerController.delegate = self
         self.present(pickerController, animated: true, completion: nil)
     }
-}
-
-extension ViewportViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func saveGalleryPreview() {
+        if let _image = self.filteredImageView.image {
+            if _image.cgImage != nil { // Backed by a CGImage, safe to save
+                UIImageWriteToSavedPhotosAlbum(_image, self, #selector(ViewportViewController.image(_:didFinishSavingWithError:contextInfo:)), nil)
+            } else if _image.ciImage != nil { // Backed by a CIImage, have to convert
+                let ciImage: CIImage = _image.ciImage!
+                let context = CIContext(options: nil)
+                guard let cgImage: CGImage = context.createCGImage(ciImage, from: ciImage.extent) else { return } // TODO: Should throw an error
+                let newImage = UIImage(cgImage: cgImage)
+                UIImageWriteToSavedPhotosAlbum(newImage, self, #selector(ViewportViewController.image(_:didFinishSavingWithError:contextInfo:)), nil)
+            }
+        }
+    }
+    
     private func toggleViewportGalleryMode(enabled: Bool) {
         self.inGalleryMode = enabled
-        // Restyle the button
+        // Restyle the button, set the image view content mode
         if enabled {
             self.galleryButton.setImage(UIImage(systemName: "camera", withConfiguration: self.bottomButtonConfig), for: .normal)
-            self.galleryButton.tintColor = .white
+            self.captureButton.setImage(UIImage(systemName: "square.and.arrow.down", withConfiguration: self.bottomButtonConfig), for: .normal)
+            self.filteredImageView.contentMode = .scaleAspectFit
+            self.upperRightButtonsView.isHidden = true
+            self.imageScrollView.minimumZoomScale = 1.0
+            self.imageScrollView.maximumZoomScale = 6.0
         } else {
             self.galleryButton.setImage(UIImage(systemName: "photo.on.rectangle", withConfiguration: self.bottomButtonConfig), for: .normal)
-            self.galleryButton.tintColor = .white
+            self.captureButton.setImage(UIImage(systemName: "circle", withConfiguration: self.bottomButtonConfig), for: .normal)
+            self.filteredImageView.contentMode = .scaleAspectFill
+            self.upperRightButtonsView.isHidden = false
+            self.imageScrollView.minimumZoomScale = 1.0
+            self.imageScrollView.maximumZoomScale = 1.0
         }
         
         self.cameraEnabled = !enabled // The world's worst line of code
@@ -281,6 +326,7 @@ extension ViewportViewController: UIImagePickerControllerDelegate, UINavigationC
         }
     }
     
+    // Protocol methods
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         defer { picker.dismiss(animated: true, completion: nil) }

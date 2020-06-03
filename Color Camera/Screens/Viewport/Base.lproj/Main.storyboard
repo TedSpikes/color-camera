@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -15,9 +15,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3sb-D9-RO0">
-                                <rect key="frame" x="-1" y="43" width="416" height="820"/>
-                            </imageView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9f0-81-4YK">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3sb-D9-RO0">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="818"/>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="3sb-D9-RO0" firstAttribute="centerY" secondItem="9f0-81-4YK" secondAttribute="centerY" id="0gS-JQ-Lhn"/>
+                                    <constraint firstItem="3sb-D9-RO0" firstAttribute="top" secondItem="9f0-81-4YK" secondAttribute="top" id="2L1-Yp-ZX6"/>
+                                    <constraint firstAttribute="bottom" secondItem="3sb-D9-RO0" secondAttribute="bottom" id="7qX-Za-KCQ"/>
+                                    <constraint firstItem="3sb-D9-RO0" firstAttribute="leading" secondItem="9f0-81-4YK" secondAttribute="leading" id="IHV-oY-bWg"/>
+                                    <constraint firstItem="3sb-D9-RO0" firstAttribute="centerX" secondItem="9f0-81-4YK" secondAttribute="centerX" id="ksn-qD-Rgx"/>
+                                    <constraint firstAttribute="trailing" secondItem="3sb-D9-RO0" secondAttribute="trailing" id="z9J-wU-MnW"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="8S6-N7-Idf"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="VQf-q8-3cW"/>
+                            </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PbW-KL-CZ0">
                                 <rect key="frame" x="353" y="52" width="53" height="96.5"/>
                                 <subviews>
@@ -106,15 +121,15 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="3sb-D9-RO0" secondAttribute="trailing" constant="-1" id="0Hq-Cv-B5X"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="PbW-KL-CZ0" secondAttribute="trailing" constant="8" id="6Zi-AW-rHO"/>
+                            <constraint firstItem="9f0-81-4YK" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="CVV-xF-Ml3"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ogM-NH-1XV" secondAttribute="bottom" constant="8" id="DGa-qB-mvE"/>
                             <constraint firstItem="PbW-KL-CZ0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="Eh2-8W-2PC"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9f0-81-4YK" secondAttribute="trailing" id="ICV-DT-bBH"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ogM-NH-1XV" secondAttribute="trailing" constant="8" id="P36-91-vtj"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="9f0-81-4YK" secondAttribute="bottom" id="cgg-El-T8v"/>
                             <constraint firstItem="ogM-NH-1XV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="exz-HM-qLk"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="3sb-D9-RO0" secondAttribute="bottom" constant="-1" id="f2q-Hh-fJ4"/>
-                            <constraint firstItem="3sb-D9-RO0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="-1" id="j4f-po-u3n"/>
-                            <constraint firstItem="3sb-D9-RO0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="-1" id="ktB-KJ-aYp"/>
+                            <constraint firstItem="9f0-81-4YK" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="vfT-1O-9Um"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -124,6 +139,7 @@
                         <outlet property="filterPickerButton" destination="lSw-oz-mwA" id="Z5C-Xz-QTZ"/>
                         <outlet property="filteredImageView" destination="3sb-D9-RO0" id="BpQ-Cg-knL"/>
                         <outlet property="galleryButton" destination="7d2-qS-4zo" id="GlJ-Ph-bEa"/>
+                        <outlet property="imageScrollView" destination="9f0-81-4YK" id="qG0-Gv-1ku"/>
                         <outlet property="toggleCameraButton" destination="83k-88-uzq" id="egS-cB-1dl"/>
                         <outlet property="toggleFlashButton" destination="6Bl-QE-Fgn" id="Rmb-Dn-8c2"/>
                         <outlet property="upperRightButtonsView" destination="PbW-KL-CZ0" id="jXK-d4-r8f"/>
