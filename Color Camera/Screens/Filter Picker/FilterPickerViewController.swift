@@ -9,7 +9,7 @@
 import UIKit
 
 class FilterPickerViewController: UIViewController {
-    var manager: FilterManager
+    var filterManager: FilterManager
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var navBar: UINavigationBar!
@@ -19,12 +19,12 @@ class FilterPickerViewController: UIViewController {
     }
     
     required init?(coder: NSCoder) {
-        self.manager = FilterManager()
+        self.filterManager = FilterManager()
         super.init(coder: coder)
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        self.manager = FilterManager()
+        self.filterManager = FilterManager()
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
@@ -57,16 +57,37 @@ extension FilterPickerViewController: UITableViewDelegate {
 // MARK: UITableViewDataSource
 extension FilterPickerViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.manager.getFilterNames().count
+        return self.filterManager.getFilterNames().count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "filterPickerCell") as! FilterPickerCell
-        let filterName: String = self.manager.getFilterNames()[indexPath.row]
-        let colorMatrix: ColorMatrix = self.manager.getColorMatrix(name: filterName)!
+        let filterName: String = self.filterManager.getFilterNames()[indexPath.row]
+        let colorMatrix: ColorMatrix = self.filterManager.getColorMatrix(name: filterName)!
         
         cell.nameLabel?.text = colorMatrix.name
         cell.descriptionLabel?.text = colorMatrix.description
+        cell.exampleImageView.image = getFilteredImage(fromUIImage: UIImage(named: "Pencils")!, for: colorMatrix.name)
         return cell
+    }
+}
+
+// MARK: Filter logic
+// Similar to the viewport
+extension FilterPickerViewController {
+    func getFilteredImage(fromUIImage inputImage: UIImage, for filterName: String, oriented orientation: CGImagePropertyOrientation = .up) -> UIImage? {
+        let filter = self.filterManager.filter(withName: filterName) as! VisionFilter
+        var image: CIImage = CIImage()
+        
+        if inputImage.cgImage != nil {
+            image = CIImage(cgImage: inputImage.cgImage!)
+        } else if inputImage.ciImage != nil {
+            image = inputImage.ciImage!
+        }
+        
+        filter.setValue(image, forKey: kCIInputImageKey)
+        var result = filter.value(forKey: kCIOutputImageKey) as! CIImage
+        result = result.oriented(orientation)
+        return UIImage(ciImage: result)
     }
 }
