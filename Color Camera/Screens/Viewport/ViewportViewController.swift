@@ -13,8 +13,8 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
     let cameraManager = CameraManager()
     let filterManager = FilterManager()
     
-    let bottomButtonConfig = UIImage.SymbolConfiguration(pointSize: CGFloat(floatLiteral: 48.0), weight: .regular)
-    let upperRightButtonConfig  = UIImage.SymbolConfiguration(pointSize: CGFloat(floatLiteral: 32.0), weight: .regular)
+    let bottomButtonConfig = UIImage.SymbolConfiguration(pointSize: CGFloat(floatLiteral: 32.0), weight: .regular)
+    let upperRightButtonConfig  = UIImage.SymbolConfiguration(pointSize: CGFloat(floatLiteral: 24.0), weight: .regular)
     
     override var prefersStatusBarHidden: Bool { return true }
     var activeFilter: VisionFilter?
@@ -118,8 +118,13 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
         self.toggleCameraButton.tintColor = .white
     }
     
-    func loadFilterFromStorage(defaultFilter: String = "Normal") {
-        let storedFilter = getStoredFilter()
+    func loadFilterFromStorage(defaultFilter: String = "No filter") {
+        var storedFilter = getStoredFilter()
+        if let _filter = storedFilter {
+            if !self.filterManager.getFilterNames().contains(_filter) {
+                storedFilter = nil
+            }
+        }
         self.switchToFilter(name: storedFilter ?? defaultFilter)
     }
     

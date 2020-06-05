@@ -22,7 +22,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" text="Description" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ylQ-ng-iFo">
-                        <rect key="frame" x="111" y="49" width="283" height="46"/>
+                        <rect key="frame" x="111" y="49" width="283" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -45,7 +45,7 @@
                     <constraint firstAttribute="trailing" secondItem="ylQ-ng-iFo" secondAttribute="trailing" constant="20" symbolic="YES" id="LMz-MN-ZkO"/>
                     <constraint firstItem="4Tx-uC-Pvq" firstAttribute="top" secondItem="bNZ-Nz-exB" secondAttribute="top" constant="20" symbolic="YES" id="Xaz-ht-5mT"/>
                     <constraint firstItem="ylQ-ng-iFo" firstAttribute="top" secondItem="4Tx-uC-Pvq" secondAttribute="bottom" constant="8" symbolic="YES" id="dvx-ad-L1P"/>
-                    <constraint firstAttribute="bottom" secondItem="ylQ-ng-iFo" secondAttribute="bottom" constant="20" symbolic="YES" id="mTa-bb-kvH"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ylQ-ng-iFo" secondAttribute="bottom" constant="8" id="mTa-bb-kvH"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -57,6 +57,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Pencils" width="80" height="80"/>
+        <image name="Pencils" width="120" height="120"/>
     </resources>
 </document>

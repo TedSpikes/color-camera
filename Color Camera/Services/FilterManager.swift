@@ -31,7 +31,7 @@ struct ColorMatrix {
 
 class FilterManager {
     private let filterNames: [String] = [  // An _ordered_ list of filters
-        "Normal",
+        "No filter",
         "Protanopia",
         "Protanomaly",
         "Deuteranopia",
@@ -43,7 +43,7 @@ class FilterManager {
     ]
     
     private let colorMatrices: [String: ColorMatrix] = [
-        "Normal":        ColorMatrix(name: "Normal",
+        "No filter":        ColorMatrix(name: "No filter",
                                      redVector: ColorVector(100.0, 0, 0),
                                      greenVector: ColorVector(0, 100.0, 0),
                                      blueVector: ColorVector(0, 0, 100.0),
@@ -52,12 +52,12 @@ class FilterManager {
                                      redVector: ColorVector(56.667, 43.333, 0),
                                      greenVector: ColorVector(55.833, 44.167, 0),
                                      blueVector: ColorVector(0, 24.167, 75.833),
-                                     description: "Full red-blindness, missing L-cones."),
+                                     description: "Full red-blindness."),
         "Protanomaly":   ColorMatrix(name: "Protanomaly",
                                      redVector: ColorVector(81.667, 18.333, 0),
                                      greenVector: ColorVector(33.333, 66.667, 0),
                                      blueVector: ColorVector(0, 12.5, 87.5),
-                                     description: "Red-blindness, defective L-cones."),
+                                     description: "Partial red-blindness."),
         "Deuteranopia":  ColorMatrix(name: "Deuteranopia",
                                      redVector: ColorVector(62.5, 37.5, 0),
                                      greenVector: ColorVector(70, 30, 0),
@@ -67,17 +67,17 @@ class FilterManager {
                                      redVector: ColorVector(80, 20, 0),
                                      greenVector: ColorVector(25.833, 74.167, 0),
                                      blueVector: ColorVector(0, 14.167, 85.833),
-                                     description: "Varies per person, green sensitivity is moved to red."),
+                                     description: "Partial green-blindness, green sensitivity moves to red."),
         "Tritanopia":    ColorMatrix(name: "Tritanopia",
                                      redVector: ColorVector(95, 5, 0),
                                      greenVector: ColorVector(0, 43.333, 56.667),
                                      blueVector: ColorVector(0, 47.5, 52.5),
-                                     description: "Rare form of missing S-cones, blue can be confused with green and yellow with violet."),
+                                     description: "A rare lack of blue perception."),
         "Tritanomaly":   ColorMatrix(name: "Tritanomaly",
                                      redVector: ColorVector(96.667, 3.333, 0),
                                      greenVector: ColorVector(0, 73.333, 26.667),
                                      blueVector: ColorVector(0, 18.333, 81.667),
-                                     description: "Usually, a lighter form of Tritanopia."),
+                                     description: "A lighter form of tritanopia."),
         "Achromatopsia": ColorMatrix(name: "Achromatopsia",
                                      redVector: ColorVector(29.9, 58.7, 11.4),
                                      greenVector: ColorVector(29.9, 58.7, 11.4),
@@ -87,12 +87,13 @@ class FilterManager {
                                      redVector: ColorVector(61.8, 32, 6.2),
                                      greenVector: ColorVector(16.3, 77.5, 6.2),
                                      blueVector: ColorVector(16.3, 32.0, 51.6),
-                                     description: "An alleviated form of Achromatopsia")
+                                     description: "A lighter, very rare form of achromatopsia.")
     ]
     
     func getColorMatrix(name: String) -> ColorMatrix? {
         return self.colorMatrices[name]
     }
+    
     func getFilterNames() -> [String] {self.filterNames}
 }
 
