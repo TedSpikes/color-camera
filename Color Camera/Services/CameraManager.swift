@@ -9,12 +9,13 @@
 import Foundation
 import UIKit
 import AVFoundation
+import os.log
 
 // MARK: Properties
 class CameraManager {
-    public enum CameraPosition {
-        case front
-        case rear
+    public enum CameraPosition: String {
+        case front = "front"
+        case rear  = "rear"
     }
     
     let captureSession: AVCaptureSession = AVCaptureSession()
@@ -73,7 +74,7 @@ class CameraManager {
             cameraPhotoOutput.enabledSemanticSegmentationMatteTypes = cameraPhotoOutput.availableSemanticSegmentationMatteTypes
             cameraPhotoOutput.maxPhotoQualityPrioritization = .quality
         } else {
-            print("Failed to add photo output!")
+            os_log(.error, "Failed to add photo output!")
         }
     }
     
@@ -130,7 +131,7 @@ class CameraManager {
                 self.captureSession.addInput(input)
                 self.cameraPosition = .rear
             } else {
-                print("Can't add input, session already has \(self.captureSession.inputs)")
+                os_log(.error, "Can't add input, session already has %s", self.captureSession.inputs.description)
             }
         } else if (self.cameraPosition == .rear) && (self.frontCamera != nil) {
             // Switch to front
@@ -142,10 +143,10 @@ class CameraManager {
                 self.captureSession.addInput(input)
                 self.cameraPosition = .front
             } else {
-                print("Can't add input, session already has \(self.captureSession.inputs)")
+                os_log(.error, "Can't add input, session already has %s", self.captureSession.inputs.description)
             }
         } else {
-            print("No other cameras available to switch away from \(self.cameraPosition)")
+            os_log(.error, "No other cameras available to switch away from %s", self.cameraPosition.rawValue)
         }
         for connection in self.videoOutput.connections {
             if connection.isVideoOrientationSupported {
@@ -171,7 +172,7 @@ class CameraManager {
                 device.unlockForConfiguration()
             }
             catch {
-                print(error)
+                os_log(.error, "%s", error.localizedDescription)
             }
         }
     }

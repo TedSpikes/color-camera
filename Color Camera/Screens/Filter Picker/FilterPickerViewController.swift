@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import os.log
 
 class FilterPickerViewController: UIViewController {
     var filterManager: FilterManager
@@ -48,7 +49,7 @@ extension FilterPickerViewController: UITableViewDelegate {
         do {
             try setUserDefault(value: filterName, forKey: .activeFilter)
         } catch {
-            print("Unexpected error when trying to save the active filter: \(error)")
+            os_log(.error, "Unexpected error when trying to save the active filter: %s", error.localizedDescription)
         }
         self.dismiss(animated: true, completion: nil)
     }

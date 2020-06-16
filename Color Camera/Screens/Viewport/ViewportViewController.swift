@@ -46,7 +46,7 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
             try self.cameraManager.switchCameras()
         }
         catch {
-            print(error)
+            Toast.show(message: "Coudn't switch cameras: \(error)", controller: self)
         }
     }
     
@@ -54,7 +54,9 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
         do {
             try self.cameraManager.toggleFlash()
             self.styleFlashButton(isOn: self.cameraManager.isFlashOn)
-        } catch { print(error) }
+        } catch {
+            Toast.show(message: "Coudn't toggle the flash: \(error)", controller: self)
+        }
     }
     
     @IBAction func pickFilter(_ sender: UIButton) {
@@ -74,7 +76,7 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
     func configureCameraController() {
         self.cameraManager.prepare(captureVideoDelegate: self) { (error) in
             if let error = error {
-                print(error)
+                Toast.show(message: "Failed to configure the camera controller: \(error)", controller: self)
             }
         }
     }
@@ -238,9 +240,8 @@ extension ViewportViewController: AVCapturePhotoCaptureDelegate {
     }
     
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishCaptureFor resolvedSettings: AVCaptureResolvedPhotoSettings, error: Error?) {
-        if error == nil {
-        } else {
-            print("Failed to capture photo: \(error!)")
+        if let _error = error {
+            Toast.show(message: "Capture failed: \(_error)", controller: self)
         }
     }
     
@@ -255,20 +256,20 @@ extension ViewportViewController: AVCapturePhotoCaptureDelegate {
                 }
             }
         } else {
-            print("Failed to process photo: \(error!)")
+            Toast.show(message: "Failed to process photo: \(String(describing: error))", controller: self)
         }
     }
     
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if error != nil {
-            print("Failed to save an image: \(String(describing: error))")
+            Toast.show(message: "Failed to save the image: \(String(describing: error))", controller: self)
         } else {
-            print("Successfully saved the image: \(image.debugDescription)")
+            Toast.show(message: "Image saved", controller: self)
         }
     }
 }
 
-// MARK: Working with images from the gallery
+// MARK: Working with the gallery
 extension ViewportViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func pickPhoto() {
         if !UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
@@ -326,7 +327,7 @@ extension ViewportViewController: UIImagePickerControllerDelegate, UINavigationC
                 self.filteredImageView.image = self.getFilteredImage(fromCIImage: CIImage(cgImage: _image))
             }
         } else {
-            print("Unable to get a filtered image out of \(originalGalleryImage.description)")
+            Toast.show(message: "Error: Unable to process the gallery image data.", controller: self)
             return
         }
     }
@@ -340,7 +341,7 @@ extension ViewportViewController: UIImagePickerControllerDelegate, UINavigationC
             originalGalleryImage = _uiImage
             refreshGalleryImage()
         } else {
-            print("Unable to get the original image from \(info.description)")
+            Toast.show(message: "Error: Couldn't get the original image from the picker.", controller: self)
             return
         }
         
@@ -349,7 +350,6 @@ extension ViewportViewController: UIImagePickerControllerDelegate, UINavigationC
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        defer { picker.dismiss(animated: true, completion: nil) }
-        print("picker did cancel")
+        do { picker.dismiss(animated: true, completion: nil) }
     }
 }

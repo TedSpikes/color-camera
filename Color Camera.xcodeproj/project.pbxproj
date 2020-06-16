@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9F20C18222A69ABA00CD8726 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F20C18122A69AB900CD8726 /* CameraManager.swift */; };
+		9F3659AC248E1ADA00CAD147 /* ToastController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3659AB248E1ADA00CAD147 /* ToastController.swift */; };
 		9F7F4FCA22367FB000294E0A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7F4FC922367FB000294E0A /* AppDelegate.swift */; };
 		9F7F4FCC22367FB000294E0A /* ViewportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7F4FCB22367FB000294E0A /* ViewportViewController.swift */; };
 		9F7F4FCF22367FB000294E0A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F7F4FCD22367FB000294E0A /* Main.storyboard */; };
@@ -27,6 +28,7 @@
 
 /* Begin PBXFileReference section */
 		9F20C18122A69AB900CD8726 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
+		9F3659AB248E1ADA00CAD147 /* ToastController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastController.swift; sourceTree = "<group>"; };
 		9F7F4FC622367FB000294E0A /* Color Camera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Color Camera.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F7F4FC922367FB000294E0A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F7F4FCB22367FB000294E0A /* ViewportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewportViewController.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				9F9234F122ABF36F00A0E51E /* FilterManager.swift */,
 				9F9234F322ABF65300A0E51E /* CustomCIKernels.metal */,
 				9FFC86632415864D00F7E307 /* StorageManager.swift */,
+				9F3659AB248E1ADA00CAD147 /* ToastController.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -225,6 +228,7 @@
 				9F9234F422ABF65300A0E51E /* CustomCIKernels.metal in Sources */,
 				9FFC86642415864D00F7E307 /* StorageManager.swift in Sources */,
 				9F7F4FCA22367FB000294E0A /* AppDelegate.swift in Sources */,
+				9F3659AC248E1ADA00CAD147 /* ToastController.swift in Sources */,
 				9F20C18222A69ABA00CD8726 /* CameraManager.swift in Sources */,
 				9FCB8AF0245DB648008716C2 /* PhotoPreviewViewController.swift in Sources */,
 				9F7F4FD222367FB000294E0A /* Color_Camera.xcdatamodeld in Sources */,
