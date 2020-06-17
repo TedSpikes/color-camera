@@ -110,11 +110,17 @@ class VisionFilter: CIFilter {
     var matrix: ColorMatrix
     
     private func createCIKernel() -> CIColorKernel {
-        guard let url = Bundle.main.url(forResource: "default", withExtension: "metallib"),
+        guard
+            let url = Bundle.main.url(forResource: "default", withExtension: "metallib"),
             let data = try? Data(contentsOf: url)
-            else { fatalError("Unable to get metallib") }
-        guard let kernel: CIColorKernel = try? CIColorKernel(functionName: "vision", fromMetalLibraryData: data)
-            else { fatalError("Couldn't create kernel") }
+        else {
+            fatalError("Unable to get metallib") // Justified fatalError
+        }
+        guard
+            let kernel: CIColorKernel = try? CIColorKernel(functionName: "vision", fromMetalLibraryData: data)
+        else {
+            fatalError("Couldn't create kernel") // Justified fatalError
+        }
         return kernel
     }
     
@@ -144,7 +150,7 @@ class VisionFilter: CIFilter {
     @objc dynamic var inputImage: CIImage?
     override var outputImage: CIImage? {
         guard let input = inputImage else {
-            fatalError("No input image!")
+            return nil
         }
         let src = CISampler(image: input)
         let redVector = self.matrix.redVector

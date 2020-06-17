@@ -42,8 +42,18 @@ class FilterPickerViewController: UIViewController {
 // MARK: UITableViewDelegate
 extension FilterPickerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let activeCell = self.tableView.cellForRow(at: indexPath) as? FilterPickerCell else { fatalError("Didn't select a FilterPickerCell") }
-        guard let filterName = activeCell.nameLabel?.text else { fatalError("Time to rewrite this properly") }
+        guard
+            let activeCell = self.tableView.cellForRow(at: indexPath) as? FilterPickerCell
+        else {
+            os_log(.error, "Couldn't get cell at %s as FilterPickerCell", indexPath.description)
+            return
+        }
+        guard
+            let filterName = activeCell.nameLabel?.text
+        else {
+            os_log(.error, "Selected cell %s does not have a title", activeCell.description)
+            return
+        }
         let presenter  = self.presentingViewController as! ViewportViewController
         presenter.switchToFilter(name: filterName)
         do {

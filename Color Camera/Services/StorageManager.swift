@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import os.log
 
 private let defaultsTypes: [defaultsKeys: Any.Type] = [
     .activeFilter: String.self,
@@ -33,7 +34,7 @@ public var isOnFrontal: Bool {
         do {
             try setUserDefault(value: newValue, forKey: .isOnFrontal)
         } catch {
-            fatalError("Must be a bool: \(error)")
+            os_log(.error, "Tried saving %s to isOnFrontal", newValue)
         }
     }
 }

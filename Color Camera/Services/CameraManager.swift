@@ -32,7 +32,7 @@ class CameraManager {
 // MARK: Prepare
     func getCaptureDevices() throws {
         let session = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: .video, position: .unspecified)
-        guard !session.devices.isEmpty else { fatalError("No cameras available on device") }
+        guard !session.devices.isEmpty else { fatalError("No cameras available on the device") } // Justified fatalError
         
         self.frontCamera = session.devices.first(where: { $0.position == .front } )
         self.rearCamera  = session.devices.first(where: { $0.position == .back } )
@@ -107,18 +107,9 @@ class CameraManager {
         completionHandler(nil)
     }
 
-// MARK: Use the camera
-    func displayPreview(on view: UIView, aspectRatio: AVLayerVideoGravity) {
-        guard self.captureSession.isRunning else { fatalError("Capture session not running") }
-        self.previewLayer.videoGravity = aspectRatio
-        self.previewLayer.connection?.videoOrientation = .portrait
-        
-        view.layer.insertSublayer(self.previewLayer, at: 0)
-        self.previewLayer.frame = view.frame
-    }
-    
+    // MARK: Use the camera
     func switchCameras() throws {
-        guard self.captureSession.isRunning else { fatalError("Capture session not running") }
+        guard self.captureSession.isRunning else { throw CameraManagerError.sessionNotRunning }
         self.captureSession.beginConfiguration()
         
         if (self.cameraPosition == .front) && (self.rearCamera != nil) {
@@ -157,7 +148,7 @@ class CameraManager {
     }
     
     func toggleFlash() throws {
-        guard let device = AVCaptureDevice.default(for: .video) else { fatalError("No default device available for video") }
+        guard let device = AVCaptureDevice.default(for: .video) else { throw CameraManagerError.noVideoDevice }
         if device.hasTorch {
             do {
                 try device.lockForConfiguration()
@@ -176,4 +167,9 @@ class CameraManager {
             }
         }
     }
+}
+
+enum CameraManagerError: Error {
+    case sessionNotRunning
+    case noVideoDevice
 }
