@@ -312,6 +312,7 @@ extension ViewportViewController: UIImagePickerControllerDelegate, UINavigationC
             self.upperRightButtonsView.isHidden = false
             self.imageScrollView.minimumZoomScale = 1.0
             self.imageScrollView.maximumZoomScale = 1.0
+            self.imageScrollView.zoomScale = 1.0
         }
         
         self.cameraEnabled = !enabled // The world's worst line of code
