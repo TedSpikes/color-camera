@@ -32,7 +32,7 @@ class CameraManager {
 // MARK: Prepare
     func getCaptureDevices() throws {
         let session = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: .video, position: .unspecified)
-        guard !session.devices.isEmpty else { fatalError("No cameras available on the device") } // Justified fatalError
+        guard !session.devices.isEmpty else { throw CameraManagerError.noDevicesAvailable }
         
         self.frontCamera = session.devices.first(where: { $0.position == .front } )
         self.rearCamera  = session.devices.first(where: { $0.position == .back } )
@@ -170,6 +170,7 @@ class CameraManager {
 }
 
 enum CameraManagerError: Error {
+    case noDevicesAvailable
     case sessionNotRunning
     case noVideoDevice
 }
