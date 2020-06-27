@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import os.log
 
 class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
     let cameraManager = CameraManager()
@@ -35,25 +36,32 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
     
     @IBAction func beginPhotoCapture(_ sender: UIButton) {
         if inGalleryMode {
-            self.saveGalleryPreview()
+            saveGalleryPreview()
         } else {
-            self.capturePhoto()
+            capturePhoto()
         }
     }
     
     @IBAction func toggleCamera(_ sender: UIButton) {
         do {
-            try self.cameraManager.switchCameras()
-        }
-        catch {
+            try cameraManager.switchCameras()
+            if cameraManager.isFlashOn {
+                try cameraManager.toggleFlash()
+            }
+            if cameraManager.cameraPosition == .front {
+                toggleFlashButton.isEnabled = false
+            } else {
+                toggleFlashButton.isEnabled = true
+            }
+        } catch {
             Toast.show(message: "Coudn't switch cameras: \(error)", controller: self)
         }
     }
     
     @IBAction func toggleFlash(_ sender: UIButton) {
         do {
-            try self.cameraManager.toggleFlash()
-            self.styleFlashButton(isOn: self.cameraManager.isFlashOn)
+            try cameraManager.toggleFlash()
+            styleFlashButton(isOn: cameraManager.isFlashOn)
         } catch {
             Toast.show(message: "Coudn't toggle the flash: \(error)", controller: self)
         }
@@ -61,20 +69,20 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
     
     @IBAction func pickFilter(_ sender: UIButton) {
         let filterPicker = FilterPickerViewController(nibName: "FilterPickerView", bundle: nil)
-        self.present(filterPicker, animated: true, completion: nil)
+        present(filterPicker, animated: true, completion: nil)
     }
     
     @IBAction func chooseImage(_ sender: UIButton) {
         if inGalleryMode {
             toggleViewportGalleryMode(enabled: false)
         } else {
-            self.pickPhoto()
+            pickPhoto()
         }
     }
     
     // MARK: The setup
     func configureCameraController() {
-        self.cameraManager.prepare(captureVideoDelegate: self) { (error) in
+        cameraManager.prepare(captureVideoDelegate: self) { (error) in
             if let error = error {
                 Toast.show(message: "Failed to configure the camera controller: \(error)", controller: self)
             }
@@ -83,63 +91,63 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
     
     func styleFlashButton(isOn: Bool) {
         if isOn {
-            self.toggleFlashButton.setImage(UIImage(systemName: "flashlight.on.fill", withConfiguration: self.upperRightButtonConfig)?.withTintColor(.white), for: .normal)
-            self.toggleFlashButton.tintColor = .white
+            toggleFlashButton.setImage(UIImage(systemName: "flashlight.on.fill", withConfiguration: upperRightButtonConfig)?.withTintColor(.white), for: .normal)
+            toggleFlashButton.tintColor = .white
         } else {
-            self.toggleFlashButton.setImage(UIImage(systemName: "flashlight.off.fill", withConfiguration: self.upperRightButtonConfig)?.withTintColor(.white), for: .normal)
-            self.toggleFlashButton.tintColor = .white
+            toggleFlashButton.setImage(UIImage(systemName: "flashlight.off.fill", withConfiguration: upperRightButtonConfig)?.withTintColor(.white), for: .normal)
+            toggleFlashButton.tintColor = .white
         }
     }
        
     func styleElements() {
         // Views
-        self.view.backgroundColor = .black
-        self.bottomButtonsView.layer.cornerRadius = 8
-        self.bottomButtonsView.backgroundColor = UIColor(white: 0.1, alpha: 0.75)
-        self.upperRightButtonsView.layer.cornerRadius = 4
-        self.upperRightButtonsView.backgroundColor = UIColor(white: 0.1, alpha:  0.75)
-        self.filteredImageView.contentMode = .scaleAspectFill
-        self.imageScrollView.minimumZoomScale = 1.0
-        self.imageScrollView.maximumZoomScale = 1.0
+        view.backgroundColor = .black
+        bottomButtonsView.layer.cornerRadius = 8
+        bottomButtonsView.backgroundColor = UIColor(white: 0.1, alpha: 0.75)
+        upperRightButtonsView.layer.cornerRadius = 4
+        upperRightButtonsView.backgroundColor = UIColor(white: 0.1, alpha:  0.75)
+        filteredImageView.contentMode = .scaleAspectFill
+        imageScrollView.minimumZoomScale = 1.0
+        imageScrollView.maximumZoomScale = 1.0
         
         let doubleTapGr = UITapGestureRecognizer(target: self, action: #selector(ViewportViewController.doubleTapZoom(_:)))
         doubleTapGr.delegate = self
         doubleTapGr.numberOfTapsRequired = 2
-        self.imageScrollView.addGestureRecognizer(doubleTapGr)
+        imageScrollView.addGestureRecognizer(doubleTapGr)
         
         // Buttons
-        self.filterPickerButton.setImage(UIImage(systemName: "list.dash", withConfiguration: self.bottomButtonConfig), for: .normal)
-        self.captureButton.setImage(UIImage(systemName: "circle", withConfiguration: self.bottomButtonConfig), for: .normal)
-        self.galleryButton.setImage(UIImage(systemName: "photo.on.rectangle", withConfiguration: self.bottomButtonConfig), for: .normal)
-        self.filterPickerButton.tintColor = .white
-        self.captureButton.tintColor = .white
-        self.galleryButton.tintColor = .white
+        filterPickerButton.setImage(UIImage(systemName: "list.dash", withConfiguration: bottomButtonConfig), for: .normal)
+        captureButton.setImage(UIImage(systemName: "circle", withConfiguration: bottomButtonConfig), for: .normal)
+        galleryButton.setImage(UIImage(systemName: "photo.on.rectangle", withConfiguration: bottomButtonConfig), for: .normal)
+        filterPickerButton.tintColor = .white
+        captureButton.tintColor = .white
+        galleryButton.tintColor = .white
         
-        self.styleFlashButton(isOn: self.cameraManager.isFlashOn)
-        self.toggleCameraButton.setImage(UIImage(systemName: "camera.rotate", withConfiguration: self.upperRightButtonConfig)?.withTintColor(.white), for: .normal)
-        self.toggleCameraButton.tintColor = .white
+        styleFlashButton(isOn: cameraManager.isFlashOn)
+        toggleCameraButton.setImage(UIImage(systemName: "camera.rotate", withConfiguration: upperRightButtonConfig)?.withTintColor(.white), for: .normal)
+        toggleCameraButton.tintColor = .white
     }
     
     func loadFilterFromStorage(defaultFilter: String = "No filter") {
         var storedFilter = getStoredFilter()
         if let _filter = storedFilter {
-            if !self.filterManager.getFilterNames().contains(_filter) {
+            if !filterManager.getFilterNames().contains(_filter) {
                 storedFilter = nil
             }
         }
-        self.switchToFilter(name: storedFilter ?? defaultFilter)
+        switchToFilter(name: storedFilter ?? defaultFilter)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.imageScrollView.delegate = self
+        imageScrollView.delegate = self
         
-        self.loadFilterFromStorage()
-        self.configureCameraController()
-        self.styleElements()
+        loadFilterFromStorage()
+        configureCameraController()
+        styleElements()
     }
     
-    func viewForZooming(in scrollView: UIScrollView) -> UIView? { return self.filteredImageView }
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? { return filteredImageView }
     
     @objc func doubleTapZoom(_ sender: UITapGestureRecognizer) {
         if imageScrollView.zoomScale > imageScrollView.minimumZoomScale {
@@ -151,8 +159,8 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
     
     // MARK: Filter switching logic
     func switchToFilter(name: String) {
-        let filter = self.filterManager.filter(withName: name) as! VisionFilter
-        self.activeFilter = filter
+        let filter = filterManager.filter(withName: name) as! VisionFilter
+        activeFilter = filter
         if inGalleryMode {
             refreshGalleryImage()
         }
@@ -160,11 +168,9 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
 
     // MARK: Work with the camera output
     func getFilteredImage(fromCIImage image: CIImage, oriented orientation: CGImagePropertyOrientation = .up) -> UIImage? {
-        guard let filter = self.activeFilter else {
-            return nil
-        }
+        guard let filter = activeFilter else { return nil }
         filter.setValue(image, forKey: kCIInputImageKey)
-        var result = filter.value(forKey: kCIOutputImageKey) as! CIImage
+        guard var result: CIImage = filter.value(forKey: kCIOutputImageKey) as? CIImage else { return nil }
         result = result.oriented(orientation)
         return UIImage(ciImage: result)
     }
@@ -172,18 +178,18 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
         let cameraImage = CIImage(cvPixelBuffer: pixelBuffer!)
-        let filteredImage = self.getFilteredImage(fromCIImage: cameraImage) ?? UIImage(ciImage: cameraImage)
+        let filteredImage = getFilteredImage(fromCIImage: cameraImage) ?? UIImage(ciImage: cameraImage)
         
-        if !self.cameraEnabled {
+        if !cameraEnabled {
             return
         }
         DispatchQueue.main.async {
             self.filteredImageView.image = filteredImage
             if self.cameraManager.cameraPosition == .front {
                 // Mirror the image view for front camera
-                self.filteredImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                self.imageScrollView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             } else {
-                self.filteredImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                self.imageScrollView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             }
         }
     }
@@ -202,10 +208,10 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
                                      kCVPixelBufferHeightKey as String: 160,
                                      ]
         photoSettings.previewPhotoFormat = previewFormat
-        if  self.cameraManager.cameraPhotoOutput.availablePhotoCodecTypes.contains(.hevc) {
+        if  cameraManager.cameraPhotoOutput.availablePhotoCodecTypes.contains(.hevc) {
             photoSettings = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.hevc])
         }
-        if (self.cameraManager.frontCameraInput?.device.isFlashAvailable ?? false) || (self.cameraManager.rearCameraInput?.device.isFlashAvailable ?? false) {
+        if (cameraManager.frontCameraInput?.device.isFlashAvailable ?? false) || (cameraManager.rearCameraInput?.device.isFlashAvailable ?? false) {
             photoSettings.flashMode = .auto
         }
         photoSettings.photoQualityPrioritization = .balanced
@@ -213,8 +219,16 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
     }
     
     func capturePhoto() {
-        let captureSettings = buildCaptureSettings()
-        self.cameraManager.cameraPhotoOutput!.capturePhoto(with: captureSettings, delegate: self)
+        if cameraManager.cameraPhotoOutput == nil {
+            do {
+                try CameraManager.checkPermissions()
+            } catch {
+                Toast.show(message: "Not allowed to use the camera", controller: self)
+            }
+        } else {
+            let captureSettings = buildCaptureSettings()
+            cameraManager.cameraPhotoOutput!.capturePhoto(with: captureSettings, delegate: self)
+        }
     }
 }
 
@@ -222,7 +236,7 @@ extension ViewportViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
 
 extension ViewportViewController: AVCapturePhotoCaptureDelegate {
     private func flashViewport() {
-        self.filteredImageView.layer.opacity = 0
+        filteredImageView.layer.opacity = 0
         UIView.animate(withDuration: 0.25) {
             self.filteredImageView.layer.opacity = 1
         }
@@ -236,7 +250,7 @@ extension ViewportViewController: AVCapturePhotoCaptureDelegate {
     }
     
     func photoOutput(_ output: AVCapturePhotoOutput, didCapturePhotoFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
-        self.flashViewport()
+        flashViewport()
     }
     
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishCaptureFor resolvedSettings: AVCaptureResolvedPhotoSettings, error: Error?) {
@@ -247,13 +261,15 @@ extension ViewportViewController: AVCapturePhotoCaptureDelegate {
     
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         if error == nil {
-            if let imageData = photo.fileDataRepresentation() {
-                let dataProvider = CGDataProvider(data: imageData as CFData)
-                let cgImageRef: CGImage! = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent)
-                if let filteredImage = self.getFilteredImage(fromCIImage: CIImage(cgImage: cgImageRef), oriented: .right) {
+            if let cgImageRepr   = photo.cgImageRepresentation() {
+                if let filteredImage = getFilteredImage(fromCIImage: CIImage(cgImage: cgImageRepr.takeUnretainedValue()), oriented: .right) {
                     let previewPopup = PhotoPreviewViewController(delegate: self, withPreview: filteredImage)
-                    self.present(previewPopup, animated: true, completion: nil)
+                    present(previewPopup, animated: true, completion: nil)
+                } else {
+                    Toast.show(message: "Capture failed: couldn't get a filtered image", controller: self)
                 }
+            } else {
+                Toast.show(message: "Capture failed: couldn't get cgImageRepresentation", controller: self)
             }
         } else {
             Toast.show(message: "Failed to process photo: \(String(describing: error))", controller: self)
@@ -278,11 +294,11 @@ extension ViewportViewController: UIImagePickerControllerDelegate, UINavigationC
         let pickerController = UIImagePickerController()
         pickerController.sourceType = .photoLibrary
         pickerController.delegate = self
-        self.present(pickerController, animated: true, completion: nil)
+        present(pickerController, animated: true, completion: nil)
     }
     
     func saveGalleryPreview() {
-        if let _image = self.filteredImageView.image {
+        if let _image = filteredImageView.image {
             if _image.cgImage != nil { // Backed by a CGImage, safe to save
                 UIImageWriteToSavedPhotosAlbum(_image, self, #selector(ViewportViewController.image(_:didFinishSavingWithError:contextInfo:)), nil)
             } else if _image.ciImage != nil { // Backed by a CIImage, have to convert
@@ -296,26 +312,26 @@ extension ViewportViewController: UIImagePickerControllerDelegate, UINavigationC
     }
     
     private func toggleViewportGalleryMode(enabled: Bool) {
-        self.inGalleryMode = enabled
+        inGalleryMode = enabled
         // Restyle the button, set the image view content mode
         if enabled {
-            self.galleryButton.setImage(UIImage(systemName: "camera", withConfiguration: self.bottomButtonConfig), for: .normal)
-            self.captureButton.setImage(UIImage(systemName: "square.and.arrow.down", withConfiguration: self.bottomButtonConfig), for: .normal)
-            self.filteredImageView.contentMode = .scaleAspectFit
-            self.upperRightButtonsView.isHidden = true
-            self.imageScrollView.minimumZoomScale = 1.0
-            self.imageScrollView.maximumZoomScale = 6.0
+            galleryButton.setImage(UIImage(systemName: "camera", withConfiguration: bottomButtonConfig), for: .normal)
+            captureButton.setImage(UIImage(systemName: "square.and.arrow.down", withConfiguration: bottomButtonConfig), for: .normal)
+            filteredImageView.contentMode = .scaleAspectFit
+            upperRightButtonsView.isHidden = true
+            imageScrollView.minimumZoomScale = 1.0
+            imageScrollView.maximumZoomScale = 6.0
         } else {
-            self.galleryButton.setImage(UIImage(systemName: "photo.on.rectangle", withConfiguration: self.bottomButtonConfig), for: .normal)
-            self.captureButton.setImage(UIImage(systemName: "circle", withConfiguration: self.bottomButtonConfig), for: .normal)
-            self.filteredImageView.contentMode = .scaleAspectFill
-            self.upperRightButtonsView.isHidden = false
-            self.imageScrollView.minimumZoomScale = 1.0
-            self.imageScrollView.maximumZoomScale = 1.0
-            self.imageScrollView.zoomScale = 1.0
+            galleryButton.setImage(UIImage(systemName: "photo.on.rectangle", withConfiguration: bottomButtonConfig), for: .normal)
+            captureButton.setImage(UIImage(systemName: "circle", withConfiguration: bottomButtonConfig), for: .normal)
+            filteredImageView.contentMode = .scaleAspectFill
+            upperRightButtonsView.isHidden = false
+            imageScrollView.minimumZoomScale = 1.0
+            imageScrollView.maximumZoomScale = 1.0
+            imageScrollView.zoomScale = 1.0
         }
         
-        self.cameraEnabled = !enabled // The world's worst line of code
+        cameraEnabled = !enabled // The world's worst line of code
     }
     
     private func refreshGalleryImage() {
@@ -346,7 +362,7 @@ extension ViewportViewController: UIImagePickerControllerDelegate, UINavigationC
             return
         }
         
-        self.cameraEnabled = false
+        cameraEnabled = false
         toggleViewportGalleryMode(enabled: true)
     }
     

@@ -11,8 +11,8 @@ import UIKit
 import AVFoundation
 import os.log
 
-// MARK: Properties
 class CameraManager {
+    // MARK: Properties
     public enum CameraPosition: String {
         case front = "front"
         case rear  = "rear"
@@ -29,7 +29,37 @@ class CameraManager {
     var videoOutput: AVCaptureVideoDataOutput = AVCaptureVideoDataOutput()
     var previewLayer: AVCaptureVideoPreviewLayer = AVCaptureVideoPreviewLayer(session: AVCaptureSession())
 
-// MARK: Prepare
+    // MARK: Prepare
+    static func checkPermissions() throws {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+            case .authorized: // The user has previously granted access to the camera.
+                return
+            
+            case .notDetermined: // The user has not yet been asked for camera access.
+                var shouldThrow: Bool = true
+                AVCaptureDevice.requestAccess(for: .video) { granted in
+                    if granted {
+                        return
+                    } else {
+                        shouldThrow = true
+                        return
+                    }
+                }
+                if shouldThrow {
+                    throw CameraManagerError.notAuthorized
+            }
+            
+            case .denied: // The user has previously denied access.
+                throw CameraManagerError.notAuthorized
+
+            case .restricted: // The user can't grant access due to restrictions.
+                throw CameraManagerError.notAuthorized
+        
+        @unknown default:
+            throw CameraManagerError.unknown
+        }
+    }
+    
     func getCaptureDevices() throws {
         let session = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: .video, position: .unspecified)
         guard !session.devices.isEmpty else { throw CameraManagerError.noDevicesAvailable }
@@ -91,6 +121,7 @@ class CameraManager {
     
     func prepare(captureVideoDelegate: AVCaptureVideoDataOutputSampleBufferDelegate, completionHandler: @escaping (Error?) -> Void) {
         do {
+            try CameraManager.checkPermissions()
             self.captureSession.beginConfiguration()
             self.captureSession.sessionPreset = .photo
             try self.getCaptureDevices()
@@ -170,6 +201,8 @@ class CameraManager {
 }
 
 enum CameraManagerError: Error {
+    case unknown
+    case notAuthorized
     case noDevicesAvailable
     case sessionNotRunning
     case noVideoDevice
