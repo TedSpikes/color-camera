@@ -47,6 +47,7 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
             try cameraManager.switchCameras()
             if cameraManager.isFlashOn {
                 try cameraManager.toggleFlash()
+                styleFlashButton(isOn: false)
             }
             if cameraManager.cameraPosition == .front {
                 toggleFlashButton.isEnabled = false
@@ -75,6 +76,7 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
     @IBAction func chooseImage(_ sender: UIButton) {
         if inGalleryMode {
             toggleViewportGalleryMode(enabled: false)
+            imageScrollView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         } else {
             pickPhoto()
         }
@@ -356,6 +358,7 @@ extension ViewportViewController: UIImagePickerControllerDelegate, UINavigationC
         
         if let _uiImage = info[.originalImage] as? UIImage {
             originalGalleryImage = _uiImage
+            imageScrollView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             refreshGalleryImage()
         } else {
             Toast.show(message: "Error: Couldn't get the original image from the picker.", controller: self)
