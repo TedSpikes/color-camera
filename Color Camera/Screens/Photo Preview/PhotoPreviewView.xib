@@ -47,7 +47,7 @@
                     </items>
                 </navigationBar>
             </subviews>
-            <color key="backgroundColor" systemColor="systemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="JY7-vY-hVp" firstAttribute="top" secondItem="gmf-4u-0R4" secondAttribute="bottom" id="4Yw-WI-d6S"/>
                 <constraint firstItem="qJs-xF-8hY" firstAttribute="trailing" secondItem="JY7-vY-hVp" secondAttribute="trailing" id="NO4-IY-MLC"/>
