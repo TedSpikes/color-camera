@@ -36,7 +36,7 @@ class CameraManager {
                 return
             
             case .notDetermined: // The user has not yet been asked for camera access.
-                var shouldThrow: Bool = true
+                var shouldThrow: Bool = false
                 AVCaptureDevice.requestAccess(for: .video) { granted in
                     if granted {
                         return
