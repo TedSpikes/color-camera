@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import os.log
 
 class Toast {
     static func show(message: String, controller: UIViewController) {
@@ -39,5 +40,16 @@ class Toast {
         }, completion: {_ in
             toastLabel.removeFromSuperview()
         })
+    }
+    
+    static func getAlertController(titled title: String, reading message: String) -> UIAlertController {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(
+            UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"),
+                          style: .default,
+                          handler: { _ in
+                            os_log(.debug, "The \"OK\" alert occured.")
+        }))
+        return alert
     }
 }

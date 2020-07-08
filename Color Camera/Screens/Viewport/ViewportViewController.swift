@@ -22,6 +22,7 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
     var cameraEnabled: Bool = true
     private var inGalleryMode: Bool = false
     private var originalGalleryImage: UIImage = UIImage()
+    private var configurationError: Error?
     
     // MARK: UI hooks
     @IBOutlet weak var filteredImageView: UIImageView!
@@ -84,9 +85,9 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
     
     // MARK: The setup
     func configureCameraController() {
-        cameraManager.prepare(captureVideoDelegate: self) { (error) in
-            if let error = error {
-                Toast.show(message: "Failed to configure the camera controller: \(error)", controller: self)
+        cameraManager.prepare(captureVideoDelegate: self) { error in
+            if let _err = error {
+                self.configurationError = _err
             }
         }
     }
@@ -147,6 +148,27 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
         loadFilterFromStorage()
         configureCameraController()
         styleElements()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let _err = self.configurationError {
+            if let managerError = _err as? CameraManagerError {
+                self.present(
+                    Toast.getAlertController(titled: managerError.rawValue,
+                                             reading: "An error occured when configuring cameras: \(managerError.rawValue)"),
+                    animated: true,
+                    completion: nil)
+                os_log(.error, "An error occured when configuring cameras: %s", managerError.rawValue)
+            } else {
+                self.present(
+                    Toast.getAlertController(titled: "Error",
+                                             reading: "An unkown error occured when configuring cameras: \(_err.localizedDescription)"),
+                    animated: true,
+                    completion: nil)
+                os_log(.error, "An unkown error occured when configuring cameras: %s", _err.localizedDescription)
+            }
+        }
     }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? { return filteredImageView }

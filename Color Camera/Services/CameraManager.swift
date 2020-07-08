@@ -200,10 +200,10 @@ class CameraManager {
     }
 }
 
-enum CameraManagerError: Error {
-    case unknown
-    case notAuthorized
-    case noDevicesAvailable
-    case sessionNotRunning
-    case noVideoDevice
+enum CameraManagerError: String, Error {
+    case unknown = "Unknown Camera Manager error"
+    case notAuthorized = "Not authorized to use the camera"
+    case noDevicesAvailable = "No cameras available"
+    case sessionNotRunning = "Capture session not running"
+    case noVideoDevice = "No video capture device available"
 }
