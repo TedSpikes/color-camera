@@ -361,11 +361,13 @@ extension ViewportViewController: UIImagePickerControllerDelegate, UINavigationC
     private func refreshGalleryImage() {
         if let _image = originalGalleryImage.ciImage {
             DispatchQueue.main.async {
-                self.filteredImageView.image = self.getFilteredImage(fromCIImage: _image)
+                self.filteredImageView.image = self.getFilteredImage(fromCIImage: _image,
+                                                                     oriented: CGImagePropertyOrientation(self.originalGalleryImage.imageOrientation))
             }
         } else if let _image = originalGalleryImage.cgImage {
             DispatchQueue.main.async {
-                self.filteredImageView.image = self.getFilteredImage(fromCIImage: CIImage(cgImage: _image))
+                self.filteredImageView.image = self.getFilteredImage(fromCIImage: CIImage(cgImage: _image),
+                                                                     oriented: CGImagePropertyOrientation(self.originalGalleryImage.imageOrientation))
             }
         } else {
             Toast.show(message: "Error: Unable to process the gallery image data.", controller: self)
