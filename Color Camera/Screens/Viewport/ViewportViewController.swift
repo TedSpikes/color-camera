@@ -226,7 +226,7 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
     private func buildCaptureSettings() -> AVCapturePhotoSettings {
         /// Simplified magic from https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture/avcam_building_a_camera_app
         var photoSettings = AVCapturePhotoSettings()
-        let previewPixelType = photoSettings.availablePreviewPhotoPixelFormatTypes.first!
+        let previewPixelType = photoSettings.__availablePreviewPhotoPixelFormatTypes.first!
         let previewFormat = [kCVPixelBufferPixelFormatTypeKey as String: previewPixelType,
                                      kCVPixelBufferWidthKey as String: 160,
                                      kCVPixelBufferHeightKey as String: 160,

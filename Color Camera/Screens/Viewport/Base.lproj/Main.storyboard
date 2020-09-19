@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -34,13 +36,13 @@
                                 <viewLayoutGuide key="frameLayoutGuide" id="VQf-q8-3cW"/>
                             </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PbW-KL-CZ0">
-                                <rect key="frame" x="353" y="52" width="53" height="96.5"/>
+                                <rect key="frame" x="351.5" y="52" width="54.5" height="93"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="1fv-47-deH">
-                                        <rect key="frame" x="4" y="4" width="45" height="88.5"/>
+                                        <rect key="frame" x="4" y="4" width="46.5" height="85"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Bl-QE-Fgn">
-                                                <rect key="frame" x="0.0" y="0.0" width="45" height="42.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="46.5" height="39"/>
                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" image="flashlight.off.fill" catalog="system">
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="32"/>
@@ -50,7 +52,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="83k-88-uzq">
-                                                <rect key="frame" x="0.0" y="54.5" width="45" height="34"/>
+                                                <rect key="frame" x="0.0" y="51" width="46.5" height="34"/>
                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" image="camera.rotate" catalog="system">
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="32"/>
@@ -62,7 +64,7 @@
                                         </subviews>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="1fv-47-deH" secondAttribute="trailing" constant="4" id="FdP-Gk-Smd"/>
                                     <constraint firstItem="1fv-47-deH" firstAttribute="leading" secondItem="PbW-KL-CZ0" secondAttribute="leading" constant="4" id="GHx-ca-4gf"/>
@@ -96,7 +98,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7d2-qS-4zo">
-                                        <rect key="frame" x="304" y="7" width="74" height="57.5"/>
+                                        <rect key="frame" x="305" y="7.5" width="73" height="56.5"/>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" image="photo.on.rectangle" catalog="system">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -107,7 +109,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="lSw-oz-mwA" firstAttribute="centerY" secondItem="ndO-GP-upW" secondAttribute="centerY" id="4MI-BL-HXm"/>
                                     <constraint firstItem="7d2-qS-4zo" firstAttribute="centerY" secondItem="ndO-GP-upW" secondAttribute="centerY" id="Ne7-hU-64I"/>
@@ -119,6 +121,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="PbW-KL-CZ0" secondAttribute="trailing" constant="8" id="6Zi-AW-rHO"/>
@@ -131,7 +134,6 @@
                             <constraint firstItem="ogM-NH-1XV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="exz-HM-qLk"/>
                             <constraint firstItem="9f0-81-4YK" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="vfT-1O-9Um"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="bottomButtonsView" destination="ogM-NH-1XV" id="qCX-zX-DOP"/>
@@ -151,10 +153,13 @@
         </scene>
     </scenes>
     <resources>
-        <image name="camera.rotate" catalog="system" width="128" height="96"/>
+        <image name="camera.rotate" catalog="system" width="128" height="94"/>
         <image name="circle" catalog="system" width="128" height="121"/>
-        <image name="flashlight.off.fill" catalog="system" width="73" height="128"/>
+        <image name="flashlight.off.fill" catalog="system" width="76" height="128"/>
         <image name="list.dash" catalog="system" width="128" height="85"/>
-        <image name="photo.on.rectangle" catalog="system" width="128" height="98"/>
+        <image name="photo.on.rectangle" catalog="system" width="128" height="96"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>
