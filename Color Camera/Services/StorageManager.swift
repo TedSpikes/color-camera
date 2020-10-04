@@ -11,12 +11,14 @@ import os.log
 
 private let defaultsTypes: [defaultsKeys: Any.Type] = [
     .activeFilter: String.self,
-    .isOnFrontal:  Bool.self
+    .isOnFrontal:  Bool.self,
+    .isPickerCompact:  Bool.self
 ]
 
 public enum defaultsKeys: String {
-    case activeFilter = "activeFilter"
-    case isOnFrontal  = "isOnFrontal"
+    case activeFilter    = "activeFilter"
+    case isOnFrontal     = "isOnFrontal"
+    case isPickerCompact = "pickerMode"
 }
 
 public func setUserDefault(value: Any, forKey key: defaultsKeys) throws {
@@ -42,4 +44,9 @@ public var isOnFrontal: Bool {
 public func getStoredFilter() -> String? {
     let defaults = UserDefaults.standard
     return defaults.string(forKey: defaultsKeys.activeFilter.rawValue)
+}
+
+public func getIsPickerCompact() -> Bool? {
+    let defaults = UserDefaults.standard
+    return defaults.bool(forKey: defaultsKeys.isPickerCompact.rawValue)
 }

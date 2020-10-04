@@ -13,6 +13,7 @@ import os.log
 class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
     let cameraManager = CameraManager()
     let filterManager = FilterManager()
+    let filterPicker  = FilterPickerViewController(nibName: "FilterPickerView", bundle: nil)
     
     let bottomButtonConfig = UIImage.SymbolConfiguration(pointSize: CGFloat(floatLiteral: 32.0), weight: .regular)
     let upperRightButtonConfig  = UIImage.SymbolConfiguration(pointSize: CGFloat(floatLiteral: 24.0), weight: .regular)
@@ -21,6 +22,7 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
     var activeFilter: VisionFilter?
     var cameraEnabled: Bool = true
     private var inGalleryMode: Bool = false
+    private var shouldUseCompactPicker: Bool = true
     private var originalGalleryImage: UIImage = UIImage()
     private var configurationError: Error?
     
@@ -70,8 +72,7 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
     }
     
     @IBAction func pickFilter(_ sender: UIButton) {
-        let filterPicker = FilterPickerViewController(nibName: "FilterPickerView", bundle: nil)
-        present(filterPicker, animated: true, completion: nil)
+        showPicker(compactMode: shouldUseCompactPicker)
     }
     
     @IBAction func chooseImage(_ sender: UIButton) {
@@ -144,6 +145,7 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
     override func viewDidLoad() {
         super.viewDidLoad()
         imageScrollView.delegate = self
+        filterPicker.delegate = self
         
         loadFilterFromStorage()
         configureCameraController()
@@ -395,5 +397,55 @@ extension ViewportViewController: UIImagePickerControllerDelegate, UINavigationC
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         do { picker.dismiss(animated: true, completion: nil) }
+    }
+}
+
+// MARK: Managing the filter picker controller
+extension ViewportViewController: IFilterPickerDelegate {
+    func showPicker(compactMode: Bool) {
+        if shouldUseCompactPicker {
+            addChild(filterPicker)
+            let frame: CGRect = CGRect(x: 0,
+                                       y: view.frame.height / 2,
+                                       width: view.frame.width,
+                                       height: view.frame.height / 2)
+            filterPicker.view.frame = frame
+            view.addSubview(filterPicker.view)
+            filterPicker.didMove(toParent: self)
+            
+            // TODO: Animate showing
+        } else {
+            present(filterPicker, animated: true, completion: nil)
+        }
+    }
+    
+    func picked(filterName: String) {
+        switchToFilter(name: filterName)
+        do {
+            try setUserDefault(value: filterName, forKey: .activeFilter)
+        } catch {
+            os_log(.error, "Unexpected error when trying to save the active filter: %s", error.localizedDescription)
+        }
+        
+        if !shouldUseCompactPicker {
+            dismissPicker()
+        }
+    }
+    
+    func switchedCompactMode(to: Bool) {
+        // 1. Change value in the variable
+        // 2. Re-present the child controller
+    }
+    
+    func dismissPicker() {
+        // Animate and dismiss the controller
+        if shouldUseCompactPicker {
+            filterPicker.willMove(toParent: nil)
+            filterPicker.view.removeFromSuperview()
+            filterPicker.removeFromParent()
+        } else {
+            filterPicker.dismiss(animated: true, completion: nil)
+        }
+        
     }
 }

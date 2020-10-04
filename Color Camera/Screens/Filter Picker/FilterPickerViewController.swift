@@ -11,12 +11,14 @@ import os.log
 
 class FilterPickerViewController: UIViewController {
     var filterManager: FilterManager
+    var delegate: IFilterPickerDelegate?
+    var inCompactMode: Bool = true
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var navBar: UINavigationBar!
     
     @IBAction func closeModal(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
+        delegate?.dismissPicker()
     }
     
     required init?(coder: NSCoder) {
@@ -46,24 +48,14 @@ extension FilterPickerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard
             let activeCell = tableView.cellForRow(at: indexPath) as? FilterPickerCell
-        else {
-            os_log(.error, "Couldn't get cell at %s as FilterPickerCell", indexPath.description)
-            return
-        }
+        else { os_log(.error, "Couldn't get cell at %s as FilterPickerCell", indexPath.description)
+               return }
         guard
             let filterName = activeCell.nameLabel?.text
-        else {
-            os_log(.error, "Selected cell %s does not have a title", activeCell.description)
-            return
-        }
-        let presenter  = presentingViewController as! ViewportViewController
-        presenter.switchToFilter(name: filterName)
-        do {
-            try setUserDefault(value: filterName, forKey: .activeFilter)
-        } catch {
-            os_log(.error, "Unexpected error when trying to save the active filter: %s", error.localizedDescription)
-        }
-        dismiss(animated: true, completion: nil)
+        else { os_log(.error, "Selected cell %s does not have a title", activeCell.description)
+               return }
+        
+        delegate?.picked(filterName: filterName)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -107,4 +99,12 @@ extension FilterPickerViewController {
         result = result.oriented(orientation)
         return UIImage(ciImage: result)
     }
+}
+
+protocol IFilterPickerDelegate {
+    func picked(filterName: String) -> Void
+    
+    func switchedCompactMode(to: Bool) -> Void
+    
+    func dismissPicker() -> Void
 }
