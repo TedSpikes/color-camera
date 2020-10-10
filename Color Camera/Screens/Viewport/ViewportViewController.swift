@@ -444,11 +444,22 @@ extension ViewportViewController: IFilterPickerDelegate {
     }
     
     func dismissPicker() {
-        // Animate and dismiss the controller
+        // Recalculate these because I'm too lazy to do this the smart way
+        let pickerWidth  = view.frame.width
+        let pickerHeight = view.frame.height / 2
+        let initialFrame = CGRect(x: 0, y: view.frame.height, width: pickerWidth, height: pickerHeight)
+        
         if shouldUseCompactPicker {
             filterPicker.willMove(toParent: nil)
-            filterPicker.view.removeFromSuperview()
-            filterPicker.removeFromParent()
+            filterPicker.beginAppearanceTransition(true, animated: true)
+            UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 2, initialSpringVelocity: 0, options: .curveEaseIn, animations: {
+                self.filterPicker.view.frame = initialFrame
+            }, completion: { isDone in
+                self.filterPicker.endAppearanceTransition()
+                self.filterPicker.didMove(toParent: self)
+                self.filterPicker.view.removeFromSuperview()
+                self.filterPicker.removeFromParent()
+            })
         } else {
             filterPicker.dismiss(animated: true, completion: nil)
         }
