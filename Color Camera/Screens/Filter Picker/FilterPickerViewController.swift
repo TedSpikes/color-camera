@@ -102,6 +102,8 @@ extension FilterPickerViewController {
 }
 
 protocol IFilterPickerDelegate {
+    var shouldUseCompactPicker: Bool { get set }
+    
     func picked(filterName: String) -> Void
     
     func switchedCompactMode(to: Bool) -> Void

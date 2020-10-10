@@ -22,7 +22,7 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
     var activeFilter: VisionFilter?
     var cameraEnabled: Bool = true
     private var inGalleryMode: Bool = false
-    private var shouldUseCompactPicker: Bool = true
+    internal var shouldUseCompactPicker: Bool = true
     private var originalGalleryImage: UIImage = UIImage()
     private var configurationError: Error?
     
@@ -148,6 +148,7 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
         filterPicker.delegate = self
         
         loadFilterFromStorage()
+        shouldUseCompactPicker = true //getIsPickerCompact() ?? true
         configureCameraController()
         styleElements()
     }
@@ -404,16 +405,21 @@ extension ViewportViewController: UIImagePickerControllerDelegate, UINavigationC
 extension ViewportViewController: IFilterPickerDelegate {
     func showPicker(compactMode: Bool) {
         if shouldUseCompactPicker {
-            addChild(filterPicker)
-            let frame: CGRect = CGRect(x: 0,
-                                       y: view.frame.height / 2,
-                                       width: view.frame.width,
-                                       height: view.frame.height / 2)
-            filterPicker.view.frame = frame
-            view.addSubview(filterPicker.view)
-            filterPicker.didMove(toParent: self)
+            let pickerWidth  = view.frame.width
+            let pickerHeight = view.frame.height / 2
+            let initialFrame = CGRect(x: 0, y: view.frame.height, width: pickerWidth, height: pickerHeight)
+            let frame        = CGRect(x: 0, y: view.frame.height / 2, width: pickerWidth, height: pickerHeight)
             
-            // TODO: Animate showing
+            addChild(filterPicker)
+            filterPicker.view.frame = initialFrame
+            view.addSubview(filterPicker.view)
+            filterPicker.beginAppearanceTransition(true, animated: true)
+            UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 2, initialSpringVelocity: 0, options: .curveEaseOut, animations: {
+                self.filterPicker.view.frame = frame
+            }, completion: { isDone in
+                self.filterPicker.endAppearanceTransition()
+                self.filterPicker.didMove(toParent: self)
+            })
         } else {
             present(filterPicker, animated: true, completion: nil)
         }
