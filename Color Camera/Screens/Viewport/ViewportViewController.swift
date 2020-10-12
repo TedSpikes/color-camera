@@ -72,7 +72,7 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
     }
     
     @IBAction func pickFilter(_ sender: UIButton) {
-        showPicker(compactMode: shouldUseCompactPicker)
+        showPicker()
     }
     
     @IBAction func chooseImage(_ sender: UIButton) {
@@ -403,7 +403,7 @@ extension ViewportViewController: UIImagePickerControllerDelegate, UINavigationC
 
 // MARK: Managing the filter picker controller
 extension ViewportViewController: IFilterPickerDelegate {
-    func showPicker(compactMode: Bool) {
+    func showPicker() {
         if shouldUseCompactPicker {
             let pickerWidth  = view.frame.width
             let pickerHeight = view.frame.height / 2
@@ -416,10 +416,9 @@ extension ViewportViewController: IFilterPickerDelegate {
             filterPicker.beginAppearanceTransition(true, animated: true)
             UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 2, initialSpringVelocity: 0, options: .curveEaseOut, animations: {
                 self.filterPicker.view.frame = frame
-            }, completion: { isDone in
-                self.filterPicker.endAppearanceTransition()
-                self.filterPicker.didMove(toParent: self)
-            })
+            }, completion: nil)
+            self.filterPicker.endAppearanceTransition()
+            self.filterPicker.didMove(toParent: self)
         } else {
             present(filterPicker, animated: true, completion: nil)
         }
@@ -434,16 +433,20 @@ extension ViewportViewController: IFilterPickerDelegate {
         }
         
         if !shouldUseCompactPicker {
-            dismissPicker()
+            dismissPicker(completion: nil)
         }
     }
     
-    func switchedCompactMode(to: Bool) {
+    func switchedCompactMode() {
+        dismissPicker(completion: { [weak self] in
+            self?.shouldUseCompactPicker = !self!.shouldUseCompactPicker
+            self?.showPicker()
+        })
         // 1. Change value in the variable
         // 2. Re-present the child controller
     }
     
-    func dismissPicker() {
+    func dismissPicker(completion: (() -> Void)?) {
         // Recalculate these because I'm too lazy to do this the smart way
         let pickerWidth  = view.frame.width
         let pickerHeight = view.frame.height / 2
@@ -454,14 +457,14 @@ extension ViewportViewController: IFilterPickerDelegate {
             filterPicker.beginAppearanceTransition(true, animated: true)
             UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 2, initialSpringVelocity: 0, options: .curveEaseIn, animations: {
                 self.filterPicker.view.frame = initialFrame
-            }, completion: { isDone in
-                self.filterPicker.endAppearanceTransition()
-                self.filterPicker.didMove(toParent: self)
-                self.filterPicker.view.removeFromSuperview()
-                self.filterPicker.removeFromParent()
-            })
+            }, completion: nil)
+            self.filterPicker.endAppearanceTransition()
+            self.filterPicker.didMove(toParent: self)
+            self.filterPicker.view.removeFromSuperview()
+            self.filterPicker.removeFromParent()
+            completion?()
         } else {
-            filterPicker.dismiss(animated: true, completion: nil)
+            filterPicker.dismiss(animated: true, completion: completion)
         }
         
     }

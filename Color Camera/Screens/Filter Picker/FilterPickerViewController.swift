@@ -10,15 +10,20 @@ import UIKit
 import os.log
 
 class FilterPickerViewController: UIViewController {
+    private let permanentNavItem = UINavigationItem(title: "Pick a filter")
+    
     var filterManager: FilterManager
     var delegate: IFilterPickerDelegate?
-    var inCompactMode: Bool = true
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var navBar: UINavigationBar!
     
     @IBAction func closeModal(_ sender: UIBarButtonItem) {
-        delegate?.dismissPicker()
+        delegate?.dismissPicker(completion: nil)
+    }
+    
+    @IBAction func switchCompactMode(_ sender: UIBarButtonItem) {
+        delegate?.switchedCompactMode()
     }
     
     required init?(coder: NSCoder) {
@@ -39,8 +44,21 @@ class FilterPickerViewController: UIViewController {
         tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = UITableView.automaticDimension
+        
+        let closeButton = UIBarButtonItem(title: "Close", style: .done, target: self, action: #selector(FilterPickerViewController.closeModal(_:)))
+        permanentNavItem.setRightBarButton(closeButton, animated: false)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let inCompact = delegate?.shouldUseCompactPicker {
+            let image  = inCompact ? UIImage(systemName: "rectangle.expand.vertical") : UIImage(systemName: "rectangle.compress.vertical")
+            let switchCompactModeButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(FilterPickerViewController.switchCompactMode(_:)))
+            permanentNavItem.setLeftBarButton(switchCompactModeButton, animated: false)
+            navBar.setItems([permanentNavItem], animated: true)
+        }
+    }
 }
 
 // MARK: UITableViewDelegate
@@ -106,7 +124,7 @@ protocol IFilterPickerDelegate {
     
     func picked(filterName: String) -> Void
     
-    func switchedCompactMode(to: Bool) -> Void
+    func switchedCompactMode() -> Void
     
-    func dismissPicker() -> Void
+    func dismissPicker(completion: (() -> Void)?) -> Void
 }

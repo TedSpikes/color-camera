@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -36,7 +38,8 @@
                     </items>
                 </navigationBar>
             </subviews>
-            <color key="backgroundColor" systemColor="systemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+            <viewLayoutGuide key="safeArea" id="k9G-S1-T1x"/>
+            <color key="backgroundColor" systemColor="systemFillColor"/>
             <constraints>
                 <constraint firstItem="k9G-S1-T1x" firstAttribute="bottom" secondItem="tlg-x0-CN0" secondAttribute="bottom" id="3oA-Qf-lnA"/>
                 <constraint firstItem="3vf-B2-8zC" firstAttribute="trailing" secondItem="k9G-S1-T1x" secondAttribute="trailing" id="Jqn-xb-BiT"/>
@@ -46,8 +49,12 @@
                 <constraint firstItem="3vf-B2-8zC" firstAttribute="top" secondItem="k9G-S1-T1x" secondAttribute="top" id="knu-Ck-xSd"/>
                 <constraint firstItem="k9G-S1-T1x" firstAttribute="trailing" secondItem="tlg-x0-CN0" secondAttribute="trailing" id="lAv-R6-pF4"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="k9G-S1-T1x"/>
             <point key="canvasLocation" x="-52.173913043478265" y="75.669642857142847"/>
         </view>
     </objects>
+    <resources>
+        <systemColor name="systemFillColor">
+            <color red="0.47058823529411764" green="0.47058823529411764" blue="0.50196078431372548" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>
