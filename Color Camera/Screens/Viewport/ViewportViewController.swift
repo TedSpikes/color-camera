@@ -22,7 +22,11 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
     var activeFilter: VisionFilter?
     var cameraEnabled: Bool = true
     private var inGalleryMode: Bool = false
-    internal var shouldUseCompactPicker: Bool = true
+    internal var shouldUseCompactPicker: Bool = true {
+        didSet {
+            try? setUserDefault(value: shouldUseCompactPicker, forKey: .isPickerCompact)
+        }
+    }
     private var originalGalleryImage: UIImage = UIImage()
     private var configurationError: Error?
     
@@ -148,7 +152,7 @@ class ViewportViewController: UIViewController, UIScrollViewDelegate, UIGestureR
         filterPicker.delegate = self
         
         loadFilterFromStorage()
-        shouldUseCompactPicker = true //getIsPickerCompact() ?? true
+        shouldUseCompactPicker = getIsPickerCompact() ?? true
         configureCameraController()
         styleElements()
     }
