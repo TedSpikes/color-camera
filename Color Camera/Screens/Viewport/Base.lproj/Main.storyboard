@@ -25,12 +25,12 @@
                                     </imageView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="3sb-D9-RO0" secondAttribute="bottom" id="8LZ-Ct-qPo"/>
-                                    <constraint firstAttribute="trailing" secondItem="3sb-D9-RO0" secondAttribute="trailing" id="9Pz-cl-Gho"/>
+                                    <constraint firstAttribute="trailing" secondItem="3sb-D9-RO0" secondAttribute="trailing" id="4Vp-go-E4s"/>
+                                    <constraint firstItem="3sb-D9-RO0" firstAttribute="centerY" secondItem="9f0-81-4YK" secondAttribute="centerY" id="8G3-jB-Ibk"/>
                                     <constraint firstItem="3sb-D9-RO0" firstAttribute="centerX" secondItem="9f0-81-4YK" secondAttribute="centerX" id="ADg-fx-odh"/>
-                                    <constraint firstItem="3sb-D9-RO0" firstAttribute="bottom" secondItem="VQf-q8-3cW" secondAttribute="bottom" id="MCK-8e-4bB"/>
-                                    <constraint firstItem="3sb-D9-RO0" firstAttribute="top" secondItem="9f0-81-4YK" secondAttribute="top" id="VTk-2a-RMB"/>
-                                    <constraint firstItem="3sb-D9-RO0" firstAttribute="leading" secondItem="9f0-81-4YK" secondAttribute="leading" id="XPv-Q7-mLH"/>
+                                    <constraint firstItem="3sb-D9-RO0" firstAttribute="leading" secondItem="9f0-81-4YK" secondAttribute="leading" id="CjN-OA-hAs"/>
+                                    <constraint firstAttribute="bottom" secondItem="3sb-D9-RO0" secondAttribute="bottom" id="Nl5-to-VZO"/>
+                                    <constraint firstItem="3sb-D9-RO0" firstAttribute="top" secondItem="9f0-81-4YK" secondAttribute="top" id="taT-z5-jdi"/>
                                 </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="8S6-N7-Idf"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="VQf-q8-3cW"/>
