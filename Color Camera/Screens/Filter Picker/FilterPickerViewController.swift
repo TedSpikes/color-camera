@@ -57,6 +57,11 @@ class FilterPickerViewController: UIViewController {
             let switchCompactModeButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(FilterPickerViewController.switchCompactMode(_:)))
             permanentNavItem.setLeftBarButton(switchCompactModeButton, animated: false)
             navBar.setItems([permanentNavItem], animated: true)
+            
+            let tableViewCornerRadius: CGFloat = inCompact ? 12 : 0
+            tableView.layer.cornerRadius       = tableViewCornerRadius
+            tableView.layer.maskedCorners      = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+            tableView.layer.masksToBounds      = true
         }
     }
 }

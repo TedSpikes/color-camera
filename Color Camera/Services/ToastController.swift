@@ -3,7 +3,7 @@
 //  Color Camera
 //
 //  Created by Ted Kostylev on 6/8/20.
-//  Copyright © 2020 Fedor Kostylev. All rights reserved.
+//  Copyright © 2020 Ted Kostylev. All rights reserved.
 //
 
 import UIKit

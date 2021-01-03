@@ -409,13 +409,16 @@ extension ViewportViewController: UIImagePickerControllerDelegate, UINavigationC
 extension ViewportViewController: IFilterPickerDelegate {
     func showPicker() {
         if shouldUseCompactPicker {
-            let pickerWidth  = view.frame.width
+            let sidePadding  = CGFloat(8)
+            let pickerWidth  = view.frame.width - sidePadding * 2
             let pickerHeight = view.frame.height / 2
             let initialFrame = CGRect(x: 0, y: view.frame.height, width: pickerWidth, height: pickerHeight)
-            let frame        = CGRect(x: 0, y: view.frame.height / 2, width: pickerWidth, height: pickerHeight)
+            let frame        = CGRect(x: 0 + sidePadding, y: view.frame.height / 2, width: pickerWidth, height: pickerHeight)
             
             addChild(filterPicker)
             filterPicker.view.frame = initialFrame
+            filterPicker.view.layer.cornerRadius = 12
+            filterPicker.view.layer.masksToBounds = true
             view.addSubview(filterPicker.view)
             filterPicker.beginAppearanceTransition(true, animated: true)
             UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 2, initialSpringVelocity: 0, options: .curveEaseOut, animations: {
